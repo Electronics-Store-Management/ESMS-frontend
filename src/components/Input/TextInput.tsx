@@ -9,9 +9,10 @@ export default function TextInput({
 	type = "text",
 	placeholder = "",
 	className = "",
+	...props
 }: PropTypes) {
 	return (
-		<div className={className}>
+		<div className={className} {...props}>
 			<div className="mb-2 block">
 				<Label htmlFor={title} value={title} />
 			</div>
@@ -31,5 +32,4 @@ type PropTypes = {
 	type?: HTMLInputTypeAttribute;
 	icon?: any;
 	placeholder?: string;
-	className?: React.ComponentProps<"div">["className"];
-};
+} & React.ComponentPropsWithRef<"div">;

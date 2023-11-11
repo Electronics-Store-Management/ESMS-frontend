@@ -2,7 +2,6 @@ import { ReactNodeChildren } from "@/types/ReactNodeChildren";
 
 export default function Link({
 	href = "",
-	onClick = () => {},
 	children,
 	className,
 	...props
@@ -11,7 +10,6 @@ export default function Link({
 		<a
 			className={`font-medium text-sm text-primary-400 ${className}`}
 			href={href}
-			onClick={onClick}
 			{...props}
 		>
 			{children}
@@ -21,6 +19,5 @@ export default function Link({
 
 type PropTypes = {
 	href?: string;
-	onClick?: (d: any) => any;
 } & React.ComponentProps<"a"> &
 	ReactNodeChildren;

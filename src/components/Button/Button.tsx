@@ -11,16 +11,19 @@ import React from "react";
 export default function Button({
 	fill = true,
 	size = "md",
-	type = "primary",
+	btnType = "primary",
 	children = "Untitle",
 	className,
+	ref,
+	...props
 }: PropTypes) {
 	return (
 		<_Button
 			theme={getTheme(fill)}
-			color={type}
+			color={btnType}
 			className={`${className} transition-all duration-300`}
 			size={size}
+			{...props}
 		>
 			{children}
 		</_Button>
@@ -49,9 +52,9 @@ const getTheme = (isFill: boolean): CustomFlowbiteTheme["button"] => {
 	};
 };
 
-type PropTypes = {
-	fill?: boolean;
-	size?: keyof ButtonSizes;
-	type?: "primary" | "secondary" | "error";
-	className?: React.ComponentProps<"button">["className"];
-} & ReactNodeChildren;
+type PropTypes = ReactNodeChildren &
+	React.ComponentPropsWithRef<"button"> & {
+		fill?: boolean;
+		size?: keyof ButtonSizes;
+		btnType?: "primary" | "secondary" | "error";
+	};

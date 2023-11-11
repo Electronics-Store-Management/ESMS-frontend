@@ -5,10 +5,18 @@ export default function CheckBox({
 	children,
 	id,
 	defaultChecked = false,
+	className,
+	ref,
+	...props
 }: PropTypes) {
 	return (
-		<div className="flex items-center gap-2">
-			<Checkbox theme={theme} id={id} defaultChecked={defaultChecked} />
+		<div className={`flex items-center gap-2 ${className}`}>
+			<Checkbox
+				theme={theme}
+				id={id}
+				defaultChecked={defaultChecked}
+				{...props}
+			/>
 			<Label htmlFor={id} className="flex">
 				{children}
 			</Label>
@@ -28,4 +36,5 @@ const theme: CustomFlowbiteTheme["checkbox"] = {
 type PropTypes = {
 	id: string;
 	defaultChecked?: boolean;
-} & ReactNodeChildren;
+} & ReactNodeChildren &
+	React.ComponentPropsWithRef<"input">;

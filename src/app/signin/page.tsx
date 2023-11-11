@@ -3,6 +3,7 @@
 import Button from "@/components/Button/Button";
 import CheckBox from "@/components/Checkbox/CheckBox";
 import TextInput from "@/components/Input/TextInput";
+import Link from "@/components/Typography/Link";
 import { HiMail, HiArrowRight } from "react-icons/hi";
 
 export default function Page() {
@@ -25,8 +26,9 @@ export default function Page() {
 						title="Password"
 						placeholder="Enter your password"
 					/>
-					<div className=" flex justify-around mt-5">
+					<div className=" w-full flex justify-between items-center mt-5">
 						<CheckBox id="remember me">Remember me</CheckBox>
+						<Link>Forgot password</Link>
 					</div>
 					<Button className=" mt-5 w-full">
 						<p className=" mr-2">Go to Store</p> <HiArrowRight />

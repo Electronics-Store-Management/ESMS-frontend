@@ -1,5 +1,12 @@
 import type { Config } from "tailwindcss";
 
+const generateColor = (name: string, colors: number[]) => {
+	return colors.reduce(
+		(obj, num) => ({ ...obj, [num]: `var(--${name}-${num})` }),
+		{}
+	);
+};
+
 const config: Config = {
 	content: [
 		"./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -10,14 +17,18 @@ const config: Config = {
 	theme: {
 		extend: {
 			colors: {
-				"th-primary": {
-					50: "var(--primary-50)",
-					100: "var(--primary-100)",
-					200: "var(--primary-200)",
-					300: "var(--primary-300)",
-					400: "var(--primary-400)",
-					500: "var(--primary-500)",
-				},
+				primary: generateColor(
+					"primary",
+					[50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
+				),
+				secondary: generateColor(
+					"secondary",
+					[50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
+				),
+				error: generateColor(
+					"error",
+					[50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
+				),
 			},
 		},
 	},

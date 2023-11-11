@@ -19,7 +19,7 @@ export default function Button({
 		<_Button
 			theme={getTheme(fill)}
 			color={type}
-			className={className}
+			className={`${className} transition-all duration-300`}
 			size={size}
 		>
 			{children}
@@ -52,6 +52,6 @@ const getTheme = (isFill: boolean): CustomFlowbiteTheme["button"] => {
 type PropTypes = {
 	fill?: boolean;
 	size?: keyof ButtonSizes;
-	type: "primary" | "secondary" | "error";
+	type?: "primary" | "secondary" | "error";
 	className?: React.ComponentProps<"button">["className"];
 } & ReactNodeChildren;

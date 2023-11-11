@@ -1,16 +1,19 @@
 "use client";
 
 import Button from "@/components/Button/Button";
+import CheckBox from "@/components/Checkbox/CheckBox";
 import TextInput from "@/components/Input/TextInput";
-import { HiMail } from "react-icons/hi";
+import { HiMail, HiArrowRight } from "react-icons/hi";
 
 export default function Page() {
 	return (
-		<div className=" h-screen grid grid-cols-3">
-			<div className=" col-span-2"></div>
-			<div className=" col-span-1">
-				<div>
-					<h1>Sign in to our platform</h1>
+		<div className=" h-screen grid grid-cols-5">
+			<div className=" col-span-3 bg-sky-500"></div>
+			<div className=" col-span-2 grid place-items-center">
+				<div className=" w-full p-16">
+					<h1 className=" text-3xl font-semibold">
+						Sign in to our platform
+					</h1>
 					<TextInput
 						className="mt-8"
 						title="Email"
@@ -22,6 +25,12 @@ export default function Page() {
 						title="Password"
 						placeholder="Enter your password"
 					/>
+					<div className=" flex justify-around mt-5">
+						<CheckBox id="remember me">Remember me</CheckBox>
+					</div>
+					<Button className=" mt-5 w-full">
+						<p className=" mr-2">Go to Store</p> <HiArrowRight />
+					</Button>
 				</div>
 			</div>
 		</div>

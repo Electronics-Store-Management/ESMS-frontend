@@ -7,7 +7,6 @@ import Link from "@/components/Typography/Link";
 import API from "@/constants/apiEnpoint";
 import TokenContext from "@/contexts/TokenContext";
 import { publicFetcher } from "@/hooks/usePublicRoute";
-import { Spinner } from "flowbite-react";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -18,7 +17,6 @@ export default function Page() {
 	const { setToken } = useContext(TokenContext);
 
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [error, setError] = useState<boolean>(false);
 
 	const {
 		register,
@@ -26,10 +24,11 @@ export default function Page() {
 		control,
 		formState: { errors },
 		setValue,
+		setError,
 	} = useForm<FormValues>();
 
 	const onSubmit = async (data: FormValues) => {
-		const email = data.email;
+		const email = data.username;
 		const password = data.password;
 
 		if (email && password) {
@@ -46,8 +45,9 @@ export default function Page() {
 				});
 				router.push("/");
 			} else {
-				setValue("email", "");
+				setValue("username", "");
 				setValue("password", "");
+				setError("root", { message: "Email or password is invalid" });
 			}
 			setIsLoading(false);
 		}
@@ -64,7 +64,7 @@ export default function Page() {
 					<form onSubmit={handleSubmit(onSubmit)}>
 						<Controller
 							control={control}
-							name="email"
+							name="username"
 							rules={{
 								required: "Email is required",
 								validate: (value) => {
@@ -80,14 +80,14 @@ export default function Page() {
 									title="Email"
 									icon={HiMail}
 									placeholder="yourmail@gmail.com"
-									{...register("email")}
-									error={!!errors.email}
+									{...register("username")}
+									error={!!errors.username}
 								/>
 							)}
 						/>
-						{errors.email && (
+						{errors.username && (
 							<p className="mt-2 text-sm text-error-500">
-								{errors.email.message}
+								{errors.username.message}
 							</p>
 						)}
 						<Controller
@@ -102,6 +102,7 @@ export default function Page() {
 									placeholder="Enter your password"
 									{...register("password")}
 									error={!!errors.password}
+									name="password"
 								/>
 							)}
 						/>
@@ -110,18 +111,21 @@ export default function Page() {
 								{errors.password.message}
 							</p>
 						)}
+						{errors.root && (
+							<p className="mt-3 text-sm text-center text-error-500">
+								{errors.root.message}
+							</p>
+						)}
 						<div className=" w-full flex justify-between items-center mt-5">
 							<CheckBox id="remember me">Remember me</CheckBox>
 							<Link>Forgot password</Link>
 						</div>
-						<Button type="submit" className=" mt-5 w-full">
-							{isLoading ? (
-								<Spinner />
-							) : (
-								<>
-									<p className=" mr-2">Go to Store</p> <HiArrowRight />
-								</>
-							)}
+						<Button
+							type="submit"
+							className=" mt-5 w-full"
+							isLoading={isLoading}
+						>
+							<p className=" mr-2">Go to Store</p> <HiArrowRight />
 						</Button>
 					</form>
 				</div>
@@ -131,6 +135,6 @@ export default function Page() {
 }
 
 type FormValues = {
-	email: string;
+	username: string;
 	password: string;
 };

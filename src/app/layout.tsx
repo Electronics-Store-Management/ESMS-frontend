@@ -2,6 +2,7 @@ import "@/themes/index";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import CustomThemeProvider from "../components/CustomThemeProvider";
+import TokenProvider from "./providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +19,9 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={inter.className}>
-				<CustomThemeProvider>{children}</CustomThemeProvider>
+				<TokenProvider>
+					<CustomThemeProvider>{children}</CustomThemeProvider>
+				</TokenProvider>
 			</body>
 		</html>
 	);

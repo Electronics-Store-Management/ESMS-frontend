@@ -1,16 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
 
 export default function useLocalStorage<T>(
 	name: string,
 	defaultValue: T
 ): [T, (data: T) => void] {
-	const [data, setData] = useState<T>(defaultValue);
-
-	useEffect(() => {
-        console.log('reload useLocalStorage')
-		const value = localStorage.getItem(name);
-		setData(value != null ? JSON.parse(value) : defaultValue);
-	}, [JSON.stringify(defaultValue), name]);
+	const [data, setData] = useState<T>(
+		localStorage.getItem(name)
+			? JSON.parse(localStorage.getItem(name) || "")
+			: defaultValue
+	);
 
 	useEffect(() => {
 		if (data) localStorage.setItem(name, JSON.stringify(data));

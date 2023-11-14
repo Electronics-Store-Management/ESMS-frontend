@@ -11,12 +11,13 @@ export default React.forwardRef(function TextInput(
 		type = "text",
 		placeholder = "",
 		className = "",
+		error = false,
 		...props
 	}: PropTypes,
 	ref: ForwardedRef<HTMLInputElement>
 ) {
 	return (
-		<div className={className} {...props}>
+		<div className={className}>
 			<div className="mb-2 block">
 				<Label htmlFor={title} value={title} />
 			</div>
@@ -26,6 +27,8 @@ export default React.forwardRef(function TextInput(
 				type={type}
 				icon={icon}
 				placeholder={placeholder}
+				{...props}
+				color={error ? "failure" : undefined}
 				required
 			/>
 		</div>
@@ -37,4 +40,5 @@ type PropTypes = {
 	type?: HTMLInputTypeAttribute;
 	icon?: any;
 	placeholder?: string;
+	error?: boolean;
 } & React.ComponentPropsWithRef<"input">;

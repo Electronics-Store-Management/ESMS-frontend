@@ -25,6 +25,7 @@ export default function Page() {
 		formState: { errors },
 		setValue,
 		setError,
+		clearErrors,
 	} = useForm<FormValues>();
 
 	const onSubmit = async (data: FormValues) => {
@@ -81,6 +82,10 @@ export default function Page() {
 									icon={HiMail}
 									placeholder="yourmail@gmail.com"
 									{...register("username")}
+									onChange={(d: any) => {
+										onChange(d);
+										clearErrors();
+									}}
 									error={!!errors.username}
 								/>
 							)}
@@ -101,6 +106,10 @@ export default function Page() {
 									title="Password"
 									placeholder="Enter your password"
 									{...register("password")}
+									onChange={(d: any) => {
+										onChange(d);
+										clearErrors();
+									}}
 									error={!!errors.password}
 									name="password"
 								/>

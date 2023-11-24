@@ -66,7 +66,8 @@ export default function Page() {
 		<div
 			className=" h-screen grid place-items-center"
 			style={{
-				background: "linear-gradient(117deg, #1C58F2 0%, #00FFF0 100%)",
+				// background: "linear-gradient(117deg, #3A4D39 100%, #4F6F52 100%, #739072 100%, #ECE3CE 100%)",
+				background: "linear-gradient(106deg, rgba(236, 227, 206, 0.21) 12.98%, #739072 71.82%, #4F6F52 100%)"
 			}}
 		>
 			<div className=" w-max min-w-[550px] rounded-3xl bg-white grid place-items-center">

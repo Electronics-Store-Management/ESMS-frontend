@@ -1,18 +1,25 @@
-import { useState, useEffect, useReducer } from "react";
+import { SetStateAction, useCallback, useEffect, useState } from "react";
 
 export default function useLocalStorage<T>(
 	name: string,
 	defaultValue: T
-): [T, (data: T) => void] {
-	const [data, setData] = useState<T>(
-		localStorage.getItem(name)
-			? JSON.parse(localStorage.getItem(name) || "")
-			: defaultValue
-	);
+): [T | undefined, (data: T) => void] {
+	const [data, _setData] = useState<T>();
 
 	useEffect(() => {
-		if (data) localStorage.setItem(name, JSON.stringify(data));
-	}, [data, name]);
+		if (localStorage.getItem(name))
+			_setData(JSON.parse(localStorage.getItem(name) || ""));
+		else _setData(defaultValue);
+	}, [name]);
 
-	return [data === undefined ? defaultValue : data, setData];
+	const setData = useCallback(
+		(action: T | SetStateAction<T | undefined>) => {
+			_setData(action);
+			if (!action) return;
+			localStorage.setItem(name, JSON.stringify(action));
+		},
+		[name]
+	);
+
+	return [data, setData];
 }

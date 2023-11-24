@@ -18,6 +18,9 @@ export default function TokenProvider({ children }: ReactNodeChildren) {
 		if (!token.refreshToken && pathname !== "/signin") {
 			redirect("/signin");
 		}
+		if (token.refreshToken && pathname === "/signin") {
+			redirect("/");
+		}
 	}, [token.accessToken, token.refreshToken, pathname]);
 
 	return (

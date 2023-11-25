@@ -19,7 +19,14 @@ export const refreshAccessTokenFn = async () => {
 				Authorization: `Bearer ${token.refreshToken}`,
 			},
 		});
-		return response.data;
+		const tokenRes = response.data;
+		localStorage.setItem(
+			"token",
+			JSON.stringify({
+				accessToken: tokenRes.access_token,
+				refreshToken: tokenRes.refresh_token,
+			} as IToken)
+		);
 	}
 };
 
@@ -28,7 +35,6 @@ apiInstance.interceptors.request.use((request) => {
 	if (tokenStr) {
 		const token = JSON.parse(tokenStr) as IToken;
 		request.headers.setAuthorization(`Bearer ${token.accessToken}`);
-        request.withCredentials = true
 	}
 	return request;
 });
@@ -39,10 +45,11 @@ apiInstance.interceptors.response.use(
 	},
 	async (error) => {
 		const originalRequest = error.config;
-		const errMessage = error.response.data.message as string;
+		const errMessage = error.response.data.errors as string;
 		if (errMessage.includes("Expired JWT") && !originalRequest._retry) {
 			originalRequest._retry = true;
-			await refreshAccessTokenFn();
+			if (!originalRequest?.isRefresh) await refreshAccessTokenFn();
+			originalRequest.isRefresh = true;
 			return apiInstance(originalRequest);
 		}
 		return Promise.reject(error);

@@ -7,13 +7,14 @@ import Link from "@/components/Typography/Link";
 import API from "@/constants/apiEnpoint";
 import TokenContext from "@/contexts/TokenContext";
 import { publicFetcher } from "@/hooks/usePublicRoute";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useContext, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { HiArrowRight, HiMail } from "react-icons/hi";
 
 import { Yesteryear } from "next/font/google";
 import ControllerTextInput from "@/components/ControllerInput/ControllerTextInput";
+import SEARCH_PARAMS from "@/constants/searchParams";
 
 const yesteryear = Yesteryear({
 	weight: "400",
@@ -23,6 +24,8 @@ const yesteryear = Yesteryear({
 
 export default function Page() {
 	const router = useRouter();
+	const searchParams = useSearchParams();
+
 	const { setToken } = useContext(TokenContext);
 
 	const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -53,7 +56,9 @@ export default function Page() {
 				accessToken: token.access_token,
 				refreshToken: token.refresh_token,
 			});
-			router.push("/");
+			router.push(
+				decodeURI(searchParams.get(SEARCH_PARAMS.redirectUri) || "/")
+			);
 		} else {
 			setValue("username", "");
 			setValue("password", "");
@@ -67,7 +72,8 @@ export default function Page() {
 			className=" h-screen grid place-items-center"
 			style={{
 				// background: "linear-gradient(117deg, #3A4D39 100%, #4F6F52 100%, #739072 100%, #ECE3CE 100%)",
-				background: "linear-gradient(106deg, rgba(236, 227, 206, 0.21) 12.98%, #739072 71.82%, #4F6F52 100%)"
+				background:
+					"linear-gradient(106deg, rgba(236, 227, 206, 0.21) 12.98%, #739072 71.82%, #4F6F52 100%)",
 			}}
 		>
 			<div className=" w-max min-w-[550px] rounded-3xl bg-white grid place-items-center">

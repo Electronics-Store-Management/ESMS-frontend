@@ -37,5 +37,7 @@
 
 	--white: #ffffff;
 	--background: #ffffff;
+	--background-hover: #F4F4F4;
+	--background-active: #d9d9d9;
 	--transparent-hover: #364b4410;
 }

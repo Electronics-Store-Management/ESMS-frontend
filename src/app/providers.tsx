@@ -2,6 +2,7 @@
 
 import SEARCH_PARAMS from "@/constants/searchParams";
 import TokenContext from "@/contexts/TokenContext";
+import useClient from "@/hooks/useClient";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { ReactNodeChildren } from "@/types/ReactNodeChildren";
 import IToken from "@/types/Token";
@@ -15,19 +16,19 @@ export default function TokenProvider({ children }: ReactNodeChildren) {
 	const pathname = usePathname();
 	const searchParams = useSearchParams();
 
-	const [token, setToken] = useLocalStorage<IToken>("token", {
+	const [token, setToken, isTokenSet] = useLocalStorage<IToken>("token", {
 		accessToken: "",
 		refreshToken: "",
 	});
 
 	useEffect(() => {
-		if (!token) return;
-		if (!token.refreshToken && pathname !== "/signin") {
+		if (!isTokenSet) return;
+		if (!token?.refreshToken && pathname !== "/signin") {
 			redirect(
 				`/signin?${SEARCH_PARAMS.redirectUri}=${encodeURI(pathname)}`
 			);
 		}
-		if (token.refreshToken && pathname === "/signin") {
+		if (token?.refreshToken && pathname === "/signin") {
 			redirect(
 				decodeURI(searchParams.get(SEARCH_PARAMS.redirectUri) || "/home")
 			);

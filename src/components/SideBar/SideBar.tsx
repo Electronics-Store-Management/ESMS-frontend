@@ -2,63 +2,91 @@
 
 import { CustomFlowbiteTheme, Sidebar } from "flowbite-react";
 import Image from "next/image";
-import { HiChartPie, HiShoppingBag } from "react-icons/hi";
+import {
+	HiBookmark,
+	HiChartPie,
+	HiChevronLeft,
+	HiDocumentSearch,
+	HiShoppingBag,
+} from "react-icons/hi";
 
+import useLocalStorage from "@/hooks/useLocalStorage";
+import { usePathname } from "next/navigation";
 import LOGO from "../../assets/logo.png";
 import FONT from "../../utils/fontFamily";
-import { usePathname } from "next/navigation";
 
 export default function SideBar() {
 	const pathname = usePathname();
 	const routeName = pathname.split("/").at(1) || "";
 
+	const [isCollapse, setIsCollapse] = useLocalStorage("isCollapse", false);
+
 	return (
-		<Sidebar
-			theme={sideBarTheme}
-			aria-label="Sidebar with multi-level dropdown example"
-		>
-			<div className=" flex gap-2 pl-3 pt-2 mb-8">
-				<Image src={LOGO} width={30} height={30} alt="logo" />
-				<h1
-					className={` text-2xl text-secondary-950 font-semibold ${FONT.inter.className}`}
-				>
-					ESMS
-				</h1>
-			</div>
-			<Sidebar.Items>
-				<Sidebar.ItemGroup>
-					<Sidebar.Item
-						theme={sideBarTheme?.item}
-						active={routeName === ROUTES.home}
-						href={ROUTES.home}
-						icon={HiChartPie}
+		<div className=" relative">
+			<button
+				onClick={() => setIsCollapse(!isCollapse)}
+				className=" absolute rounded-full border-secondary-300 border-2 p-1 top-16 right-0 translate-x-1/2 bg-background-normal hover:bg-background-hover active:bg-background-active"
+			>
+				<HiChevronLeft
+					className={`text-secondary-300 w-5 h-5 ${
+						isCollapse ? " rotate-180" : ""
+					}`}
+				/>
+			</button>
+			<Sidebar
+				theme={sideBarTheme}
+				collapsed={isCollapse}
+				aria-label="Sidebar with multi-level dropdown example"
+			>
+				<div className=" flex gap-2 pl-1 pt-2 mb-12">
+					<Image src={LOGO} width={30} height={30} alt="logo" />
+					<h1
+						className={` ml-3 text-2xl text-secondary-950 font-semibold ${FONT.inter.className}`}
 					>
-						Dashboard
-					</Sidebar.Item>
-					<Sidebar.Collapse
-						theme={sideBarTheme?.collapse}
-						open={[ROUTES.category, ROUTES.product].includes(routeName)}
-						icon={HiShoppingBag}
-						label="Product"
-					>
+						ESMS
+					</h1>
+				</div>
+				<Sidebar.Items>
+					<Sidebar.ItemGroup>
 						<Sidebar.Item
-							active={routeName === ROUTES.product}
-							theme={sideBarCollapsedItemTheme?.item}
-							href={ROUTES.product}
+							theme={sideBarTheme?.item}
+							active={routeName === ROUTES.home}
+							href={ROUTES.home}
+							icon={HiChartPie}
 						>
-							Product List
+							Dashboard
 						</Sidebar.Item>
-						<Sidebar.Item
-							active={routeName === ROUTES.category}
-							theme={sideBarCollapsedItemTheme?.item}
-							href={ROUTES.category}
+						<Sidebar.Collapse
+							theme={sideBarTheme?.collapse}
+							href={isCollapse ? ROUTES.product : ""}
+							open={
+								[ROUTES.category, ROUTES.product].includes(routeName) &&
+								!isCollapse
+							}
+							icon={HiShoppingBag}
+							label="Product"
 						>
-							Category
-						</Sidebar.Item>
-					</Sidebar.Collapse>
-				</Sidebar.ItemGroup>
-			</Sidebar.Items>
-		</Sidebar>
+							<Sidebar.Item
+								active={routeName === ROUTES.product}
+								theme={sideBarCollapsedItemTheme?.item}
+								href={ROUTES.product}
+								icon={HiDocumentSearch}
+							>
+								Product List
+							</Sidebar.Item>
+							<Sidebar.Item
+								active={routeName === ROUTES.category}
+								theme={sideBarCollapsedItemTheme?.item}
+								href={ROUTES.category}
+								icon={HiBookmark}
+							>
+								Category
+							</Sidebar.Item>
+						</Sidebar.Collapse>
+					</Sidebar.ItemGroup>
+				</Sidebar.Items>
+			</Sidebar>
+		</div>
 	);
 }
 
@@ -71,7 +99,7 @@ const sideBarTheme: CustomFlowbiteTheme["sidebar"] = {
 			on: "w-16",
 			off: "w-64",
 		},
-		inner: "h-full overflow-y-auto overflow-x-hidden rounded bg-background py-4 px-3",
+		inner: "h-full overflow-y-auto overflow-x-hidden rounded bg-background-normal py-4 px-3",
 	},
 	collapse: {
 		button:

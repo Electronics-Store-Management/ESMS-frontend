@@ -57,9 +57,9 @@ const getTheme = (isFill: boolean): CustomFlowbiteTheme["button"] => {
 };
 
 type PropTypes = ReactNodeChildren &
-  React.ComponentPropsWithRef<"button"> & {
-    fill?: boolean;
-    size?: keyof ButtonSizes;
-    btnType?: "primary" | "secondary" | "error";
-    isLoading: boolean;
-  };
+	React.ComponentPropsWithRef<"button"> & {
+		fill?: boolean;
+		size?: keyof ButtonSizes;
+		btnType?: "primary" | "secondary" | "error";
+		isLoading?: boolean;
+	};

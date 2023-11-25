@@ -29,7 +29,7 @@ export default function useProtectedRoute(
 	const { token } = useContext(TokenContext);
 
 	const { data, error, isLoading } = useSWR(url, () =>
-		protectFetcher(url, method, body, token)
+		protectFetcher(url, method, body, token || {})
 	);
 
 	return { data, error, isLoading };

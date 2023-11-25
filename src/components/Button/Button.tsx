@@ -60,5 +60,5 @@ type PropTypes = ReactNodeChildren &
 		fill?: boolean;
 		size?: keyof ButtonSizes;
 		btnType?: "primary" | "secondary" | "error";
-		isLoading: boolean;
+		isLoading?: boolean;
 	};

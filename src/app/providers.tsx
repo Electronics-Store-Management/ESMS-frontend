@@ -22,7 +22,7 @@ export default function TokenProvider({ children }: ReactNodeChildren) {
 
 	useEffect(() => {
 		if (!token) return;
-		if (token.refreshToken == "" && pathname !== "/signin") {
+		if (!token.refreshToken && pathname !== "/signin") {
 			redirect(
 				`/signin?${SEARCH_PARAMS.redirectUri}=${encodeURI(pathname)}`
 			);

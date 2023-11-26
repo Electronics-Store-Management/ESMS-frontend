@@ -4,11 +4,11 @@ import { useRef, useState } from "react";
 import viewCategoryList from "@/api/product/viewCategoryList";
 import Category from "@/types/entity/Category";
 
-export default function ProductSearch() {
+export default function ProductSearch(
+    props: Omit<React.ComponentPropsWithoutRef<"div">, "onClick">,
+) {
     const [categoryName, setCategoryName] = useState<string | undefined>();
     const [isCategoryClicked, setIsCategoryClicked] = useState(false);
-
-    const productNameRef = useRef();
 
     const { data: categories, isLoading: isCategoryLoading } = useQuery(
         ["category"],

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import Filter from "./FilterUI";
+import Filter from "./Filter";
 import withQuery from "../../utils/withQuery";
 import SEARCH_PARAMS from "../../constants/searchParams";
 

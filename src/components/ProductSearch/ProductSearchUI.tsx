@@ -8,12 +8,12 @@ import {
 import { HiOutlineCheck, HiOutlineSearch } from "react-icons/hi";
 
 import Category from "@/types/entity/Category";
-import React, { useEffect, useRef, useState } from "react";
-import Button from "../Button/Button";
 import { useRouter, useSearchParams } from "next/navigation";
-import withQuery from "../../utils/withQuery";
-import SEARCH_PARAMS from "../../constants/searchParams";
+import React, { useRef, useState } from "react";
 import { useDeepCompareEffect } from "react-use";
+import SEARCH_PARAMS from "../../constants/searchParams";
+import withQuery from "../../utils/withQuery";
+import Button from "../Button/Button";
 
 export default function ProductSearchUI({
     onCategoryChange = () => {},
@@ -148,7 +148,7 @@ const textInputTheme: CustomFlowbiteTheme["textInput"] = {
     field: {
         input: {
             withAddon: {
-                off: "rounded-none w-[300px]",
+                off: "rounded-none w-[240px]",
             },
         },
     },

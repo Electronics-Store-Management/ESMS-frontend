@@ -2,12 +2,10 @@
 
 import SEARCH_PARAMS from "@/constants/searchParams";
 import TokenContext from "@/contexts/TokenContext";
-import useClient from "@/hooks/useClient";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { ReactNodeChildren } from "@/types/ReactNodeChildren";
 import IToken from "@/types/Token";
 import { redirect, usePathname, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { useDeepCompareEffect } from "react-use";
 

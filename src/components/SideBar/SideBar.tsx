@@ -19,7 +19,7 @@ export default function SideBar() {
 	const pathname = usePathname();
 	const routeName = pathname.split("/").at(1) || "";
 
-	const [isCollapse, setIsCollapse] = useLocalStorage("isCollapse", false);
+	const [isCollapse, setIsCollapse, isSet] = useLocalStorage("isCollapse", false);
 
 	return (
 		<div className=" relative h-full">
@@ -103,7 +103,7 @@ const sideBarTheme: CustomFlowbiteTheme["sidebar"] = {
 	},
 	collapse: {
 		button:
-			"group flex w-full items-center rounded-lg p-2 text-base font-normal text-secondary-900 transition duration-75 hover:bg-primary-100",
+			"group flex w-full items-center rounded-lg p-2 text-sm font-normal text-secondary-900 transition duration-75 hover:bg-primary-100",
 		icon: {
 			base: "h-6 w-6 text-secondary-500 transition duration-75 group-hover:text-secondary-900",
 			open: {
@@ -140,7 +140,7 @@ const sideBarTheme: CustomFlowbiteTheme["sidebar"] = {
 		},
 	},
 	item: {
-		base: "flex items-center justify-center rounded-lg p-2 text-base font-normal text-secondary-600 transition-all duration-200 hover:bg-primary-100 active:bg-primary-300 hover:text-secondary-950 hover:font-semibold ",
+		base: "flex items-center justify-center rounded-lg p-2 text-sm font-normal text-secondary-600 transition-all duration-200 hover:bg-primary-100 active:bg-primary-300 hover:text-secondary-950 hover:font-semibold ",
 		active: " text-secondary-950 font-semibold bg-primary-200",
 		collapsed: {
 			insideCollapse: "group w-full pl-8 transition duration-200",
@@ -171,7 +171,7 @@ const sideBarTheme: CustomFlowbiteTheme["sidebar"] = {
 
 const sideBarCollapsedItemTheme: CustomFlowbiteTheme["sidebar"] = {
 	item: {
-		base: "flex items-center justify-center rounded-lg p-2 text-base font-normal text-secondary-600 transition-all duration-200 hover:bg-primary-100 active:bg-primary-300 ",
+		base: "flex items-center justify-center rounded-lg p-2 text-sm font-normal text-secondary-600 transition-all duration-200 hover:bg-primary-100 active:bg-primary-300 ",
 		active: " text-primary-500 underline underline-offset-4 font-medium",
 		collapsed: {
 			insideCollapse: "group w-full pl-8 transition duration-200",

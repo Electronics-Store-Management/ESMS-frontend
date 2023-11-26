@@ -11,6 +11,9 @@ import SEARCH_PARAMS from "@/constants/searchParams";
 import { useQuery } from "react-query";
 import viewProductList from "@/api/product/viewProductList.api";
 import ProductPreview from "@/types/entity/ProductPreview";
+import { useNotifyModal } from "@/components/NotifyModal/NotifyModal";
+import ClaimModal from "@/components/NotifyModal/ClaimModal";
+import { useState } from "react";
 
 export default function Page() {
     const searchParams = useSearchParams();
@@ -22,6 +25,11 @@ export default function Page() {
         viewProductList,
         {},
     );
+
+	
+
+    const { isOpenModal, setOpenModal } = useNotifyModal();
+    const [deletedProduct, setDeletedProduct] = useState<ProductPreview>();
 
     return (
         <div className="w-full">
@@ -41,6 +49,10 @@ export default function Page() {
             </p>
             <CheckboxTable
                 data={data || []}
+                onDelete={(product) => {
+                    setOpenModal(true);
+                    setDeletedProduct(product);
+                }}
                 pick={{
                     name: { title: "Name" },
                     category: { title: "Category" },
@@ -68,6 +80,16 @@ export default function Page() {
                             }).format(new Date(value)),
                     },
                 }}
+            />
+            <ClaimModal
+                itemName={
+                    <span>
+                        product <b>{deletedProduct?.name}</b>
+                    </span>
+                }
+                openModal={isOpenModal}
+                setOpenModal={setOpenModal}
+                onResponse={(isDelete) => {}}
             />
         </div>
     );

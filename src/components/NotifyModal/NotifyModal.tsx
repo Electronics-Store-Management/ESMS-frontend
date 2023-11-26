@@ -5,9 +5,12 @@ import { Modal } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 export function useNotifyModal() {
-    const [openModal, setOpenModal] = useState(false);
+    const [isOpenModal, setOpenModal] = useState(false);
 
-    return { openModal, setOpenModal };
+    return {
+        isOpenModal,
+        setOpenModal
+    };
 }
 
 export default function NotifyModal({

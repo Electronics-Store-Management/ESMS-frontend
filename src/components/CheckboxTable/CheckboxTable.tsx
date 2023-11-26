@@ -8,6 +8,8 @@ export default function CheckboxTable<T extends BaseEntity>({
     data,
     pick,
     className,
+    onEdit = () => {},
+    onDelete = () => {},
     ...props
 }: PropTypes<T>) {
     return (
@@ -80,7 +82,10 @@ export default function CheckboxTable<T extends BaseEntity>({
                                     )}
                                     dismissOnClick={false}
                                 >
-                                    <Dropdown.Item icon={HiPencil}>
+                                    <Dropdown.Item
+                                        icon={HiPencil}
+                                        onClick={() => onEdit(row)}
+                                    >
                                         Edit
                                     </Dropdown.Item>
                                     <Dropdown.Item
@@ -88,6 +93,7 @@ export default function CheckboxTable<T extends BaseEntity>({
                                             icon: " text-red-600 mr-2 h-4 w-4",
                                         }}
                                         icon={HiTrash}
+                                        onClick={() => onDelete(row)}
                                     >
                                         <p className=" text-red-600">Delete</p>
                                     </Dropdown.Item>
@@ -129,6 +135,8 @@ const tableTheme: CustomFlowbiteTheme["table"] = {
 
 type PropTypes<T> = {
     data: T[];
+    onEdit?: (id: T) => any;
+    onDelete?: (id: T) => any;
     pick: { [key in keyof Partial<T>]: Column };
 } & React.ComponentPropsWithoutRef<"div">;
 

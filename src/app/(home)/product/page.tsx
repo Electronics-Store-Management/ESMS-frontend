@@ -8,28 +8,42 @@ import ProductSearch from "@/components/ProductSearch/ProductSearch";
 import { useSearchParams } from "next/navigation";
 import CheckboxTable from "@/components/CheckboxTable/CheckboxTable";
 import SEARCH_PARAMS from "@/constants/searchParams";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import viewProductList from "@/api/product/viewProductList.api";
 import ProductPreview from "@/types/entity/ProductPreview";
 import { useNotifyModal } from "@/components/NotifyModal/NotifyModal";
 import ClaimModal from "@/components/NotifyModal/ClaimModal";
 import { useState } from "react";
+import deleteProduct from "@/api/product/deleteProduct.api";
+import OperationState from "@/types/OperationState";
+import OperationStatusModal from "@/components/NotifyModal/OperationStatusModal";
 
 export default function Page() {
     const searchParams = useSearchParams();
     const category = searchParams.get(SEARCH_PARAMS.categoryName) || "";
     const productKeyword = searchParams.get(SEARCH_PARAMS.productName) || "";
 
-    const { data, isLoading } = useQuery<ProductPreview[]>(
+    const { isOpenModal, setOpenModal } = useNotifyModal();
+    const [deletedProduct, setDeletedProduct] = useState<ProductPreview>();
+
+    const [deleteModalState, setDeleteModalState] =
+        useState<OperationState>("none");
+
+    const { data, isLoading, refetch } = useQuery<ProductPreview[]>(
         ["products", productKeyword, category],
         viewProductList,
         {},
     );
 
-	
-
-    const { isOpenModal, setOpenModal } = useNotifyModal();
-    const [deletedProduct, setDeletedProduct] = useState<ProductPreview>();
+    const deleteMutation = useMutation(deleteProduct, {
+        onSuccess: () => {
+            refetch();
+            setDeleteModalState("success");
+        },
+        onError: () => {
+            setDeleteModalState("fail");
+        },
+    });
 
     return (
         <div className="w-full">
@@ -89,7 +103,24 @@ export default function Page() {
                 }
                 openModal={isOpenModal}
                 setOpenModal={setOpenModal}
-                onResponse={(isDelete) => {}}
+                onResponse={(isDelete) =>
+                    isDelete && deleteMutation.mutate(deletedProduct?.id || "")
+                }
+            />
+            <OperationStatusModal
+                state={deleteModalState}
+                success={
+                    <span>
+                        Delete product{" "}
+                        <b>{deletedProduct?.name} successfully</b>
+                    </span>
+                }
+                fail={
+                    <span>
+                        Fail to delete product <b>{deletedProduct?.name}</b>
+                    </span>
+                }
+                onCloseModal={() => setDeleteModalState("none")}
             />
         </div>
     );

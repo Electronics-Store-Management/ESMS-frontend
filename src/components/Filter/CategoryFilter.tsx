@@ -1,4 +1,4 @@
-import viewCategoryList from "@/api/product/viewCategoryList";
+import viewCategoryList from "@/api/category/viewCategoryList";
 import Category from "@/types/entity/Category";
 import React from "react";
 import { useQuery } from "react-query";

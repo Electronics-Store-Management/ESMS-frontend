@@ -41,6 +41,7 @@ const authenticationInterceptor = apiInstance.interceptors.request.use(
         if (tokenStr && !request.headers.getAuthorization()) {
             const token = JSON.parse(tokenStr) as IToken;
             request.headers.setAuthorization(`Bearer ${token.accessToken}`);
+            // request.withCredentials = true;
         }
         return request;
     },

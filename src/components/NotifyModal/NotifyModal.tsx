@@ -1,0 +1,80 @@
+import React, { ReactNode, useState } from "react";
+import Button from "../Button/Button";
+import { Modal } from "flowbite-react";
+
+import { HiOutlineExclamationCircle } from "react-icons/hi";
+
+export function useNotifyModal() {
+    const [openModal, setOpenModal] = useState(false);
+
+    return { openModal, setOpenModal };
+}
+
+export default function NotifyModal({
+    openModal = false,
+    setOpenModal = () => {},
+    icon = (
+        <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+    ),
+    message = (
+        <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+            Are you sure you want to delete this product?
+        </h3>
+    ),
+    agree = (
+        <Button
+            color="failure"
+            onClick={() => {
+                setOpenModal(false);
+                onResponse(true);
+            }}
+        >
+            Yes, I'm sure
+        </Button>
+    ),
+    cancel = (
+        <Button
+            color="gray"
+            onClick={() => {
+                setOpenModal(false);
+                onResponse(false);
+            }}
+        >
+            No, cancel
+        </Button>
+    ),
+    onResponse = () => {},
+}: PropTypes) {
+    return (
+        <>
+            <Modal
+                show={openModal}
+                size="md"
+                onClose={() => setOpenModal(false)}
+                popup
+            >
+                <Modal.Header />
+                <Modal.Body>
+                    <div className="text-center">
+                        {icon}
+                        {message}
+                        <div className="flex justify-center gap-4">
+                            {agree}
+                            {cancel}
+                        </div>
+                    </div>
+                </Modal.Body>
+            </Modal>
+        </>
+    );
+}
+
+type PropTypes = {
+    openModal?: boolean;
+    setOpenModal?: (v: boolean) => any;
+    icon?: ReactNode;
+    message?: ReactNode;
+    agree?: ReactNode;
+    cancel?: ReactNode;
+    onResponse?: (v: boolean) => any;
+};

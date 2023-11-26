@@ -7,7 +7,7 @@ export default function Layout({ children }: ReactNodeChildren) {
 			<div className=" w-max">
 				<SideBar />
 			</div>
-			<div className=" pt-8 px-5 w-full">{children}</div>
+			<div className=" pt-8 px-5 pr-8 w-full">{children}</div>
 		</div>
 	);
 }

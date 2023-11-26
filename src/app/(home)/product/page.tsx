@@ -1,6 +1,7 @@
 "use client";
 
 import CategoryFilter from "@/components/Filter/CategoryFilter";
+import PriceRangeFilter from "@/components/Filter/PriceRangeFilter";
 import ProductSearch from "@/components/ProductSearch/ProductSearch";
 import { useSearchParams } from "next/navigation";
 
@@ -16,6 +17,7 @@ export default function Page() {
                 <ProductSearch className="" />
                 <div className=" flex justify-end gap-5">
                     <CategoryFilter className="" />
+					<PriceRangeFilter />
                 </div>
             </div>
         </div>

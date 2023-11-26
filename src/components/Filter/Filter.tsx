@@ -97,7 +97,7 @@ const dropdownTheme: CustomFlowbiteTheme["dropdown"] = {
 
 type PropTypes = {
     title: string;
-    items: string[];
+    items?: string[];
     choosen?: string;
     onClick?: () => any;
     onItemChange?: (item: string) => any;

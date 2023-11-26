@@ -3,38 +3,38 @@ import type { Meta, StoryObj } from "@storybook/react";
 import SideBar from "./SideBar";
 
 const meta = {
-	title: "Components/SideBar",
-	component: SideBar,
-	parameters: {
-		layout: "centered",
-	},
-	tags: ["autodocs"],
-	argTypes: {},
+    title: "Components/SideBar",
+    component: SideBar,
+    parameters: {
+        layout: "centered",
+    },
+    tags: ["autodocs"],
+    argTypes: {},
 } satisfies Meta<typeof SideBar>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Dashboard: Story = {
-	args: {},
+    args: {},
     parameters: {
-    nextjs: {
-      appDirectory: true,
-      navigation: {
-        pathname: '/home',
-      },
+        nextjs: {
+            appDirectory: true,
+            navigation: {
+                pathname: "/home",
+            },
+        },
     },
-  },
 };
 
 export const Products: Story = {
-	args: {},
+    args: {},
     parameters: {
-    nextjs: {
-      appDirectory: true,
-      navigation: {
-        pathname: '/product',
-      },
+        nextjs: {
+            appDirectory: true,
+            navigation: {
+                pathname: "/product",
+            },
+        },
     },
-  },
 };

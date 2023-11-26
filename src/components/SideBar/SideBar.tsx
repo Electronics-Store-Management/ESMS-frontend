@@ -22,10 +22,10 @@ export default function SideBar() {
 	const [isCollapse, setIsCollapse] = useLocalStorage("isCollapse", false);
 
 	return (
-		<div className=" relative">
+		<div className=" relative h-full">
 			<button
 				onClick={() => setIsCollapse(!isCollapse)}
-				className=" absolute rounded-full border-secondary-300 border-2 p-1 top-16 right-0 translate-x-1/2 bg-background-normal hover:bg-background-hover active:bg-background-active"
+				className=" absolute rounded-full border-secondary-300 border-2 p-1 bottom-16 right-0 translate-x-1/2 bg-background-normal hover:bg-background-hover active:bg-background-active"
 			>
 				<HiChevronLeft
 					className={`text-secondary-300 w-5 h-5 ${

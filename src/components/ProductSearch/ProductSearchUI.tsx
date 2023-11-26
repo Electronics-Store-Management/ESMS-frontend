@@ -13,6 +13,7 @@ import Button from "../Button/Button";
 import { useRouter, useSearchParams } from "next/navigation";
 import withQuery from "../../utils/withQuery";
 import SEARCH_PARAMS from "../../constants/searchParams";
+import { useDeepCompareEffect } from "react-use";
 
 export default function ProductSearchUI({
     onCategoryChange = () => {},
@@ -30,9 +31,9 @@ export default function ProductSearchUI({
     const [category, setCategory] = useState<Category | undefined>();
     const productNameRef = useRef<HTMLInputElement>(null);
 
-    useEffect(() => {
+    useDeepCompareEffect(() => {
         onCategoryChange(category);
-    }, [category?.id]);
+    }, [category]);
 
     return (
         <div {...props}>

@@ -9,37 +9,40 @@ import IToken from "@/types/Token";
 import { redirect, usePathname, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { useDeepCompareEffect } from "react-use";
 
 const queryClient = new QueryClient();
 
 export default function TokenProvider({ children }: ReactNodeChildren) {
-	const pathname = usePathname();
-	const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
 
-	const [token, setToken, isTokenSet] = useLocalStorage<IToken>("token", {
-		accessToken: "",
-		refreshToken: "",
-	});
+    const [token, setToken, isTokenSet] = useLocalStorage<IToken>("token", {
+        accessToken: "",
+        refreshToken: "",
+    });
 
-	useEffect(() => {
-		if (!isTokenSet) return;
-		if (!token?.refreshToken && pathname !== "/signin") {
-			redirect(
-				`/signin?${SEARCH_PARAMS.redirectUri}=${encodeURI(pathname)}`
-			);
-		}
-		if (token?.refreshToken && pathname === "/signin") {
-			redirect(
-				decodeURI(searchParams.get(SEARCH_PARAMS.redirectUri) || "/home")
-			);
-		}
-	}, [token?.accessToken, token?.refreshToken, pathname]);
+    useDeepCompareEffect(() => {
+        if (!isTokenSet) return;
+        if (!token?.refreshToken && pathname !== "/signin") {
+            redirect(
+                `/signin?${SEARCH_PARAMS.redirectUri}=${encodeURI(pathname)}`,
+            );
+        }
+        if (token?.refreshToken && pathname === "/signin") {
+            redirect(
+                decodeURI(
+                    searchParams.get(SEARCH_PARAMS.redirectUri) || "/home",
+                ),
+            );
+        }
+    }, [token, isTokenSet, searchParams, pathname]);
 
-	return (
-		<TokenContext.Provider value={{ token, setToken }}>
-			<QueryClientProvider client={queryClient}>
-				{children}
-			</QueryClientProvider>
-		</TokenContext.Provider>
-	);
+    return (
+        <TokenContext.Provider value={{ token, setToken }}>
+            <QueryClientProvider client={queryClient}>
+                {children}
+            </QueryClientProvider>
+        </TokenContext.Provider>
+    );
 }

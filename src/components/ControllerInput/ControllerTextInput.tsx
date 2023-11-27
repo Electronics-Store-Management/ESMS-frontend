@@ -26,7 +26,7 @@ export default function ControllerTextInput({
                 render={({ field: { value, onChange, ...field } }) => (
                     <TextInput
                         type={type}
-                        className=" mt-5"
+                        className=""
                         title={title}
                         icon={icon}
                         placeholder={placeholder}
@@ -53,7 +53,7 @@ type PropTypes = {
     title: string;
     type?: string;
     icon?: any;
-    placeholder: string;
+    placeholder?: string;
     rules: any;
     onValueChange: any;
     register: any;

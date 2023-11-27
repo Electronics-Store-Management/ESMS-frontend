@@ -1,5 +1,6 @@
 "use client";
 
+import FONT from "../../utils/fontFamily";
 import { Label, TextInput as _TextInput } from "flowbite-react";
 import React, { ForwardedRef } from "react";
 import { HTMLInputTypeAttribute } from "react";
@@ -19,7 +20,11 @@ export default React.forwardRef(function TextInput(
     return (
         <div className={className}>
             <div className="mb-2 block">
-                <Label htmlFor={title} value={title} />
+                <Label
+                    htmlFor={title}
+                    value={title}
+                    className={`${FONT.primary.className} font-semibold`}
+                />
             </div>
             <_TextInput
                 ref={ref}

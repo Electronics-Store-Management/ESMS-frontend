@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import CreateProductForm from "./CreateProductForm";
+import CreateProductFormUI from "./CreateProductFormUI";
 
 const meta = {
-    title: "Components/CreateProductForm",
-    component: CreateProductForm,
+    title: "Components/CreateProductFormUI",
+    component: CreateProductFormUI,
     parameters: {
         layout: "centered",
     },
     tags: ["autodocs"],
     argTypes: {},
-} satisfies Meta<typeof CreateProductForm>;
+} satisfies Meta<typeof CreateProductFormUI>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

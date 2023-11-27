@@ -3,8 +3,11 @@ import FONT from "../../utils/fontFamily";
 import { CustomFlowbiteTheme, Dropdown } from "flowbite-react";
 import { Controller } from "react-hook-form";
 import React from "react";
+import BaseEntity from "@/types/entity/BaseEntity";
 
-export default function ControllerSelectInput({
+export default function ControllerSelectInput<
+    T extends BaseEntity & { name: String },
+>({
     control,
     name,
     title,
@@ -14,7 +17,7 @@ export default function ControllerSelectInput({
     isLoading,
     className,
     ...props
-}: PropTypes) {
+}: PropTypes<T>) {
     return (
         <div className={` py-[10px] ${className}`} {...props}>
             <p
@@ -29,7 +32,7 @@ export default function ControllerSelectInput({
                     <Dropdown
                         theme={dropdownTheme}
                         label={
-                            choseValue || (
+                            items?.find((v) => v.id === choseValue)?.name || (
                                 <p className=" font-normal text-secondary-600">
                                     Not choose
                                 </p>
@@ -37,17 +40,17 @@ export default function ControllerSelectInput({
                         }
                         dismissOnClick={true}
                     >
-                        <Dropdown.Item onClick={() => onValueChange("")}>
+                        <Dropdown.Item onClick={() => onValueChange(undefined)}>
                             <p className=" font-normal text-secondary-600">
                                 Not choose
                             </p>
                         </Dropdown.Item>
                         {items?.map((value) => (
                             <Dropdown.Item
-                                key={value}
-                                onClick={() => onValueChange(value)}
+                                key={value.id}
+                                onClick={() => onValueChange(value?.id)}
                             >
-                                {value}
+                                {value.name}
                             </Dropdown.Item>
                         ))}
                     </Dropdown>
@@ -89,13 +92,13 @@ const dropdownTheme: CustomFlowbiteTheme["dropdown"] = {
     inlineWrapper: "flex w-full items-center justify-between",
 };
 
-type PropTypes = {
+type PropTypes<T> = {
     control: any;
     name: string;
     title: string;
-    items?: string[];
+    items?: T[];
     choseValue?: string;
     isLoading?: boolean;
-    onValueChange?: any;
+    onValueChange?: (value?: string) => any;
 } & React.ComponentPropsWithoutRef<"div"> &
     ReactNodeChildren;

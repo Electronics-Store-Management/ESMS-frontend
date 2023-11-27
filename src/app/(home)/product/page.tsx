@@ -17,6 +17,7 @@ import { useState } from "react";
 import deleteProduct from "@/api/product/deleteProduct.api";
 import OperationState from "@/types/OperationState";
 import OperationStatusModal from "@/components/NotifyModal/OperationStatusModal";
+import FORMATTER from "@/utils/formatter";
 
 export default function Page() {
     const searchParams = useSearchParams();
@@ -73,11 +74,7 @@ export default function Page() {
                     price: {
                         title: "Price",
                         className: " font-normal text-secondary-500",
-                        mapper: (value: number) =>
-                            new Intl.NumberFormat("vn-VN", {
-                                style: "currency",
-                                currency: "VND",
-                            }).format(value),
+                        mapper: FORMATTER.toCurrency,
                     },
                     quantity: {
                         title: "Quantity",
@@ -86,12 +83,7 @@ export default function Page() {
                     modifiedDate: {
                         title: "Last update",
                         className: " font-normal text-secondary-500",
-                        mapper: (value: string) =>
-                            new Intl.DateTimeFormat("en-GB", {
-                                dateStyle: "medium",
-                                timeStyle: "short",
-                                timeZone: "Asia/Ho_Chi_Minh",
-                            }).format(new Date(value)),
+                        mapper: FORMATTER.toShortDate,
                     },
                 }}
             />

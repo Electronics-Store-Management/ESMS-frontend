@@ -1,3 +1,5 @@
+"use client";
+
 import viewCategoryList from "@/api/category/viewCategoryList";
 import CreateProductFormUI from "./CreateProductFormUI";
 import Category from "@/types/entity/Category";

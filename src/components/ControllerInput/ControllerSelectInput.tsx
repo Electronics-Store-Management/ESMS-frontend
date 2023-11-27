@@ -2,11 +2,11 @@ import { ReactNodeChildren } from "@/types/ReactNodeChildren";
 import FONT from "../../utils/fontFamily";
 import { CustomFlowbiteTheme, Dropdown } from "flowbite-react";
 import { Controller } from "react-hook-form";
-import React from "react";
+import React, { useState } from "react";
 import BaseEntity from "@/types/entity/BaseEntity";
 
 export default function ControllerSelectInput<
-    T extends BaseEntity & { name: String },
+    T extends BaseEntity & { name: string },
 >({
     control,
     name,
@@ -18,6 +18,8 @@ export default function ControllerSelectInput<
     className,
     ...props
 }: PropTypes<T>) {
+    const [selected, setSelected] = useState<string>();
+
     return (
         <div className={` py-[10px] ${className}`} {...props}>
             <p
@@ -32,7 +34,7 @@ export default function ControllerSelectInput<
                     <Dropdown
                         theme={dropdownTheme}
                         label={
-                            items?.find((v) => v.id === choseValue)?.name || (
+                            selected || (
                                 <p className=" font-normal text-secondary-600">
                                     Not choose
                                 </p>
@@ -48,7 +50,10 @@ export default function ControllerSelectInput<
                         {items?.map((value) => (
                             <Dropdown.Item
                                 key={value.id}
-                                onClick={() => onValueChange(value?.id)}
+                                onClick={() => {
+                                    onValueChange(value?.id);
+                                    setSelected(value?.name);
+                                }}
                             >
                                 {value.name}
                             </Dropdown.Item>

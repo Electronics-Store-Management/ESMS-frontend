@@ -1,28 +1,33 @@
 "use client";
 import { HiPlus } from "react-icons/hi";
 
+import deleteProduct from "@/api/product/deleteProduct.api";
+import viewProductList from "@/api/product/viewProductList.api";
 import Button from "@/components/Button/Button";
+import CheckboxTable from "@/components/CheckboxTable/CheckboxTable";
 import CategoryFilter from "@/components/Filter/CategoryFilter";
 import PriceRangeFilter from "@/components/Filter/PriceRangeFilter";
-import ProductSearch from "@/components/ProductSearch/ProductSearch";
-import { useSearchParams } from "next/navigation";
-import CheckboxTable from "@/components/CheckboxTable/CheckboxTable";
-import SEARCH_PARAMS from "@/constants/searchParams";
-import { useMutation, useQuery } from "react-query";
-import viewProductList from "@/api/product/viewProductList.api";
-import ProductPreview from "@/types/entity/ProductPreview";
-import { useNotifyModal } from "@/components/NotifyModal/NotifyModal";
 import ClaimModal from "@/components/NotifyModal/ClaimModal";
-import { useState } from "react";
-import deleteProduct from "@/api/product/deleteProduct.api";
-import OperationState from "@/types/OperationState";
+import { useNotifyModal } from "@/components/NotifyModal/NotifyModal";
 import OperationStatusModal from "@/components/NotifyModal/OperationStatusModal";
+import ProductSearch from "@/components/ProductSearch/ProductSearch";
+import SEARCH_PARAMS from "@/constants/searchParams";
+import OperationState from "@/types/OperationState";
+import ProductPreview from "@/types/entity/ProductPreview";
 import FORMATTER from "@/utils/formatter";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { useMutation, useQuery } from "react-query";
+import { useModalState } from "@/contexts/ModalContext";
 
 export default function Page() {
+    const router = useRouter();
     const searchParams = useSearchParams();
+
     const category = searchParams.get(SEARCH_PARAMS.categoryName) || "";
     const productKeyword = searchParams.get(SEARCH_PARAMS.productName) || "";
+
+    const { addProductModal } = useModalState();
 
     const { isOpenModal, setOpenModal } = useNotifyModal();
     const [deletedProduct, setDeletedProduct] = useState<ProductPreview>();
@@ -53,7 +58,7 @@ export default function Page() {
                 <div className=" flex justify-end gap-8">
                     <CategoryFilter className="" />
                     <PriceRangeFilter />
-                    <Button size="sm">
+                    <Button size="sm" onClick={() => addProductModal.open()}>
                         <HiPlus className=" w-4 h-4 mr-2" />
                         Add product
                     </Button>

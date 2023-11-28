@@ -4,7 +4,7 @@ const FORMATTER = {
             style: "currency",
             currency: "VND",
         }).format(value),
-    toShortDate: (value: string) =>
+    toShortDate: (value: Date) =>
         new Intl.DateTimeFormat("en-GB", {
             dateStyle: "medium",
             timeStyle: "short",

@@ -90,6 +90,10 @@ export default function Page() {
                         className: " font-normal text-secondary-500",
                         mapper: FORMATTER.toShortDate,
                     },
+                    warrantyPeriod: {
+                        title: "Warranty period",
+                        mapper: (value: number) => `${value} months`,
+                    },
                 }}
             />
             <ClaimModal

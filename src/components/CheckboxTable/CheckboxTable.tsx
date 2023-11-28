@@ -4,7 +4,7 @@ import { HiOutlineDotsVertical, HiPencil, HiTrash } from "react-icons/hi";
 import Button from "../Button/Button";
 import FONT from "@/utils/fontFamily";
 
-export default function CheckboxTable<T extends BaseEntity>({
+export default function CheckboxTable<T extends Object & BaseEntity>({
     data,
     pick,
     className,
@@ -22,7 +22,7 @@ export default function CheckboxTable<T extends BaseEntity>({
                     >
                         STT
                     </Table.HeadCell>
-                    {Object.values<Column>(pick).map((column) => (
+                    {Object.values<Column<any>>(pick).map((column) => (
                         <Table.HeadCell
                             theme={tableTheme?.head?.cell}
                             key={column.title}
@@ -137,12 +137,12 @@ type PropTypes<T> = {
     data: T[];
     onEdit?: (id: T) => any;
     onDelete?: (id: T) => any;
-    pick: { [key in keyof Partial<T>]: Column };
+    pick: { [key in keyof Partial<T>]: Column<T[key]> };
 } & React.ComponentPropsWithoutRef<"div">;
 
-type Column = {
+type Column<T> = {
     title?: string;
     size?: number;
     className?: string;
-    mapper?: (value: any) => any;
+    mapper?: (value: T) => any;
 };

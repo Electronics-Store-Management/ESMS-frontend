@@ -10,7 +10,7 @@ export default async function addNewProduct(product: NewProduct) {
 
 export type NewProduct = {
     name: string;
-    category?: string;
+    categoryId?: string;
     price: number;
     unit: string;
     warrantyPeriod: number;

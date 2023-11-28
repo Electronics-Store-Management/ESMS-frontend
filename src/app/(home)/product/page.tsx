@@ -108,8 +108,8 @@ export default function Page() {
                 state={deleteModalState}
                 success={
                     <span>
-                        Delete product{" "}
-                        <b>{deletedProduct?.name} successfully</b>
+                        Delete product <b>{deletedProduct?.name} </b>{" "}
+                        successfully
                     </span>
                 }
                 fail={

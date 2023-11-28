@@ -7,6 +7,7 @@ import Button from "../Button/Button";
 import ControllerSelectInput from "../ControllerInput/ControllerSelectInput";
 import ControllerTextInput from "../ControllerInput/ControllerTextInput";
 import DropZone from "../DropZone/DropZone";
+import { useModalState } from "@/contexts/ModalContext";
 
 export default function CreateProductFormUI({
     categories = [],
@@ -25,9 +26,11 @@ export default function CreateProductFormUI({
         clearErrors,
     } = useForm<NewProduct>();
 
+    const { addProductModal } = useModalState();
+
     return (
         <div
-            className={` w-[700px] bg-background-normal rounded-2xl p-8 border-secondary-200 border-2 ${className}`}
+            className={` w-[700px] bg-background-normal rounded-2xl p-8 ${className}`}
             {...props}
         >
             <h1
@@ -52,13 +55,13 @@ export default function CreateProductFormUI({
                         />
                         <ControllerSelectInput
                             control={control}
-                            name="category"
+                            name="categoryId"
                             title="Category"
                             isLoading={isCategoryLoading}
                             items={categories}
-                            choseValue={getValues("category")}
+                            choseValue={getValues("categoryId")}
                             onValueChange={(value) =>
-                                setValue("category", value)
+                                setValue("categoryId", value)
                             }
                         />
                         <div className=" flex gap-5">
@@ -127,7 +130,12 @@ export default function CreateProductFormUI({
                     </div>
                 </div>
                 <div className=" flex justify-between mt-12">
-                    <Button btnType="secondary">Back</Button>
+                    <Button
+                        btnType="secondary"
+                        onClick={() => addProductModal.close()}
+                    >
+                        Back
+                    </Button>
                     <Button type="submit">Create</Button>
                 </div>
             </form>

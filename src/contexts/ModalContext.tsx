@@ -20,7 +20,12 @@ export function ModalProvider({ children }: ReactNodeChildren) {
         <ModalStateContext.Provider value={{ modalState, setModalState }}>
             {children}
             <Modal
-                className=" rounded-2xl"
+                dismissible
+                theme={{
+                    content: {
+                        inner: " rounded-2xl",
+                    },
+                }}
                 show={modalState.addProduct.isOpen}
                 onClose={() =>
                     setModalState((prev) => ({

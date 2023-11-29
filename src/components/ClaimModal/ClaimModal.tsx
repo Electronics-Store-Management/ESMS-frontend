@@ -1,5 +1,12 @@
-import { ReactNode } from "react";
-import NotifyModal from "./NotifyModal";
+import { ReactNode, useContext } from "react";
+import NotifyModal from "../NotifyModal/NotifyModal";
+import { ModalStateContext } from "@/contexts/ModalContext";
+
+export function useClaimModal() {
+    const {} = useContext(ModalStateContext)
+
+
+}
 
 export default function ClaimModal({ itemName, ...props }: PropTypes) {
     return (

@@ -7,7 +7,7 @@ import Button from "../Button/Button";
 import ControllerSelectInput from "../ControllerInput/ControllerSelectInput";
 import ControllerTextInput from "../ControllerInput/ControllerTextInput";
 import DropZone from "../DropZone/DropZone";
-import { useModalState } from "@/contexts/ModalContext";
+import { useCreateProductModal } from "./CreateProductFormModal";
 
 export default function CreateProductFormUI({
     categories = [],
@@ -26,11 +26,11 @@ export default function CreateProductFormUI({
         clearErrors,
     } = useForm<NewProduct>();
 
-    const { addProductModal } = useModalState();
+    const { closeCreateProductModal } = useCreateProductModal();
 
     return (
         <div
-            className={` w-[700px] bg-background-normal rounded-2xl p-8 ${className}`}
+            className={` w-full bg-background-normal rounded-2xl p-8 ${className}`}
             {...props}
         >
             <h1
@@ -132,11 +132,15 @@ export default function CreateProductFormUI({
                 <div className=" flex justify-between mt-12">
                     <Button
                         btnType="secondary"
-                        onClick={() => addProductModal.close()}
+                        onClick={() => closeCreateProductModal()}
                     >
                         Back
                     </Button>
-                    <Button type="submit">Create</Button>
+                    <Button
+                        type="submit"
+                    >
+                        Create
+                    </Button>
                 </div>
             </form>
         </div>

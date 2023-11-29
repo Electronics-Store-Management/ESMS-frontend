@@ -41,7 +41,7 @@ const authenticationInterceptor = apiInstance.interceptors.request.use(
         if (tokenStr && !request.headers.getAuthorization()) {
             const token = JSON.parse(tokenStr) as IToken;
             request.headers.setAuthorization(`Bearer ${token.accessToken}`);
-			request.withCredentials = true
+            request.withCredentials = true;
         }
         return request;
     },
@@ -53,6 +53,7 @@ apiInstance.interceptors.response.use(
     },
     async (error) => {
         const originalRequest = error.config;
+        if (error.code == "ERR_NETWORK") return Promise.reject(error);
         const errMessage = error.response.data.errors as string;
         if (errMessage.includes("Expired JWT") && !originalRequest._retry) {
             originalRequest._retry = true;

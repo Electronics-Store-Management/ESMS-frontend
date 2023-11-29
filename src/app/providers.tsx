@@ -6,6 +6,7 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 import { ReactNodeChildren } from "@/types/ReactNodeChildren";
 import IToken from "@/types/Token";
 import { redirect, usePathname, useSearchParams } from "next/navigation";
+import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { useDeepCompareEffect } from "react-use";
 
@@ -40,6 +41,7 @@ export default function TokenProvider({ children }: ReactNodeChildren) {
         <TokenContext.Provider value={{ token, setToken }}>
             <QueryClientProvider client={queryClient}>
                 {children}
+                <Toaster position="bottom-right" />
             </QueryClientProvider>
         </TokenContext.Provider>
     );

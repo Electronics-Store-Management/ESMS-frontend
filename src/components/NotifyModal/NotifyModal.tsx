@@ -9,7 +9,7 @@ export function useNotifyModal() {
 
     return {
         isOpenModal,
-        setOpenModal
+        setOpenModal,
     };
 }
 
@@ -32,7 +32,7 @@ export default function NotifyModal({
                 onResponse(true);
             }}
         >
-            Yes, I'm sure
+            Yes, I&apos;m sure
         </Button>
     ),
     cancel = (

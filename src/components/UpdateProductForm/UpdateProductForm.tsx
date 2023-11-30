@@ -11,6 +11,7 @@ import { CreateProductToast } from "../ToastMessage/CreateProductToast";
 import { useUpdateProductModal } from "./UpdateProductFormModal";
 import UpdateProductFormUI from "./UpdateProductFormUI";
 import useLoading from "@/hooks/useLoading";
+import Loading from "../Loading/Loading";
 
 export default function UpdateProductForm({ productId }: PropTypes) {
     const { data: categories, isLoading: isCategoriesLoading } = useQuery<
@@ -66,13 +67,19 @@ export default function UpdateProductForm({ productId }: PropTypes) {
     });
 
     return (
-        <UpdateProductFormUI
-            categories={categories}
-            isCategoryLoading={isCategoriesLoading}
-            onSubmitData={(data) => mutate(data)}
-            product={product}
-            isLoading={isProductLoading}
-        />
+        <>
+            {isProductLoading ? (
+                <Loading />
+            ) : (
+                <UpdateProductFormUI
+                    categories={categories}
+                    isCategoryLoading={isCategoriesLoading}
+                    onSubmitData={(data) => mutate(data)}
+                    product={product}
+                    isLoading={isProductLoading}
+                />
+            )}
+        </>
     );
 }
 

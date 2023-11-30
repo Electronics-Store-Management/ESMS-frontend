@@ -10,11 +10,14 @@ import { useMutation, useQuery } from "react-query";
 import { CreateProductToast } from "../ToastMessage/CreateProductToast";
 import { useUpdateProductModal } from "./UpdateProductFormModal";
 import UpdateProductFormUI from "./UpdateProductFormUI";
+import useLoading from "@/hooks/useLoading";
 
 export default function UpdateProductForm({ productId }: PropTypes) {
     const { data: categories, isLoading: isCategoriesLoading } = useQuery<
         Category[]
     >(["category"], viewCategoryList);
+
+    const { openLoading, closeLoading } = useLoading();
 
     const { refetchProductList } = useUpdateProductModal();
 
@@ -26,6 +29,12 @@ export default function UpdateProductForm({ productId }: PropTypes) {
     const { closeUpdateProductModal } = useUpdateProductModal();
 
     const { mutate } = useMutation(updateProductAPI, {
+        onMutate: () => {
+            openLoading("Creating product...");
+        },
+        onSettled: () => {
+            closeLoading();
+        },
         onSuccess: (_, data) => {
             refetchProductList?.();
             toast.custom(

@@ -8,16 +8,26 @@ import addNewProduct from "@/api/product/addNewProduct.api";
 import { useCreateProductModal } from "./CreateProductFormModal";
 import { CreateProductToast } from "../ToastMessage/CreateProductToast";
 import toast from "react-hot-toast";
+import useLoading from "@/hooks/useLoading";
 
 export default function CreateProductForm() {
     const { data: categories, isLoading: isCategoriesLoading } = useQuery<
         Category[]
     >(["category"], viewCategoryList);
+    const { openLoading, closeLoading } = useLoading();
 
-    const { closeCreateProductModal } = useCreateProductModal();
+    const { refetchProductList, closeCreateProductModal } =
+        useCreateProductModal();
 
     const { mutate } = useMutation(addNewProduct, {
+        onMutate: () => {
+            openLoading("Creating product...");
+        },
+        onSettled: () => {
+            closeLoading();
+        },
         onSuccess: (_, data) => {
+            refetchProductList?.();
             toast.custom(
                 (t) => (
                     <CreateProductToast

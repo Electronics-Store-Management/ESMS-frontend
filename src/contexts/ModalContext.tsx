@@ -47,10 +47,11 @@ export type IModalStateContext = {
 
 export type IModalState = {
     addProduct: IModalStateItem;
-    updateProduct: IModalStateItem & { productId?: string; refetch?: () => any };
+    updateProduct: IModalStateItem & { productId?: string };
     deleteProduct: IModalStateItem;
 };
 
 export type IModalStateItem = {
     isOpen: boolean;
+    refetch?: () => any;
 };

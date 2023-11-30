@@ -11,8 +11,9 @@ export function useCreateProductModal() {
 
     return {
         isCreateProductModalOpen: addProduct.isOpen,
-        openCreateProductModal: () =>
-            setModalState({ addProduct: { isOpen: true } }),
+        refetchProductList: addProduct.refetch,
+        openCreateProductModal: (refetch?: () => any) =>
+            setModalState({ addProduct: { isOpen: true, refetch } }),
         closeCreateProductModal: () =>
             setModalState({ addProduct: { isOpen: false } }),
     };

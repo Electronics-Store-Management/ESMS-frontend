@@ -85,7 +85,10 @@ export default function Page() {
                 <div className=" flex justify-end gap-8">
                     <CategoryFilter className="" />
                     <PriceRangeFilter />
-                    <Button size="sm" onClick={() => openCreateProductModal()}>
+                    <Button
+                        size="sm"
+                        onClick={() => openCreateProductModal(refetch)}
+                    >
                         <HiPlus className=" w-4 h-4 mr-2" />
                         Add product
                     </Button>

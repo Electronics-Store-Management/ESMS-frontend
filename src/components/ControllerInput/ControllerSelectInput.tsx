@@ -4,6 +4,7 @@ import { CustomFlowbiteTheme, Dropdown } from "flowbite-react";
 import { Controller } from "react-hook-form";
 import React, { useState } from "react";
 import BaseEntity from "@/types/entity/BaseEntity";
+import Category from "@/types/entity/Category";
 
 export default function ControllerSelectInput<
     T extends BaseEntity & { name: string },
@@ -11,6 +12,7 @@ export default function ControllerSelectInput<
     control,
     name,
     title,
+    defaultValue,
     onValueChange = () => {},
     choseValue = "",
     items,
@@ -18,7 +20,7 @@ export default function ControllerSelectInput<
     className,
     ...props
 }: PropTypes<T>) {
-    const [selected, setSelected] = useState<string>();
+    const [selected, setSelected] = useState<string>(defaultValue?.name || "");
 
     return (
         <div className={` py-[10px] ${className}`} {...props}>
@@ -97,13 +99,17 @@ const dropdownTheme: CustomFlowbiteTheme["dropdown"] = {
     inlineWrapper: "flex w-full items-center justify-between",
 };
 
-type PropTypes<T> = {
-    control: any;
-    name: string;
-    title: string;
-    items?: T[];
-    choseValue?: string;
-    isLoading?: boolean;
-    onValueChange?: (value?: string) => any;
-} & React.ComponentPropsWithoutRef<"div"> &
-    ReactNodeChildren;
+type PropTypes<T> = Omit<
+    React.ComponentPropsWithoutRef<"div">,
+    "defaultValue"
+> &
+    ReactNodeChildren & {
+        control: any;
+        name: string;
+        title: string;
+        items?: T[];
+        choseValue?: string;
+        isLoading?: boolean;
+        onValueChange?: (value?: string) => any;
+        defaultValue?: Category;
+    };

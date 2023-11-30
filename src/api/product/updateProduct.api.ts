@@ -1,14 +1,15 @@
 import apiInstance from "../apiInstance";
 
-export default async function addNewProduct(product: NewProduct) {
+export default async function updateProductAPI(product: UpdatedProduct) {
     apiInstance.defaults.headers.common["Content-Type"] = "multipart/form-data";
-    const response = await apiInstance.post("/product", product, {});
+    const response = await apiInstance.put(`/product/${product.id}`, product, {});
     apiInstance.defaults.headers.common["Content-Type"] = "application/json";
 
     return response.data;
 }
 
-export type NewProduct = {
+export type UpdatedProduct = {
+    id: string;
     name: string;
     categoryId?: string;
     price: number;

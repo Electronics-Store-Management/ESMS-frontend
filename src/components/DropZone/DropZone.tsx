@@ -1,11 +1,13 @@
 "use client";
 
 import { FileInput, Label } from "flowbite-react";
-import { useEffect, useState } from "react";
+import Image from "next/image";
+import { useState } from "react";
 import { useDeepCompareEffect } from "react-use";
 
 export default function DropZone({
     file: _file,
+    defaultValue,
     onFileChange = () => {},
     className,
 }: PropTypes) {
@@ -22,11 +24,25 @@ export default function DropZone({
             <Label
                 htmlFor="dropzone-file"
                 className={` flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600 ${
-                    file ? "h-fit" : "h-64"
+                    file || defaultValue ? "h-fit" : "h-64"
                 }`}
             >
-                {file ? (
-                    <img src={URL.createObjectURL(file)} />
+                {file || defaultValue ? (
+                    file ? (
+                        <Image
+                            src={URL.createObjectURL(file)}
+                            width={500}
+                            height={256}
+                            alt="Uploaded image"
+                        />
+                    ) : (
+                        <Image
+                            src={defaultValue || ""}
+                            width={500}
+                            height={256}
+                            alt="Uploaded image"
+                        />
+                    )
                 ) : (
                     <div className="flex flex-col items-center justify-center pb-6 pt-5">
                         <svg
@@ -78,7 +94,8 @@ export default function DropZone({
     );
 }
 
-type PropTypes = {
+type PropTypes = React.ComponentPropsWithoutRef<"div"> & {
     file?: File | null;
     onFileChange?: (file?: File | null) => any;
-} & React.ComponentPropsWithoutRef<"div">;
+    defaultValue?: string;
+};

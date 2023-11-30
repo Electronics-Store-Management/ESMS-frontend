@@ -135,8 +135,8 @@ const tableTheme: CustomFlowbiteTheme["table"] = {
 
 type PropTypes<T> = {
     data: T[];
-    onEdit?: (id: T) => any;
-    onDelete?: (id: T) => any;
+    onEdit?: (product: T) => any;
+    onDelete?: (product: T) => any;
     pick: { [key in keyof Partial<T>]: Column<T[key]> };
 } & React.ComponentPropsWithoutRef<"div">;
 

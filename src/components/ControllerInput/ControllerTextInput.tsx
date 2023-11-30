@@ -13,6 +13,7 @@ export default function ControllerTextInput({
     register,
     placeholder,
     onValueChange,
+    defaultValue,
     error,
     className,
     ...props
@@ -29,6 +30,7 @@ export default function ControllerTextInput({
                         className=""
                         title={title}
                         icon={icon}
+                        defaultValue={defaultValue}
                         placeholder={placeholder}
                         {...register(name)}
                         onChange={(d: any) => {

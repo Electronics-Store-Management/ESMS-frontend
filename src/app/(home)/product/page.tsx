@@ -21,9 +21,9 @@ import { useCreateProductModal } from "@/components/CreateProductForm/CreateProd
 import toast from "react-hot-toast";
 import { DeleteProductToast } from "@/components/ToastMessage/DeleteProductToast";
 import useLoading from "@/hooks/useLoading";
+import { useUpdateProductModal } from "@/components/UpdateProductForm/UpdateProductFormModal";
 
 export default function Page() {
-    const router = useRouter();
     const searchParams = useSearchParams();
 
     const category = searchParams.get(SEARCH_PARAMS.categoryName) || "";
@@ -34,12 +34,12 @@ export default function Page() {
     const { openLoading, closeLoading } = useLoading();
 
     const { isOpenModal, setOpenModal } = useNotifyModal();
+    const { openUpdateProductModal } = useUpdateProductModal();
     const [deletedProduct, setDeletedProduct] = useState<ProductPreview>();
 
     const { data, isLoading, refetch } = useQuery<ProductPreview[]>(
         ["products", productKeyword, category],
         viewProductList,
-        {},
     );
 
     const deleteMutation = useMutation(deleteProductAPI, {
@@ -99,6 +99,9 @@ export default function Page() {
                 onDelete={(product) => {
                     setOpenModal(true);
                     setDeletedProduct(product);
+                }}
+                onEdit={(product) => {
+                    openUpdateProductModal(product.id, refetch);
                 }}
                 pick={{
                     name: { title: "Name" },

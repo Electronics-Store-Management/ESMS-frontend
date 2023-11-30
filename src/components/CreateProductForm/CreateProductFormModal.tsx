@@ -12,39 +12,22 @@ export function useCreateProductModal() {
     return {
         isCreateProductModalOpen: addProduct.isOpen,
         openCreateProductModal: () =>
-            setModalState((prev) => ({
-                ...prev,
-                addProduct: { isOpen: true },
-            })),
+            setModalState({ addProduct: { isOpen: true } }),
         closeCreateProductModal: () =>
-            setModalState((prev) => ({
-                ...prev,
-                addProduct: { isOpen: false },
-            })),
+            setModalState({ addProduct: { isOpen: false } }),
     };
 }
 
 export default function CreateProductFormModal() {
-    const {
-        modalState: { addProduct },
-        setModalState,
-    } = useContext(ModalStateContext);
+    const { isCreateProductModalOpen, closeCreateProductModal } =
+        useCreateProductModal();
 
     return (
         <Modal
-            theme={{
-                content: {
-                    inner: " rounded-2xl",
-                },
-            }}
+            theme={{ content: { inner: " rounded-2xl" } }}
             size="3xl"
-            show={addProduct.isOpen}
-            onClose={() =>
-                setModalState((prev) => ({
-                    ...prev,
-                    addProduct: { isOpen: false },
-                }))
-            }
+            show={isCreateProductModalOpen}
+            onClose={closeCreateProductModal}
         >
             <CreateProductForm />
         </Modal>

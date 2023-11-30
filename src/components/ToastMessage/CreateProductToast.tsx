@@ -56,6 +56,6 @@ type PropsType = {
     productName: string;
     isSuccess: boolean;
     t: Toast;
-    message: string;
+    message?: string;
     retry?: () => any;
 };

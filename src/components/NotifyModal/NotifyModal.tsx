@@ -15,7 +15,7 @@ export function useNotifyModal() {
 
 export default function NotifyModal({
     openModal = false,
-    setOpenModal = () => {},
+    closeModal = () => {},
     icon = (
         <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
     ),
@@ -28,7 +28,7 @@ export default function NotifyModal({
         <Button
             color="failure"
             onClick={() => {
-                setOpenModal(false);
+                closeModal();
                 onResponse(true);
             }}
         >
@@ -39,7 +39,7 @@ export default function NotifyModal({
         <Button
             color="gray"
             onClick={() => {
-                setOpenModal(false);
+                closeModal();
                 onResponse(false);
             }}
         >
@@ -53,7 +53,7 @@ export default function NotifyModal({
             <Modal
                 show={openModal}
                 size="md"
-                onClose={() => setOpenModal(false)}
+                onClose={() => closeModal()}
                 popup
             >
                 <Modal.Header />
@@ -74,7 +74,7 @@ export default function NotifyModal({
 
 type PropTypes = {
     openModal?: boolean;
-    setOpenModal?: (v: boolean) => any;
+    closeModal?: () => any;
     icon?: ReactNode;
     message?: ReactNode;
     agree?: ReactNode;

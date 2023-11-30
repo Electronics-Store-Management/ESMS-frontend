@@ -1,16 +1,17 @@
 "use client";
 
+import ClaimModal from "@/components/ClaimModal/ClaimModal";
 import CreateProductFormModal from "@/components/CreateProductForm/CreateProductFormModal";
 import UpdateProductFormModal from "@/components/UpdateProductForm/UpdateProductFormModal";
 import { ReactNodeChildren } from "@/types/ReactNodeChildren";
-import Product from "@/types/entity/Product";
-import { Dispatch, SetStateAction, createContext, useState } from "react";
+import ProductPreview from "@/types/entity/ProductPreview";
+import { ReactNode, createContext, useState } from "react";
 
 export function ModalProvider({ children }: ReactNodeChildren) {
     const [modalState, setModalState] = useState<IModalState>({
         addProduct: { isOpen: false },
         updateProduct: { isOpen: false },
-        deleteProduct: { isOpen: false },
+        claim: { isOpen: false },
     });
 
     return (
@@ -25,6 +26,7 @@ export function ModalProvider({ children }: ReactNodeChildren) {
             {children}
             <CreateProductFormModal />
             <UpdateProductFormModal />
+            <ClaimModal />
         </ModalStateContext.Provider>
     );
 }
@@ -33,7 +35,7 @@ export const ModalStateContext = createContext<IModalStateContext>({
     modalState: {
         addProduct: { isOpen: false },
         updateProduct: { isOpen: false },
-        deleteProduct: { isOpen: false },
+        claim: { isOpen: false },
     },
     setModalState: () => {},
 });
@@ -48,7 +50,10 @@ export type IModalStateContext = {
 export type IModalState = {
     addProduct: IModalStateItem;
     updateProduct: IModalStateItem & { productId?: string };
-    deleteProduct: IModalStateItem;
+    claim: IModalStateItem & {
+        message?: ReactNode;
+        onResponse?: (confirm: boolean) => any;
+    };
 };
 
 export type IModalStateItem = {

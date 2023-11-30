@@ -3,23 +3,43 @@ import NotifyModal from "../NotifyModal/NotifyModal";
 import { ModalStateContext } from "@/contexts/ModalContext";
 
 export function useClaimModal() {
-    const {} = useContext(ModalStateContext)
+    const {
+        modalState: { claim },
+        setModalState,
+    } = useContext(ModalStateContext);
 
-
+    return {
+        isClaimModalOpen: claim.isOpen,
+        claimModalMessage: claim.message,
+        onClaimResponse: claim.onResponse,
+        openClaimModal: (
+            message: ReactNode,
+            onResponse: (confirm: boolean) => any,
+        ) => setModalState({ claim: { isOpen: true, message, onResponse } }),
+        closeClaimModal: () => setModalState({ claim: { isOpen: false } }),
+    };
 }
 
-export default function ClaimModal({ itemName, ...props }: PropTypes) {
+export default function ClaimModal({}: PropTypes) {
+    const {
+        claimModalMessage,
+        isClaimModalOpen,
+        closeClaimModal,
+        onClaimResponse,
+    } = useClaimModal();
     return (
         <NotifyModal
-            {...props}
+            openModal={isClaimModalOpen}
+            closeModal={closeClaimModal}
+            onResponse={onClaimResponse}
             icon={null}
             message={
                 <>
                     <h2 className=" mb-6 text-2xl font-semibold text-secondary-950">
-                        Confirm delete?
+                        Confirm
                     </h2>
                     <p className=" mb-6 text-sm font-medium text-secondary-950">
-                        Do you really want to delete {itemName || ""}?
+                        {claimModalMessage}
                     </p>
                 </>
             }
@@ -27,9 +47,4 @@ export default function ClaimModal({ itemName, ...props }: PropTypes) {
     );
 }
 
-type PropTypes = {
-    openModal?: boolean;
-    setOpenModal?: (v: boolean) => any;
-    onResponse?: (v: boolean) => any;
-    itemName?: ReactNode;
-};
+type PropTypes = {};

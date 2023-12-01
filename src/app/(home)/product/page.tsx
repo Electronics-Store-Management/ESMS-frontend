@@ -14,10 +14,14 @@ import { useUpdateProductModal } from "@/components/UpdateProductForm/UpdateProd
 import SEARCH_PARAMS from "@/constants/searchParams";
 import ProductPreview from "@/types/entity/ProductPreview";
 import FORMATTER from "@/utils/formatter";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useQuery } from "react-query";
+import FilterBadge from "@/components/FilterBadge/FilterBadge";
+import { withoutQuery } from "@/utils/withQuery";
 
 export default function Page() {
+    const router = useRouter();
+    const pathname = usePathname();
     const searchParams = useSearchParams();
 
     const category = searchParams.get(SEARCH_PARAMS.categoryName) || "";
@@ -49,6 +53,36 @@ export default function Page() {
                         Add product
                     </Button>
                 </div>
+            </div>
+            <div className=" flex gap-5 mt-10">
+                <FilterBadge
+                    title="Product name"
+                    content={searchParams.get(SEARCH_PARAMS.productName) || ""}
+                    type="search"
+                    onClose={() =>
+                        router.push(
+                            withoutQuery(
+                                pathname,
+                                [SEARCH_PARAMS.productName],
+                                searchParams,
+                            ),
+                        )
+                    }
+                />
+                <FilterBadge
+                    title="Category"
+                    content={searchParams.get(SEARCH_PARAMS.categoryName) || ""}
+                    type="filter"
+                    onClose={() =>
+                        router.push(
+                            withoutQuery(
+                                pathname,
+                                [SEARCH_PARAMS.categoryName],
+                                searchParams,
+                            ),
+                        )
+                    }
+                />
             </div>
             <p className=" mt-8 mb-4 font-semibold text-yellow-500">
                 {data && !isLoading ? `${data.length} items` : "Loading..."}

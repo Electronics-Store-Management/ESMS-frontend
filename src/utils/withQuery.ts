@@ -1,20 +1,36 @@
-export default function withQuery(url: string, _queries: object): string {
-    const oldQueryStr = url.split("?").at(1)?.split("&");
-    const oldQueries = new Map();
-    oldQueryStr?.forEach((element) => {
-        const [key, value] = element.split("=");
-        if (oldQueries.get(key) instanceof Array)
-            oldQueries.set(key, [...oldQueries.get(key), value]);
-        else if (oldQueries.has(key))
-            oldQueries.set(key, [oldQueries.get(key), value]);
-        else oldQueries.set(key, value);
-    });
+import { ReadonlyURLSearchParams } from "next/navigation";
 
-    const queries = { ...Object.fromEntries(oldQueries), ..._queries };
+export default function withQuery(
+    url: string,
+    _queries: object,
+    searchParams?: ReadonlyURLSearchParams,
+): string {
+    const queries = {
+        ...Object.fromEntries(searchParams?.entries() || []),
+        ..._queries,
+    };
 
     const queryString = Object.entries(queries)
         .filter(([key, value]) => value)
-        .map(([key, value]) =>
+        .map(([key, value]: [key: string, value: string | string[]]) =>
+            value instanceof Array
+                ? value.map((v) => `${key}=${v}`).join("&")
+                : `${key}=${value}`,
+        )
+        .join("&");
+    return `${url}?${queryString}`;
+}
+
+export function withoutQuery(
+    url: string,
+    _queries: string[],
+    searchParams?: ReadonlyURLSearchParams,
+): string {
+    const queries = Object.fromEntries(searchParams?.entries?.() || []);
+
+    const queryString = Object.entries(queries)
+        .filter(([key, value]) => value && !_queries.includes(key))
+        .map(([key, value]: [key: string, value: string | string[]]) =>
             value instanceof Array
                 ? value.map((v) => `${key}=${v}`).join("&")
                 : `${key}=${value}`,

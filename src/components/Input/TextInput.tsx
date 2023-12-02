@@ -47,7 +47,7 @@ export default React.forwardRef(function TextInput(
         field: {
             input: {
                 base: twMerge(
-                    "!bg-secondary-25 !border-secondary-200 focus:!border-primary-400 focus:!ring-0",
+                    "!bg-secondary-25 !border-secondary-200 focus:!border-primary-400 focus:!ring-0 !w-full",
                     rightAddon && theme.input.withRightAddon,
                 ),
                 sizes: {
@@ -72,9 +72,10 @@ export default React.forwardRef(function TextInput(
             <div className="mb-2 block">
                 <Label htmlFor={title} value={title} />
             </div>
-            <div className="flex">
+            <div className="flex w-full">
                 <_TextInput
                     theme={customTheme}
+                    className="w-full"
                     ref={ref}
                     id={title}
                     type={type}

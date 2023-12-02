@@ -1,16 +1,30 @@
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Filter from "../Filter/Filter";
+import SEARCH_PARAMS from "@/constants/searchParams";
+import withQuery from "@/utils/withQuery";
 
 export default function PriceRangeFilter({
     onItemChange = () => {},
     ...props
 }: PropTypes) {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
+
     return (
         <Filter
             title="Price range"
-            onItemChange={(item: string) =>
-                onItemChange(priceRange.get(item) || "")
-            }
             items={Object.keys(Object.fromEntries(priceRange))}
+            choosen={searchParams.get(SEARCH_PARAMS.price) || ""}
+            onItemChange={(item) =>
+                router.push(
+                    withQuery(
+                        pathname,
+                        { [SEARCH_PARAMS.price]: item },
+                        searchParams,
+                    ),
+                )
+            }
             {...props}
         />
     );

@@ -20,7 +20,7 @@ export default function Filter({
             <Dropdown
                 theme={dropdownTheme}
                 label={
-                    <p className=" whitespace-nowrap	overflow-hidden text-ellipsis max-w-[90px]">
+                    <p className=" whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]">
                         {choosen || "All"}
                     </p>
                 }
@@ -90,7 +90,7 @@ const dropdownTheme: CustomFlowbiteTheme["dropdown"] = {
             light: "border border-secondary-200 bg-white text-secondary-900",
             auto: "border border-secondary-200 bg-white text-secondary-900",
         },
-        target: " max-w-[120px] border-2 border-surface-grey02 text-ellipsis flex bg-surface-grey01 text-secondary-950 transition duration-200 enabled:hover:bg-primary-200 enabled:active:bg-primary-300",
+        target: " max-w-[250px] w-max border-2 border-surface-grey02 text-ellipsis flex bg-surface-grey01 text-secondary-950 transition duration-200 enabled:hover:bg-primary-200 enabled:active:bg-primary-300",
     },
     inlineWrapper: "flex w-full items-center justify-between",
 };

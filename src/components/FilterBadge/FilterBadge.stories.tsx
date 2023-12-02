@@ -11,7 +11,7 @@ const meta = {
     tags: ["autodocs"],
     argTypes: {
         title: { control: "text" },
-        content: { control: "text" },
+        searchParamName: { control: "text" },
         type: {
             options: ["search", "filter"],
             control: "radio",
@@ -25,7 +25,7 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
     args: {
         title: "Product name",
-        content: "san pham",
+        searchParamName: "category_name",
         type: "search",
     },
 };

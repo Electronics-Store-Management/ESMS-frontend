@@ -8,7 +8,10 @@ import withQuery from "@/utils/withQuery";
 import SEARCH_PARAMS from "@/constants/searchParams";
 import { useSearchParams } from "next/navigation";
 
-export default function CategoryFilter({ ...props }: PropTypes) {
+export default function CategoryFilter({
+    onItemChange = () => {},
+    ...props
+}: PropTypes) {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -25,9 +28,13 @@ export default function CategoryFilter({ ...props }: PropTypes) {
             choosen={searchParams.get(SEARCH_PARAMS.categoryName) || ""}
             onItemChange={(item) =>
                 router.push(
-                    withQuery(pathname, {
-                        [SEARCH_PARAMS.categoryName]: item,
-                    }),
+                    withQuery(
+                        pathname,
+                        {
+                            [SEARCH_PARAMS.categoryName]: item,
+                        },
+                        searchParams,
+                    ),
                 )
             }
             isLoading={isLoading}
@@ -36,4 +43,7 @@ export default function CategoryFilter({ ...props }: PropTypes) {
     );
 }
 
-type PropTypes = {} & Omit<React.ComponentPropsWithoutRef<"div">, "onClick">;
+type PropTypes = { onItemChange?: (item: string) => any } & Omit<
+    React.ComponentPropsWithoutRef<"div">,
+    "onClick"
+>;

@@ -26,13 +26,14 @@ export default function Page() {
 
     const category = searchParams.get(SEARCH_PARAMS.categoryName) || "";
     const productKeyword = searchParams.get(SEARCH_PARAMS.productName) || "";
+    const price = searchParams.get(SEARCH_PARAMS.price) || "";
 
     const { openCreateProductModal } = useCreateProductModal();
     const { openUpdateProductModal } = useUpdateProductModal();
     const { openClaimModal } = useClaimModal();
 
     const { data, isLoading, refetch } = useQuery<ProductPreview[]>(
-        ["products", productKeyword, category],
+        ["products", productKeyword, category, price],
         viewProductList,
         {
             retry: false,
@@ -60,31 +61,18 @@ export default function Page() {
             <div className=" flex gap-5 mt-10">
                 <FilterBadge
                     title="Product name"
-                    content={searchParams.get(SEARCH_PARAMS.productName) || ""}
                     type="search"
-                    onClose={() =>
-                        router.push(
-                            withoutQuery(
-                                pathname,
-                                [SEARCH_PARAMS.productName],
-                                searchParams,
-                            ),
-                        )
-                    }
+                    searchParamName={SEARCH_PARAMS.productName}
                 />
                 <FilterBadge
                     title="Category"
-                    content={searchParams.get(SEARCH_PARAMS.categoryName) || ""}
+                    searchParamName={SEARCH_PARAMS.categoryName}
                     type="filter"
-                    onClose={() =>
-                        router.push(
-                            withoutQuery(
-                                pathname,
-                                [SEARCH_PARAMS.categoryName],
-                                searchParams,
-                            ),
-                        )
-                    }
+                />
+                <FilterBadge
+                    title="Price"
+                    searchParamName={SEARCH_PARAMS.price}
+                    type="filter"
                 />
             </div>
             <p className=" mt-8 mb-4 font-semibold text-yellow-500">

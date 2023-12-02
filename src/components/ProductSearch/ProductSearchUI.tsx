@@ -154,7 +154,7 @@ const textInputTheme: CustomFlowbiteTheme["textInput"] = {
     },
 };
 
-type PropTypes = {
+type PropTypes = React.ComponentPropsWithRef<"div"> & {
     onCategoryChange?: (category?: Category) => any;
     onProductSearchChange?: (keyword: string) => any;
     onSearch?: () => any;
@@ -162,4 +162,4 @@ type PropTypes = {
     isCategoryLoading?: boolean;
     isProductLoading?: boolean;
     categories?: Category[];
-} & React.ComponentPropsWithRef<"div">;
+};

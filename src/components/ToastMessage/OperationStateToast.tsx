@@ -2,11 +2,12 @@ import toast, { Toast } from "react-hot-toast";
 
 import { HiCheckCircle, HiXCircle } from "react-icons/hi";
 
-export function CreateProductToast({
+export function OperationStateToast({
     productName,
     isSuccess,
     t,
-    message,
+    title,
+    content,
     retry,
 }: PropsType) {
     return (
@@ -26,17 +27,9 @@ export function CreateProductToast({
                     </div>
                     <div className="ml-3 flex-1">
                         <p className="text-sm font-medium text-gray-900">
-                            {isSuccess ? "Success" : message}
+                            {title || "Success"}
                         </p>
-                        {isSuccess ? (
-                            <p className="mt-1 text-sm text-gray-500">
-                                Success to create
-                            </p>
-                        ) : (
-                            <p className="mt-1 text-sm text-gray-500">
-                                Fail to create product
-                            </p>
-                        )}
+                        <p className="mt-1 text-sm text-gray-500">{content}</p>
                     </div>
                 </div>
             </div>
@@ -56,6 +49,7 @@ type PropsType = {
     productName: string;
     isSuccess: boolean;
     t: Toast;
-    message?: string;
+    title?: string;
+    content?: string;
     retry?: () => any;
 };

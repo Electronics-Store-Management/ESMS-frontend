@@ -1,14 +1,14 @@
 "use client";
 
 import viewCategoryList from "@/api/category/viewCategoryList";
-import CreateProductFormUI from "./CreateProductFormUI";
-import Category from "@/types/entity/Category";
-import { useMutation, useQuery } from "react-query";
 import addNewProduct from "@/api/product/addNewProduct.api";
-import { useCreateProductModal } from "./CreateProductFormModal";
-import { CreateProductToast } from "../ToastMessage/CreateProductToast";
-import toast from "react-hot-toast";
 import useLoading from "@/hooks/useLoading";
+import Category from "@/types/entity/Category";
+import toast from "react-hot-toast";
+import { useMutation, useQuery } from "react-query";
+import { OperationStateToast } from "../ToastMessage/OperationStateToast";
+import { useCreateProductModal } from "./CreateProductFormModal";
+import CreateProductFormUI from "./CreateProductFormUI";
 
 export default function CreateProductForm() {
     const { data: categories, isLoading: isCategoriesLoading } = useQuery<
@@ -30,9 +30,10 @@ export default function CreateProductForm() {
             refetchProductList?.();
             toast.custom(
                 (t) => (
-                    <CreateProductToast
+                    <OperationStateToast
                         productName={data?.name || ""}
                         isSuccess
+                        content="Creating product successfully"
                         t={t}
                     />
                 ),
@@ -43,11 +44,12 @@ export default function CreateProductForm() {
         onError: (error: any, data) => {
             toast.custom(
                 (t) => (
-                    <CreateProductToast
+                    <OperationStateToast
                         productName={data?.name || ""}
                         isSuccess={false}
                         t={t}
-                        message={error.message}
+                        title={error.message}
+                        content="Fail to create product"
                         retry={() => mutate(data)}
                     />
                 ),

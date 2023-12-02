@@ -7,7 +7,7 @@ import Category from "@/types/entity/Category";
 import Product from "@/types/entity/Product";
 import toast from "react-hot-toast";
 import { useMutation, useQuery } from "react-query";
-import { CreateProductToast } from "../ToastMessage/CreateProductToast";
+import { OperationStateToast } from "../ToastMessage/OperationStateToast";
 import { useUpdateProductModal } from "./UpdateProductFormModal";
 import UpdateProductFormUI from "./UpdateProductFormUI";
 import useLoading from "@/hooks/useLoading";
@@ -31,7 +31,7 @@ export default function UpdateProductForm({ productId }: PropTypes) {
 
     const { mutate } = useMutation(updateProductAPI, {
         onMutate: () => {
-            openLoading("Creating product...");
+            openLoading("Updating product...");
         },
         onSettled: () => {
             closeLoading();
@@ -40,9 +40,10 @@ export default function UpdateProductForm({ productId }: PropTypes) {
             refetchProductList?.();
             toast.custom(
                 (t) => (
-                    <CreateProductToast
+                    <OperationStateToast
                         productName={data?.name || ""}
                         isSuccess
+                        content={`Updating product successfully`}
                         t={t}
                     />
                 ),
@@ -53,11 +54,12 @@ export default function UpdateProductForm({ productId }: PropTypes) {
         onError: (error: any, data) => {
             toast.custom(
                 (t) => (
-                    <CreateProductToast
+                    <OperationStateToast
                         productName={data?.name || ""}
                         isSuccess={false}
                         t={t}
-                        message={error.message}
+                        title={error.message}
+                        content={`Fail to update product ${data.name}`}
                         retry={() => mutate(data)}
                     />
                 ),

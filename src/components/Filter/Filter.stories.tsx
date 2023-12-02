@@ -5,7 +5,7 @@ import withQuery from "../../utils/withQuery";
 import SEARCH_PARAMS from "../../constants/searchParams";
 
 const meta = {
-    title: "Components/Filter",
+    title: "Components/Filter/Filter",
     component: Filter,
     parameters: {
         layout: "centered",

@@ -27,6 +27,7 @@ export default function ClaimModal({}: PropTypes) {
         closeClaimModal,
         onClaimResponse,
     } = useClaimModal();
+
     return (
         <NotifyModal
             openModal={isClaimModalOpen}

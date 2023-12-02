@@ -4,11 +4,11 @@ import { HiPlus } from "react-icons/hi";
 import { useDeleteProductMutation } from "@/api/product/deleteProduct.api";
 import viewProductList from "@/api/product/viewProductList.api";
 import Button from "@/components/Button/Button";
-import CheckboxTable from "@/components/CheckboxTable/CheckboxTable";
+import DataTable from "@/components/DataTable/DataTable";
 import { useClaimModal } from "@/components/ClaimModal/ClaimModal";
 import { useCreateProductModal } from "@/components/CreateProductForm/CreateProductFormModal";
-import CategoryFilter from "@/components/Filter/CategoryFilter";
-import PriceRangeFilter from "@/components/Filter/PriceRangeFilter";
+import CategoryFilter from "@/components/CategoryFilter/CategoryFilter";
+import PriceRangeFilter from "@/components/PriceRangeFilter/PriceRangeFilter";
 import ProductSearch from "@/components/ProductSearch/ProductSearch";
 import { useUpdateProductModal } from "@/components/UpdateProductForm/UpdateProductFormModal";
 import SEARCH_PARAMS from "@/constants/searchParams";
@@ -34,6 +34,9 @@ export default function Page() {
     const { data, isLoading, refetch } = useQuery<ProductPreview[]>(
         ["products", productKeyword, category],
         viewProductList,
+        {
+            retry: false,
+        },
     );
 
     const deleteProductMutation = useDeleteProductMutation(refetch);
@@ -87,8 +90,9 @@ export default function Page() {
             <p className=" mt-8 mb-4 font-semibold text-yellow-500">
                 {data && !isLoading ? `${data.length} items` : "Loading..."}
             </p>
-            <CheckboxTable
+            <DataTable
                 data={data || []}
+                isLoading={isLoading}
                 onDelete={(product) => {
                     openClaimModal(
                         <>

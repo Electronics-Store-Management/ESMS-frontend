@@ -1,39 +1,27 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import SideBar from "./SideBar";
+import TableSkeleton from "./TableSkeleton";
 
 const meta = {
-    title: "Components/Item/SideBar",
-    component: SideBar,
+    title: "Components/Skeleton/TableSkeleton",
+    component: TableSkeleton,
     parameters: {
         layout: "centered",
     },
     tags: ["autodocs"],
     argTypes: {},
-} satisfies Meta<typeof SideBar>;
+} satisfies Meta<typeof TableSkeleton>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Dashboard: Story = {
+export const Primary: Story = {
     args: {},
     parameters: {
         nextjs: {
             appDirectory: true,
             navigation: {
                 pathname: "/home",
-            },
-        },
-    },
-};
-
-export const Products: Story = {
-    args: {},
-    parameters: {
-        nextjs: {
-            appDirectory: true,
-            navigation: {
-                pathname: "/product",
             },
         },
     },

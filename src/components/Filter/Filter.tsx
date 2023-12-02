@@ -29,7 +29,7 @@ export default function Filter({
                 size="sm"
             >
                 {isLoading ? (
-                    <div className=" my-2 flex gap-2 justify-center items-center">
+                    <div className=" my-2 flex gap-2 justify-center items-center px-4 py-1">
                         <Spinner size="sm" />
                         <p className=" text-sm text-secondary-900">
                             Loading...

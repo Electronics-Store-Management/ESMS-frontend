@@ -6,7 +6,7 @@ import useLoading from "@/hooks/useLoading";
 import Category from "@/types/entity/Category";
 import toast from "react-hot-toast";
 import { useMutation, useQuery } from "react-query";
-import { OperationStateToast } from "../ToastMessage/OperationStateToast";
+import OperationStateToast from "../OperationStateToast/OperationStateToast";
 import { useCreateProductModal } from "./CreateProductFormModal";
 import CreateProductFormUI from "./CreateProductFormUI";
 
@@ -31,7 +31,6 @@ export default function CreateProductForm() {
             toast.custom(
                 (t) => (
                     <OperationStateToast
-                        productName={data?.name || ""}
                         isSuccess
                         content="Creating product successfully"
                         t={t}
@@ -45,7 +44,6 @@ export default function CreateProductForm() {
             toast.custom(
                 (t) => (
                     <OperationStateToast
-                        productName={data?.name || ""}
                         isSuccess={false}
                         t={t}
                         title={error.message}

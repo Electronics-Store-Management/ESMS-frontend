@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import CreateProductFormUI from "./CreateProductFormUI";
 
 const meta = {
-    title: "Components/CreateProductFormUI",
+    title: "Components/Form/CreateProductFormUI",
     component: CreateProductFormUI,
     parameters: {
         layout: "centered",

@@ -1,9 +1,9 @@
+import { ReactNode } from "react";
 import toast, { Toast } from "react-hot-toast";
 
 import { HiCheckCircle, HiXCircle } from "react-icons/hi";
 
-export function OperationStateToast({
-    productName,
+export default function OperationStateToast({
     isSuccess,
     t,
     title,
@@ -12,9 +12,9 @@ export function OperationStateToast({
 }: PropsType) {
     return (
         <div
-            className={`${t.visible ? "animate-enter" : "animate-leave"} ${
+            className={`${t?.visible ? "animate-enter" : "animate-leave"} ${
                 isSuccess ? " border-green-400" : " border-red-500"
-            } max-w-md w-full bg-white shadow-lg border-2 rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+            } max-w-md w-full min-w-[400px] min-w-20 bg-white shadow-lg border-2 rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
         >
             <div className="flex-1 w-0 p-4">
                 <div className="flex items-start">
@@ -35,7 +35,9 @@ export function OperationStateToast({
             </div>
             <div className="flex border-l border-gray-200">
                 <button
-                    onClick={() => (isSuccess ? toast.remove(t.id) : retry?.())}
+                    onClick={() =>
+                        isSuccess ? toast.remove(t?.id) : retry?.()
+                    }
                     className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 >
                     {isSuccess ? "Dismiss" : "Retry"}
@@ -46,10 +48,9 @@ export function OperationStateToast({
 }
 
 type PropsType = {
-    productName: string;
     isSuccess: boolean;
-    t: Toast;
-    title?: string;
-    content?: string;
+    t?: Toast;
+    title?: ReactNode;
+    content?: ReactNode;
     retry?: () => any;
 };

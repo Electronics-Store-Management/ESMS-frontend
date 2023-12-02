@@ -2,7 +2,7 @@ import viewCategoryList from "@/api/category/viewCategoryList";
 import Category from "@/types/entity/Category";
 import React from "react";
 import { useQuery } from "react-query";
-import Filter from "./Filter";
+import Filter from "../Filter/Filter";
 import { usePathname, useRouter } from "next/navigation";
 import withQuery from "@/utils/withQuery";
 import SEARCH_PARAMS from "@/constants/searchParams";

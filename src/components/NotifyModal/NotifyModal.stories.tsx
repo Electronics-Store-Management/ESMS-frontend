@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import NotifyModal from "./NotifyModal";
 
 const meta = {
-    title: "Components/NotifyModal",
+    title: "Components/Modal/NotifyModal",
     component: NotifyModal,
     parameters: {
         layout: "centered",

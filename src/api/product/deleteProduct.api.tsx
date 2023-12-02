@@ -3,7 +3,7 @@ import apiInstance from "../apiInstance";
 import { useMutation } from "react-query";
 import useLoading from "@/hooks/useLoading";
 import toast from "react-hot-toast";
-import { DeleteProductToast } from "@/components/ToastMessage/DeleteProductToast";
+import OperationStateToast from "@/components/OperationStateToast/OperationStateToast";
 
 export default async function deleteProductAPI(product?: ProductPreview) {
     if (!product?.id) throw new Error("Invalid product");
@@ -28,23 +28,34 @@ export function useDeleteProductMutation(refetch: () => any) {
             closeLoading();
             toast.custom(
                 (t) => (
-                    <DeleteProductToast
-                        productName={data?.name || ""}
+                    <OperationStateToast
                         isSuccess
+                        title="Delete successfully"
+                        content={
+                            <>
+                                Product <b>{data?.name}</b> is deleted
+                                successfully
+                            </>
+                        }
                         t={t}
                     />
                 ),
                 { duration: 3000 },
             );
         },
-        onError: (error, data) => {
+        onError: (error: any, data) => {
             closeLoading();
             toast.custom(
                 (t) => (
-                    <DeleteProductToast
-                        productName={data?.name || ""}
+                    <OperationStateToast
                         isSuccess={false}
                         t={t}
+                        title={error.message}
+                        content={
+                            <>
+                                Fail to delete product <b>{data?.name}</b>
+                            </>
+                        }
                         retry={() => deleteMutation.mutate(data)}
                     />
                 ),

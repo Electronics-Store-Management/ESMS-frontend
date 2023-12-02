@@ -23,7 +23,10 @@ const config: Config = {
                 ),
                 secondary: generateColor(
                     "secondary",
-                    [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],
+                    [
+                        25, 50, 75, 100, 200, 300, 400, 500, 600, 700, 800, 900,
+                        950,
+                    ],
                 ),
                 red: generateColor(
                     "red",
@@ -63,3 +66,4 @@ const config: Config = {
     plugins: [require("flowbite/plugin")],
 };
 export default config;
+

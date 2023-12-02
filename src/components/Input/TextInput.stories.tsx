@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { HiUser, HiOutlineX } from "react-icons/hi";
+import { HiUser, HiOutlineX, HiOutlineSearch } from "react-icons/hi";
 
 import TextInput from "./TextInput";
 
@@ -40,6 +40,30 @@ export const WithIcon: Story = {
 export const WithRightIcon: Story = {
     args: {
         rightIcon: HiOutlineX,
+        title: "Your email",
+        placeholder: "Enter your email here",
+    },
+};
+
+export const WithAddon: Story = {
+    args: {
+        addon: (
+            <div>
+                <HiOutlineSearch />
+            </div>
+        ),
+        title: "Your email",
+        placeholder: "Enter your email here",
+    },
+};
+
+export const WithRightAddon: Story = {
+    args: {
+        rightAddon: (
+            <div>
+                <HiOutlineSearch />
+            </div>
+        ),
         title: "Your email",
         placeholder: "Enter your email here",
     },

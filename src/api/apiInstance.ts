@@ -3,6 +3,7 @@ import axios from "axios";
 
 import { ILoginResponse } from "./types";
 import IToken from "@/types/Token";
+import SEARCH_PARAMS from "@/constants/searchParams";
 
 const apiInstance = axios.create({
     baseURL: API.baseUrl,
@@ -14,24 +15,31 @@ export const refreshAccessTokenFn = async () => {
     const tokenStr = localStorage.getItem("token") || "";
     if (tokenStr) {
         const token = JSON.parse(tokenStr) as IToken;
-        const response = await apiInstance.post<ILoginResponse>(
-            `auth/refresh-token`,
-            {},
-            {
-                headers: {
-                    Authorization: `Bearer ${token.refreshToken}`,
+        try {
+            const response = await apiInstance.post<ILoginResponse>(
+                `auth/refresh-token`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${token.refreshToken}`,
+                    },
+                    baseURL: API.baseUrl,
                 },
-                baseURL: API.baseUrl,
-            },
-        );
-        const tokenRes = response.data;
-        localStorage.setItem(
-            "token",
-            JSON.stringify({
-                accessToken: tokenRes.access_token,
-                refreshToken: tokenRes.refresh_token,
-            } as IToken),
-        );
+            );
+            const tokenRes = response.data;
+            localStorage.setItem(
+                "token",
+                JSON.stringify({
+                    accessToken: tokenRes.access_token,
+                    refreshToken: tokenRes.refresh_token,
+                } as IToken),
+            );
+        } catch (error) {
+            localStorage.setItem("token", "{}");
+            window.location.replace(
+                `/signin?${SEARCH_PARAMS.redirectUri}=${window.location.href}`,
+            );
+        }
     }
 };
 
@@ -54,7 +62,7 @@ apiInstance.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config;
         if (error.code == "ERR_NETWORK") return Promise.reject(error);
-        const errMessage = error.response.data.errors as string;
+        const errMessage = error.response.data.errors as string[];
         if (errMessage.includes("Expired JWT") && !originalRequest._retry) {
             originalRequest._retry = true;
             if (!originalRequest?.isRefresh) await refreshAccessTokenFn();

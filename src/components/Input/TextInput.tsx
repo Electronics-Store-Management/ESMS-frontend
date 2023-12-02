@@ -36,6 +36,9 @@ export default React.forwardRef(function TextInput(
         ),
         input: {
             withRightAddon: "!rounded-r-none",
+            status: {
+                error: "!border-red-500 !text-red-600 focus:!border-red-600",
+            },
         },
     };
 
@@ -49,6 +52,7 @@ export default React.forwardRef(function TextInput(
                 base: twMerge(
                     "!bg-secondary-25 !border-secondary-200 focus:!border-primary-400 focus:!ring-0 !w-full",
                     rightAddon && theme.input.withRightAddon,
+                    error && theme.input.status.error,
                 ),
                 sizes: {
                     sm: "!py-2 !px-4 text-sm",
@@ -85,7 +89,6 @@ export default React.forwardRef(function TextInput(
                     sizing={sizing}
                     addon={addon}
                     {...props}
-                    color={error ? "failure" : undefined}
                     required
                 />
                 {rightAddon && (

@@ -78,7 +78,7 @@ export default function Page() {
             <div className=" w-max min-w-[550px] rounded-3xl bg-white grid place-items-center">
                 <div className=" w-full px-20 py-16">
                     <div className="relative w-fit mx-auto">
-                        <h1 className=" mb-14 text-3xl text-center font-semibold">
+                        <h1 className=" mb-14 text-3xl text-center font-semibold text-secondary-900">
                             Electronic Store
                         </h1>
                         <p

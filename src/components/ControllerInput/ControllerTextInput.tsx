@@ -27,7 +27,7 @@ export default function ControllerTextInput({
                 render={({ field: { value, onChange, ...field } }) => (
                     <TextInput
                         type={type}
-                        className=""
+                        className=" text-secondary-900"
                         title={title}
                         icon={icon}
                         defaultValue={defaultValue}

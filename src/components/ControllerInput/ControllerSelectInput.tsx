@@ -25,7 +25,7 @@ export default function ControllerSelectInput<
     return (
         <div className={` py-[10px] ${className}`} {...props}>
             <p
-                className={`${FONT.primary.className} mb-2 font-semibold text-sm`}
+                className={`${FONT.primary.className} mb-2 font-semibold text-sm text-secondary-900`}
             >
                 {title}
             </p>

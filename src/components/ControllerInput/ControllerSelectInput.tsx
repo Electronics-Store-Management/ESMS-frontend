@@ -44,7 +44,12 @@ export default function ControllerSelectInput<
                         }
                         dismissOnClick={true}
                     >
-                        <Dropdown.Item onClick={() => onValueChange(undefined)}>
+                        <Dropdown.Item
+                            onClick={() => {
+                                onValueChange("");
+                                setSelected("");
+                            }}
+                        >
                             <p className=" font-normal text-secondary-600">
                                 Not choose
                             </p>

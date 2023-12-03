@@ -7,6 +7,7 @@ import {
     Button as _Button,
     Spinner,
 } from "flowbite-react";
+
 import React from "react";
 
 export default function Button({
@@ -28,7 +29,7 @@ export default function Button({
             disabled={isLoading}
             {...props}
         >
-            {isLoading ? <Spinner /> : children}
+            {isLoading ? <Spinner size={size} /> : children}
         </_Button>
     );
 }
@@ -56,10 +57,10 @@ const getTheme = (isFill: boolean): CustomFlowbiteTheme["button"] => {
 };
 
 type PropTypes = ReactNodeChildren &
+    React.ComponentProps<typeof _Button> &
     React.ComponentPropsWithRef<"button"> & {
         fill?: boolean;
         size?: keyof ButtonSizes;
         btnType?: "primary" | "secondary" | "error";
         isLoading?: boolean;
     };
-

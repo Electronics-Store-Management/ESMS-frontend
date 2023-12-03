@@ -4,7 +4,7 @@ import { HiUser, HiOutlineX, HiOutlineSearch } from "react-icons/hi";
 import TextInput from "./TextInput";
 
 const meta = {
-    title: "Components/TextInput",
+    title: "Components/Item/TextInput",
     component: TextInput,
     parameters: {
         layout: "centered",
@@ -68,4 +68,3 @@ export const WithRightAddon: Story = {
         placeholder: "Enter your email here",
     },
 };
-

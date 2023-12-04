@@ -1,6 +1,6 @@
 "use client";
 
-import viewCategoryList from "@/api/category/viewCategoryList";
+import viewCategoryList from "@/api/category/viewCategoryList.api";
 import addNewProduct from "@/api/product/addNewProduct.api";
 import useLoading from "@/hooks/useLoading";
 import Category from "@/types/entity/Category";
@@ -64,3 +64,4 @@ export default function CreateProductForm() {
         />
     );
 }
+

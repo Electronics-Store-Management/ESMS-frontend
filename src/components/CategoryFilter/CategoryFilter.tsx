@@ -1,4 +1,4 @@
-import viewCategoryList from "@/api/category/viewCategoryList";
+import viewCategoryList from "@/api/category/viewCategoryList.api";
 import Category from "@/types/entity/Category";
 import React from "react";
 import { useQuery } from "react-query";
@@ -47,3 +47,4 @@ type PropTypes = { onItemChange?: (item: string) => any } & Omit<
     React.ComponentPropsWithoutRef<"div">,
     "onClick"
 >;
+

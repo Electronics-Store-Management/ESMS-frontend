@@ -1,6 +1,6 @@
 "use client";
 
-import viewCategoryList from "@/api/category/viewCategoryList";
+import viewCategoryList from "@/api/category/viewCategoryList.api";
 import updateProductAPI from "@/api/product/updateProduct.api";
 import viewDetailProduct from "@/api/product/viewDetailProduct.api";
 import Category from "@/types/entity/Category";
@@ -90,3 +90,4 @@ export default function UpdateProductForm({ productId }: PropTypes) {
 type PropTypes = {
     productId: string;
 };
+

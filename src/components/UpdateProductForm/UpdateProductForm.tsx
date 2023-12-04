@@ -25,6 +25,10 @@ export default function UpdateProductForm({ productId }: PropTypes) {
     const { data: product, isLoading: isProductLoading } = useQuery<Product>(
         ["product", productId],
         viewDetailProduct,
+        {
+            refetchOnMount: "always",
+            cacheTime: 0,
+        },
     );
 
     const { closeUpdateProductModal } = useUpdateProductModal();

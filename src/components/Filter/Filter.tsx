@@ -14,7 +14,9 @@ export default function Filter({
 }: PropTypes) {
     return (
         <div className={` flex items-center gap-2 ${className}`} {...props}>
-            <p className={`${FONT.primary.className} font-bold text-[14px]`}>
+            <p
+                className={`${FONT.primary.className} font-bold text-[14px] text-secondary-900`}
+            >
                 {title}
             </p>
             <Dropdown

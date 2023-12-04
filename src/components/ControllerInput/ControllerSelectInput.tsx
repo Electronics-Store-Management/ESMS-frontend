@@ -25,7 +25,7 @@ export default function ControllerSelectInput<
     return (
         <div className={` py-[10px] ${className}`} {...props}>
             <p
-                className={`${FONT.primary.className} mb-2 font-semibold text-sm`}
+                className={`${FONT.primary.className} mb-2 font-semibold text-sm text-secondary-900`}
             >
                 {title}
             </p>
@@ -44,7 +44,12 @@ export default function ControllerSelectInput<
                         }
                         dismissOnClick={true}
                     >
-                        <Dropdown.Item onClick={() => onValueChange(undefined)}>
+                        <Dropdown.Item
+                            onClick={() => {
+                                onValueChange("");
+                                setSelected("");
+                            }}
+                        >
                             <p className=" font-normal text-secondary-600">
                                 Not choose
                             </p>

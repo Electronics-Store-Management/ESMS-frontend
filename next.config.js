@@ -4,7 +4,7 @@ const nextConfig = {
         remotePatterns: [
             {
                 protocol: "https",
-                hostname: "esms-store.s3.amazonaws.com",
+                hostname: "esms-images.s3.amazonaws.com",
             },
         ],
     },

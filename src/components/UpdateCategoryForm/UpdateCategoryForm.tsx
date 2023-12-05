@@ -1,58 +1,51 @@
-"use client";
-
 import viewCategoryList from "@/api/category/viewCategoryList.api";
-import updateProductAPI from "@/api/product/updateProduct.api";
-import viewDetailProduct from "@/api/product/viewDetailProduct.api";
+import useLoading from "@/hooks/useLoading";
 import Category from "@/types/entity/Category";
-import Product from "@/types/entity/Product";
 import toast from "react-hot-toast";
 import { useMutation, useQuery } from "react-query";
 import OperationStateToast from "../OperationStateToast/OperationStateToast";
-import { useUpdateProductModal } from "./UpdateProductFormModal";
-import UpdateProductFormUI from "./UpdateProductFormUI";
-import useLoading from "@/hooks/useLoading";
 import Loading from "../Loading/Loading";
+import { useUpdateCategoryModal } from "./UpdateCategoryFormModal";
+import viewDetailCategory from "@/api/category/viewDetailCategory.api";
+import updateCategoryAPI from "@/api/category/updateCategory.api";
+import UpdateCategoryFormUI from "./UpdateCategoryFormUI";
 
-export default function UpdateProductForm({ productId }: PropTypes) {
-    const { data: categories, isLoading: isCategoriesLoading } = useQuery<
-        Category[]
-    >(["category"], viewCategoryList);
-
+export default function UpdateCategoryForm({ categoryId }: PropTypes) {
     const { openLoading, closeLoading } = useLoading();
 
-    const { refetchProductList } = useUpdateProductModal();
+    const { refetchCategoryList } = useUpdateCategoryModal();
 
-    const { data: product, isLoading: isProductLoading } = useQuery<Product>(
-        ["product", productId],
-        viewDetailProduct,
+    const { data: category, isLoading: isCategoryLoading } = useQuery<Category>(
+        ["category", categoryId],
+        viewDetailCategory,
         {
             refetchOnMount: "always",
             cacheTime: 0,
         },
     );
 
-    const { closeUpdateProductModal } = useUpdateProductModal();
+    const { closeUpdateCategoryModal } = useUpdateCategoryModal();
 
-    const { mutate } = useMutation(updateProductAPI, {
+    const { mutate } = useMutation(updateCategoryAPI, {
         onMutate: () => {
-            openLoading("Updating product...");
+            openLoading("Updating category...");
         },
         onSettled: () => {
             closeLoading();
         },
         onSuccess: (_, data) => {
-            refetchProductList?.();
+            refetchCategoryList?.();
             toast.custom(
                 (t) => (
                     <OperationStateToast
                         isSuccess
-                        content={`Updating product successfully`}
+                        content={`Updating category successfully`}
                         t={t}
                     />
                 ),
                 { duration: 3000 },
             );
-            closeUpdateProductModal();
+            closeUpdateCategoryModal();
         },
         onError: (error: any, data) => {
             toast.custom(
@@ -61,7 +54,7 @@ export default function UpdateProductForm({ productId }: PropTypes) {
                         isSuccess={false}
                         t={t}
                         title={error.message}
-                        content={`Fail to update product ${data.name}`}
+                        content={`Fail to update category ${data.name}`}
                         retry={() => mutate(data)}
                     />
                 ),
@@ -72,15 +65,13 @@ export default function UpdateProductForm({ productId }: PropTypes) {
 
     return (
         <>
-            {isProductLoading ? (
+            {isCategoryLoading ? (
                 <Loading />
             ) : (
-                <UpdateProductFormUI
-                    categories={categories}
-                    isCategoryLoading={isCategoriesLoading}
+                <UpdateCategoryFormUI
                     onSubmitData={(data) => mutate(data)}
-                    product={product}
-                    isLoading={isProductLoading}
+                    isLoading={isCategoryLoading}
+                    category={category}
                 />
             )}
         </>
@@ -88,6 +79,6 @@ export default function UpdateProductForm({ productId }: PropTypes) {
 }
 
 type PropTypes = {
-    productId: string;
+    categoryId: string;
 };
 

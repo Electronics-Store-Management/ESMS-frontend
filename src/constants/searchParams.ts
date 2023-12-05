@@ -3,6 +3,8 @@ const SEARCH_PARAMS = {
     productName: "product_name",
     categoryName: "category_name",
     price: "price",
+    name: "name",
 };
 
 export default SEARCH_PARAMS;
+

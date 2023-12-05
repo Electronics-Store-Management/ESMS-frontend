@@ -15,6 +15,7 @@ export default function CategorySearchUI({
     onSearch = () => {},
     onCategorySearchChange = () => {},
     isCategoryLoading,
+    className,
     ...props
 }: PropTypes) {
     const router = useRouter();
@@ -23,8 +24,8 @@ export default function CategorySearchUI({
     const categoryNameRef = useRef<HTMLInputElement>(null);
 
     return (
-        <div {...props}>
-            <ButtonFlowbite.Group>
+        <div {...props} className={className}>
+            <ButtonFlowbite.Group className="w-full">
                 <TextInputFlowbite
                     ref={categoryNameRef}
                     theme={textInputTheme}
@@ -53,10 +54,11 @@ export default function CategorySearchUI({
 }
 
 const textInputTheme: CustomFlowbiteTheme["textInput"] = {
+    base: "w-full",
     field: {
         input: {
             withAddon: {
-                off: "rounded-none rounded-s-lg w-[240px]",
+                off: "rounded-none rounded-s-lg w-full",
             },
         },
     },
@@ -67,5 +69,6 @@ type PropTypes = React.ComponentPropsWithRef<"div"> & {
     onSearch?: () => any;
     isCategoryLoading?: boolean;
     categories?: Category[];
+    className?: string;
 };
 

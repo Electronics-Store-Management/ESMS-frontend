@@ -26,7 +26,7 @@ export default function CreateCategoryFormModal() {
     return (
         <Modal
             theme={{ content: { inner: " rounded-2xl" } }}
-            size="3xl"
+            size="lg"
             show={isCreateCategoryModalOpen}
             onClose={closeCreateCategoryModal}
         >

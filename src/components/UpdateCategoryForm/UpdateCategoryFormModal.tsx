@@ -29,7 +29,7 @@ export default function UpdateCategoryFormModal() {
     return (
         <Modal
             theme={{ content: { inner: " rounded-2xl" } }}
-            size="3xl"
+            size="lg"
             show={isUpdateCategoryModalOpen}
             onClose={closeUpdateCategoryModal}
         >

@@ -23,7 +23,7 @@ export default function CreateCategoryFormUI({
 
     return (
         <div
-            className={` w-full bg-background-normal rounded-2xl p-8 ${className}`}
+            className={`w-full bg-background-normal rounded-2xl p-8 ${className}`}
             {...props}
         >
             <h1
@@ -32,21 +32,20 @@ export default function CreateCategoryFormUI({
                 Add category
             </h1>
             <form onSubmit={handleSubmit(onSubmitData)}>
-                <div className=" grid grid-cols-2 gap-5">
-                    <ControllerTextInput
-                        control={control}
-                        name="name"
-                        title="Name"
-                        rules={{ required: "Name is required" }}
-                        register={register}
-                        placeholder="BOYALINK"
-                        onValueChange={(d: any) => {
-                            clearErrors("name");
-                        }}
-                        error={errors.name}
-                    />
-                </div>
-                <div className=" flex justify-between mt-12">
+                <ControllerTextInput
+                    control={control}
+                    name="name"
+                    title="Name"
+                    rules={{ required: "Name is required" }}
+                    register={register}
+                    placeholder="BOYALINK"
+                    onValueChange={(d: any) => {
+                        clearErrors("name");
+                    }}
+                    error={errors.name}
+                />
+
+                <div className="flex justify-between mt-8">
                     <Button
                         btnType="secondary"
                         onClick={() => closeCreateCategoryModal()}

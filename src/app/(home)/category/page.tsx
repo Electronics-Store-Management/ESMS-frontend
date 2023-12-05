@@ -11,6 +11,8 @@ import { useCreateCategoryModal } from "@/components/CreateCategoryForm/CreateCa
 import { useClaimModal } from "@/components/ClaimModal/ClaimModal";
 import DataTable from "@/components/DataTable/DataTable";
 import CategorySearch from "@/components/CategorySearch/CategorySearch";
+import { useDeleteCategoryMutation } from "@/api/category/deleteCategory.api";
+import { useUpdateCategoryModal } from "@/components/UpdateCategoryForm/UpdateCategoryFormModal";
 
 export default function Page() {
     const searchParams = useSearchParams();
@@ -18,6 +20,7 @@ export default function Page() {
     const categoryKeyword = searchParams.get(SEARCH_PARAMS.name) || "";
 
     const { openCreateCategoryModal } = useCreateCategoryModal();
+    const { openUpdateCategoryModal } = useUpdateCategoryModal();
     const { openClaimModal } = useClaimModal();
 
     const { data, isLoading, refetch } = useQuery<Category[]>(
@@ -27,6 +30,8 @@ export default function Page() {
             retry: false,
         },
     );
+
+    const deleteCategoryMutation = useDeleteCategoryMutation(refetch);
 
     return (
         <>
@@ -45,19 +50,19 @@ export default function Page() {
             <DataTable
                 data={data || []}
                 isLoading={isLoading}
-                // onDelete={(product) => {
-                //     openClaimModal(
-                //         <>
-                //             Do you want to delete product{" "}
-                //             <span>{product.name}</span>
-                //         </>,
-                //         (confirm) =>
-                //             confirm && deleteProductMutation.mutate(product),
-                //     );
-                // }}
-                // onEdit={(product) => {
-                //     openUpdateProductModal(product.id, refetch);
-                // }}
+                onDelete={(category) => {
+                    openClaimModal(
+                        <>
+                            Do you want to delete category{" "}
+                            <span>{category.name}</span>
+                        </>,
+                        (confirm) =>
+                            confirm && deleteCategoryMutation.mutate(category),
+                    );
+                }}
+                onEdit={(category) => {
+                    openUpdateCategoryModal(category.id, refetch);
+                }}
                 pick={{
                     name: { title: "Name" },
                 }}

@@ -1,9 +1,16 @@
+import Category from "@/types/entity/Category";
 import apiInstance from "../apiInstance";
 
-export default async function viewCategoryList({ queryKey }: { queryKey: any }) {
-	const [_key] = queryKey;
-	const response = await apiInstance.get("/category", {
-	});
+export default async function viewCategoryList({
+    queryKey,
+}: {
+    queryKey: any;
+}) {
+    const [_key, name] = queryKey;
+    const response = await apiInstance.get("/category", { params: { name } });
 
-	return response.data;
+    const categories = response.data as Category[];
+
+    return categories;
 }
+

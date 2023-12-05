@@ -15,13 +15,13 @@ import CategorySearch from "@/components/CategorySearch/CategorySearch";
 export default function Page() {
     const searchParams = useSearchParams();
 
-    const category = searchParams.get(SEARCH_PARAMS.categoryName) || "";
+    const categoryKeyword = searchParams.get(SEARCH_PARAMS.name) || "";
 
     const { openCreateCategoryModal } = useCreateCategoryModal();
     const { openClaimModal } = useClaimModal();
 
     const { data, isLoading, refetch } = useQuery<Category[]>(
-        ["categories", category],
+        ["categories", categoryKeyword],
         viewCategoryList,
         {
             retry: false,

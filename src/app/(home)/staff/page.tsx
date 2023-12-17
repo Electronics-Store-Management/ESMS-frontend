@@ -92,7 +92,7 @@ export default function Page() {
                         className: " font-normal text-secondary-500",
                     },
                     citizenId: {
-                        title: "CCCD",
+                        title: "Citizen ID",
                         className: " font-normal text-secondary-500",
                     },
                     lastOnline: {

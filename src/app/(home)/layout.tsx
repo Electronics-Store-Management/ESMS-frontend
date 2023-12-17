@@ -17,16 +17,16 @@ export default async function Layout({ children }: ReactNodeChildren) {
 
     const redirectURI = headers().get(COOKIE_NAME.XURL) || "";
 
-    if (!accessToken)
+    const staffInfoResponse = await fetch(API.staff.getStaffProfile, {
+        headers: myHeaders,
+    });
+
+    if (staffInfoResponse.status !== 200)
         redirect(
             withQuery("/signin", {
                 [SEARCH_PARAMS.redirectUri]: redirectURI,
             }),
         );
-
-    const staffInfoResponse = await fetch(API.staff.getStaffProfile, {
-        headers: myHeaders,
-    });
 
     const staffInfo: Staff = await staffInfoResponse.json();
 

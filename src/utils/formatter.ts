@@ -5,11 +5,13 @@ const FORMATTER = {
             currency: "VND",
         }).format(value),
     toShortDate: (value: Date) =>
-        new Intl.DateTimeFormat("en-GB", {
-            dateStyle: "medium",
-            timeStyle: "short",
-            timeZone: "Asia/Ho_Chi_Minh",
-        }).format(new Date(value)),
+        value
+            ? new Intl.DateTimeFormat("en-GB", {
+                  dateStyle: "medium",
+                  timeStyle: "short",
+                  timeZone: "Asia/Ho_Chi_Minh",
+              }).format(new Date(value))
+            : "No data",
 };
 
-export default FORMATTER
+export default FORMATTER;

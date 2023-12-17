@@ -21,22 +21,6 @@ export default function TokenProvider({ children }: ReactNodeChildren) {
         refreshToken: "",
     });
 
-    useDeepCompareEffect(() => {
-        if (!isTokenSet) return;
-        if (!token?.refreshToken && pathname !== "/signin") {
-            redirect(
-                `/signin?${SEARCH_PARAMS.redirectUri}=${encodeURI(pathname)}`,
-            );
-        }
-        if (token?.refreshToken && pathname === "/signin") {
-            redirect(
-                decodeURI(
-                    searchParams.get(SEARCH_PARAMS.redirectUri) || "/home",
-                ),
-            );
-        }
-    }, [token, isTokenSet, searchParams, pathname]);
-
     return (
         <TokenContext.Provider value={{ token, setToken }}>
             <QueryClientProvider client={queryClient}>

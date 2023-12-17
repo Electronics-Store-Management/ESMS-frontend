@@ -6,6 +6,9 @@ const API = {
     authentication: {
         signIn: `${BASE_API}/auth/authenticate`,
     },
+    staff: {
+        getStaffProfile: `${BASE_API}/staff/profile`,
+    },
 };
 
 export default API;

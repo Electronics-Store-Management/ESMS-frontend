@@ -4,6 +4,7 @@ import axios from "axios";
 import { ILoginResponse } from "./types";
 import IToken from "@/types/Token";
 import SEARCH_PARAMS from "@/constants/searchParams";
+import { setCookie } from "cookies-next";
 
 const apiInstance = axios.create({
     baseURL: API.baseUrl,
@@ -34,6 +35,7 @@ export const refreshAccessTokenFn = async () => {
                     refreshToken: tokenRes.refresh_token,
                 } as IToken),
             );
+            setCookie("accessToken", tokenRes.access_token);
         } catch (error) {
             localStorage.setItem("token", "{}");
             window.location.replace(

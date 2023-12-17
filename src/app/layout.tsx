@@ -7,22 +7,23 @@ import TokenProvider from "./providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-	title: "ESMS Web App",
-	description: "Electronic Store Management System",
+    title: "ESMS Web App",
+    description: "Electronic Store Management System",
 };
 
 export default function RootLayout({
-	children,
+    children,
 }: {
-	children: React.ReactNode;
+    children: React.ReactNode;
 }) {
-	return (
-		<html lang="en">
-			<body className={inter.className}>
-				<TokenProvider>
-					<CustomThemeProvider>{children}</CustomThemeProvider>
-				</TokenProvider>
-			</body>
-		</html>
-	);
+    return (
+        <html lang="en">
+            <body className={inter.className}>
+                <TokenProvider>
+                    <CustomThemeProvider>{children}</CustomThemeProvider>
+                </TokenProvider>
+            </body>
+        </html>
+    );
 }
+

@@ -1,7 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import ClaimModal from "./ClaimModal";
-import { ModalProvider, ModalStateContext } from "@/contexts/ModalContext";
+import {
+    ModalProvider,
+    ModalStateContext,
+    defaultModalStateValue,
+} from "@/contexts/ModalContext";
 
 const meta = {
     title: "Components/Modal/ClaimModal",
@@ -14,14 +18,7 @@ const meta = {
         (Story) => (
             <ModalStateContext.Provider
                 value={{
-                    modalState: {
-                        addProduct: { isOpen: false },
-                        updateProduct: { isOpen: false },
-                        claim: {
-                            isOpen: true,
-                            message: "Do you really want to continue?",
-                        },
-                    },
+                    modalState: defaultModalStateValue,
                     setModalState: (d) => {},
                 }}
             >

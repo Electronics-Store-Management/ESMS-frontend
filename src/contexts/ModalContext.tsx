@@ -10,7 +10,7 @@ import { ReactNodeChildren } from "@/types/ReactNodeChildren";
 import { ReactNode, createContext, useState } from "react";
 
 export function ModalProvider({ children }: ReactNodeChildren) {
-    const [modalState, setModalState] = useState<IModalState>(defaultValue);
+    const [modalState, setModalState] = useState<IModalState>(defaultModalStateValue);
 
     return (
         <ModalStateContext.Provider
@@ -32,7 +32,7 @@ export function ModalProvider({ children }: ReactNodeChildren) {
     );
 }
 
-const defaultValue = {
+export const defaultModalStateValue = {
     addProduct: { isOpen: false },
     addStaff: { isOpen: false },
     updateProduct: { isOpen: false },
@@ -42,7 +42,7 @@ const defaultValue = {
 };
 
 export const ModalStateContext = createContext<IModalStateContext>({
-    modalState: defaultValue,
+    modalState: defaultModalStateValue,
     setModalState: () => {},
 });
 

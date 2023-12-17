@@ -9,6 +9,7 @@ import {
     HiDocumentSearch,
     HiShoppingBag,
     HiUserGroup,
+    HiClipboardCheck,
 } from "react-icons/hi";
 
 import COOKIE_NAME from "@/constants/cookies";
@@ -91,6 +92,32 @@ export default function SideBar({ staffInfo }: PropTypes) {
                         >
                             Staff
                         </Sidebar.Item>
+                        <Sidebar.Collapse
+                            theme={sideBarTheme?.collapse}
+                            href={isCollapse ? ROUTES.product : ""}
+                            open={
+                                [ROUTES.category, ROUTES.product].includes(
+                                    routeName,
+                                ) && !isCollapse
+                            }
+                            icon={HiClipboardCheck}
+                            label="Import"
+                        >
+                            <Sidebar.Item
+                                active={routeName === ROUTES.import_bill}
+                                theme={sideBarCollapsedItemTheme?.item}
+                                href={ROUTES.import_bill}
+                            >
+                                Invoices
+                            </Sidebar.Item>
+                            <Sidebar.Item
+                                active={routeName === ROUTES.import}
+                                theme={sideBarCollapsedItemTheme?.item}
+                                href={ROUTES.import}
+                            >
+                                Import goods
+                            </Sidebar.Item>
+                        </Sidebar.Collapse>
                     </Sidebar.ItemGroup>
                 </Sidebar.Items>
                 <div className="absolute w-full left-0 bottom-5 bg-transparent">
@@ -176,6 +203,8 @@ const ROUTES = {
     product: "/product",
     category: "/category",
     staff: "/staff",
+    import_bill: "/import_bill",
+    import: "/import",
 };
 
 const sideBarTheme: CustomFlowbiteTheme["sidebar"] = {

@@ -19,6 +19,7 @@ import { useSearchParams } from "next/navigation";
 import { useQuery } from "react-query";
 import Staff from "@/types/entity/Staff";
 import viewStaffList from "@/api/staff/viewStaffList.api";
+import { useCreateStaffModal } from "@/components/CreateStaffForm/CreateStaffFormModal";
 
 export default function Page() {
     const searchParams = useSearchParams();
@@ -27,7 +28,7 @@ export default function Page() {
     // const productKeyword = searchParams.get(SEARCH_PARAMS.productName) || "";
     // const price = searchParams.get(SEARCH_PARAMS.price) || "";
 
-    // const { openCreateProductModal } = useCreateProductModal();
+    const { openCreateStaffModal } = useCreateStaffModal();
     // const { openUpdateProductModal } = useUpdateProductModal();
     // const { openClaimModal } = useClaimModal();
 
@@ -48,7 +49,7 @@ export default function Page() {
                 <div className=" flex justify-end gap-8">
                     <Button
                         size="sm"
-                        // onClick={() => openCreateProductModal(refetch)}
+                        onClick={() => openCreateStaffModal(refetch)}
                     >
                         <HiPlus className=" w-4 h-4 mr-2" />
                         Add new staff

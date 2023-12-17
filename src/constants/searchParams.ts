@@ -4,6 +4,10 @@ const SEARCH_PARAMS = {
     categoryName: "category_name",
     price: "price",
     name: "name",
+    importCode: "import_code",
+    // rangeDate: "history",
+    endDate: "end_date",
+    startDate: "start_date",
 };
 
 export default SEARCH_PARAMS;

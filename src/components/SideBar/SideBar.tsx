@@ -8,6 +8,7 @@ import {
     HiChevronLeft,
     HiDocumentSearch,
     HiShoppingBag,
+    HiClipboardCheck,
 } from "react-icons/hi";
 
 import useLocalStorage from "../../hooks/useLocalStorage";
@@ -87,6 +88,32 @@ export default function SideBar() {
                                 Category
                             </Sidebar.Item>
                         </Sidebar.Collapse>
+                        <Sidebar.Collapse
+                            theme={sideBarTheme?.collapse}
+                            href={isCollapse ? ROUTES.product : ""}
+                            open={
+                                [ROUTES.category, ROUTES.product].includes(
+                                    routeName,
+                                ) && !isCollapse
+                            }
+                            icon={HiClipboardCheck}
+                            label="Import"
+                        >
+                            <Sidebar.Item
+                                active={routeName === ROUTES.import_bill}
+                                theme={sideBarCollapsedItemTheme?.item}
+                                href={ROUTES.import_bill}
+                            >
+                                Invoices
+                            </Sidebar.Item>
+                            <Sidebar.Item
+                                active={routeName === ROUTES.import}
+                                theme={sideBarCollapsedItemTheme?.item}
+                                href={ROUTES.import}
+                            >
+                                Import goods
+                            </Sidebar.Item>
+                        </Sidebar.Collapse>
                     </Sidebar.ItemGroup>
                 </Sidebar.Items>
             </Sidebar>
@@ -94,7 +121,13 @@ export default function SideBar() {
     );
 }
 
-const ROUTES = { home: "/home", product: "/product", category: "/category" };
+const ROUTES = {
+    home: "/home",
+    product: "/product",
+    category: "/category",
+    import_bill: "/import_bill",
+    import: "/import",
+};
 
 const sideBarTheme: CustomFlowbiteTheme["sidebar"] = {
     root: {
@@ -191,3 +224,4 @@ const sideBarCollapsedItemTheme: CustomFlowbiteTheme["sidebar"] = {
         listItem: "",
     },
 };
+

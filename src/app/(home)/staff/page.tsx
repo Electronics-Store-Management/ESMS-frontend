@@ -17,41 +17,41 @@ import ProductPreview from "@/types/entity/ProductPreview";
 import FORMATTER from "@/utils/formatter";
 import { useSearchParams } from "next/navigation";
 import { useQuery } from "react-query";
+import Staff from "@/types/entity/Staff";
+import viewStaffList from "@/api/staff/viewStaffList.api";
 
 export default function Page() {
     const searchParams = useSearchParams();
 
-    const category = searchParams.get(SEARCH_PARAMS.categoryName) || "";
-    const productKeyword = searchParams.get(SEARCH_PARAMS.productName) || "";
-    const price = searchParams.get(SEARCH_PARAMS.price) || "";
+    // const category = searchParams.get(SEARCH_PARAMS.categoryName) || "";
+    // const productKeyword = searchParams.get(SEARCH_PARAMS.productName) || "";
+    // const price = searchParams.get(SEARCH_PARAMS.price) || "";
 
-    const { openCreateProductModal } = useCreateProductModal();
-    const { openUpdateProductModal } = useUpdateProductModal();
-    const { openClaimModal } = useClaimModal();
+    // const { openCreateProductModal } = useCreateProductModal();
+    // const { openUpdateProductModal } = useUpdateProductModal();
+    // const { openClaimModal } = useClaimModal();
 
-    const { data, isLoading, refetch } = useQuery<ProductPreview[]>(
-        ["products", productKeyword, category, price],
-        viewProductList,
+    const { data, isLoading, refetch } = useQuery<Staff[]>(
+        ["staffs", ""],
+        viewStaffList,
         {
             retry: false,
         },
     );
 
-    const deleteProductMutation = useDeleteProductMutation(refetch);
+    // const deleteProductMutation = useDeleteProductMutation(refetch);
 
     return (
         <div className="w-full">
             <div className=" w-full grid grid-cols-2">
                 <ProductSearch className="" />
                 <div className=" flex justify-end gap-8">
-                    <CategoryFilter className="" />
-                    <PriceRangeFilter />
                     <Button
                         size="sm"
-                        onClick={() => openCreateProductModal(refetch)}
+                        // onClick={() => openCreateProductModal(refetch)}
                     >
                         <HiPlus className=" w-4 h-4 mr-2" />
-                        Add product
+                        Add new staff
                     </Button>
                 </div>
             </div>
@@ -59,17 +59,7 @@ export default function Page() {
                 <FilterBadge
                     title="Product name"
                     type="search"
-                    searchParamName={SEARCH_PARAMS.productName}
-                />
-                <FilterBadge
-                    title="Category"
-                    searchParamName={SEARCH_PARAMS.categoryName}
-                    type="filter"
-                />
-                <FilterBadge
-                    title="Price"
-                    searchParamName={SEARCH_PARAMS.price}
-                    type="filter"
+                    searchParamName={SEARCH_PARAMS.staffName}
                 />
             </div>
             <p className=" mt-8 mb-4 font-semibold text-yellow-500">
@@ -78,40 +68,58 @@ export default function Page() {
             <DataTable
                 data={data || []}
                 isLoading={isLoading}
-                onDelete={(product) => {
-                    openClaimModal(
-                        <>
-                            Do you want to delete product{" "}
-                            <span>{product.name}</span>
-                        </>,
-                        (confirm) =>
-                            confirm && deleteProductMutation.mutate(product),
-                    );
-                }}
-                onEdit={(product) => {
-                    openUpdateProductModal(product.id, refetch);
-                }}
+                // onDelete={(product) => {
+                //     openClaimModal(
+                //         <>
+                //             Do you want to delete product{" "}
+                //             <span>{product.name}</span>
+                //         </>,
+                //         (confirm) =>
+                //             confirm && deleteProductMutation.mutate(product),
+                //     );
+                // }}
+                // onEdit={(product) => {
+                //     openUpdateProductModal(product.id, refetch);
+                // }}
                 pick={{
                     name: { title: "Name" },
-                    category: { title: "Category" },
-                    price: {
-                        title: "Price",
+                    email: {
+                        title: "Email",
                         className: " font-normal text-secondary-500",
-                        mapper: FORMATTER.toCurrency,
                     },
-                    quantity: {
-                        title: "Quantity",
-                        mapper: (value: number) => value || "0",
+                    phone: {
+                        title: "Phone number",
+                        className: " font-normal text-secondary-500",
                     },
-                    modifiedDate: {
-                        title: "Last update",
+                    citizenId: {
+                        title: "CCCD",
+                        className: " font-normal text-secondary-500",
+                    },
+                    lastOnline: {
+                        title: "Last online",
                         className: " font-normal text-secondary-500",
                         mapper: FORMATTER.toShortDate,
                     },
-                    warrantyPeriod: {
-                        title: "Warranty period",
-                        mapper: (value: number) => `${value} months`,
-                    },
+
+                    // category: { title: "Category" },
+                    // price: {
+                    //     title: "Price",
+                    //     className: " font-normal text-secondary-500",
+                    //     mapper: FORMATTER.toCurrency,
+                    // },
+                    // quantity: {
+                    //     title: "Quantity",
+                    //     mapper: (value: number) => value || "0",
+                    // },
+                    // modifiedDate: {
+                    //     title: "Last update",
+                    //     className: " font-normal text-secondary-500",
+                    //     mapper: FORMATTER.toShortDate,
+                    // },
+                    // warrantyPeriod: {
+                    //     title: "Warranty period",
+                    //     mapper: (value: number) => `${value} months`,
+                    // },
                 }}
             />
         </div>

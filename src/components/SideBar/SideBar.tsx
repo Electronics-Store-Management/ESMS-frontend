@@ -1,12 +1,6 @@
 "use client";
 
-import {
-    Avatar,
-    Card,
-    CustomFlowbiteTheme,
-    Dropdown,
-    Sidebar,
-} from "flowbite-react";
+import { Avatar, CustomFlowbiteTheme, Dropdown, Sidebar } from "flowbite-react";
 import Image from "next/image";
 import {
     HiBookmark,
@@ -14,16 +8,16 @@ import {
     HiChevronLeft,
     HiDocumentSearch,
     HiShoppingBag,
+    HiUserGroup,
 } from "react-icons/hi";
 
-import useLocalStorage from "../../hooks/useLocalStorage";
-import { usePathname } from "next/navigation";
-import LOGO from "../../assets/logo.png";
-import FONT from "../../utils/fontFamily";
-import Staff from "@/types/entity/Staff";
-import { deleteCookie, setCookie } from "cookies-next";
 import COOKIE_NAME from "@/constants/cookies";
-import { useRouter } from "next/navigation";
+import Staff from "@/types/entity/Staff";
+import { deleteCookie } from "cookies-next";
+import { usePathname, useRouter } from "next/navigation";
+import LOGO from "../../assets/logo.png";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import FONT from "../../utils/fontFamily";
 
 export default function SideBar({ staffInfo }: PropTypes) {
     const router = useRouter();
@@ -89,6 +83,14 @@ export default function SideBar({ staffInfo }: PropTypes) {
                                 Category
                             </Sidebar.Item>
                         </Sidebar.Collapse>
+                        <Sidebar.Item
+                            active={routeName === ROUTES.staff}
+                            theme={sideBarCollapsedItemTheme?.item}
+                            href={ROUTES.staff}
+                            icon={HiUserGroup}
+                        >
+                            Staff
+                        </Sidebar.Item>
                     </Sidebar.ItemGroup>
                 </Sidebar.Items>
                 <div className="absolute w-full left-0 bottom-5 bg-transparent">
@@ -169,7 +171,12 @@ export default function SideBar({ staffInfo }: PropTypes) {
     );
 }
 
-const ROUTES = { home: "/home", product: "/product", category: "/category" };
+const ROUTES = {
+    home: "/home",
+    product: "/product",
+    category: "/category",
+    staff: "/staff",
+};
 
 const sideBarTheme: CustomFlowbiteTheme["sidebar"] = {
     root: {

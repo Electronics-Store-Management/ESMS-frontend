@@ -116,5 +116,5 @@ type PropTypes<T> = Omit<
         choseValue?: string;
         isLoading?: boolean;
         onValueChange?: (value?: string) => any;
-        defaultValue?: Category;
+        defaultValue?: any;
     };

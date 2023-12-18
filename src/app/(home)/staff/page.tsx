@@ -20,17 +20,17 @@ import { useQuery } from "react-query";
 import Staff from "@/types/entity/Staff";
 import viewStaffList from "@/api/staff/viewStaffList.api";
 import { useCreateStaffModal } from "@/components/CreateStaffForm/CreateStaffFormModal";
+import deleteStaffAPI, {
+    useDeleteStaffMutation,
+} from "@/api/staff/deleteStaff.api";
+import { useUpdateStaffModal } from "@/components/UpdateStaffForm/UpdateStaffFormModal";
 
 export default function Page() {
     const searchParams = useSearchParams();
 
-    // const category = searchParams.get(SEARCH_PARAMS.categoryName) || "";
-    // const productKeyword = searchParams.get(SEARCH_PARAMS.productName) || "";
-    // const price = searchParams.get(SEARCH_PARAMS.price) || "";
-
     const { openCreateStaffModal } = useCreateStaffModal();
-    // const { openUpdateProductModal } = useUpdateProductModal();
-    // const { openClaimModal } = useClaimModal();
+    const { openUpdateStaffModal } = useUpdateStaffModal();
+    const { openClaimModal } = useClaimModal();
 
     const { data, isLoading, refetch } = useQuery<Staff[]>(
         ["staffs", ""],
@@ -40,12 +40,13 @@ export default function Page() {
         },
     );
 
-    // const deleteProductMutation = useDeleteProductMutation(refetch);
+    const deleteStaffMutation = useDeleteStaffMutation(refetch);
 
     return (
         <div className="w-full">
             <div className=" w-full grid grid-cols-2">
-                <ProductSearch className="" />
+                {/* <ProductSearch className="" /> */}
+                <h1 className=" font-semibold text-2xl">Staff management</h1>
                 <div className=" flex justify-end gap-8">
                     <Button
                         size="sm"
@@ -69,19 +70,18 @@ export default function Page() {
             <DataTable
                 data={data || []}
                 isLoading={isLoading}
-                // onDelete={(product) => {
-                //     openClaimModal(
-                //         <>
-                //             Do you want to delete product{" "}
-                //             <span>{product.name}</span>
-                //         </>,
-                //         (confirm) =>
-                //             confirm && deleteProductMutation.mutate(product),
-                //     );
-                // }}
-                // onEdit={(product) => {
-                //     openUpdateProductModal(product.id, refetch);
-                // }}
+                onDelete={(staff) => {
+                    openClaimModal(
+                        <>
+                            Do you want to delete staff <b>{staff.name}</b>
+                        </>,
+                        (confirm) =>
+                            confirm && deleteStaffMutation.mutate(staff),
+                    );
+                }}
+                onEdit={(staff) => {
+                    openUpdateStaffModal(staff.id, refetch);
+                }}
                 pick={{
                     name: { title: "Name" },
                     email: {
@@ -101,26 +101,6 @@ export default function Page() {
                         className: " font-normal text-secondary-500",
                         mapper: FORMATTER.toShortDate,
                     },
-
-                    // category: { title: "Category" },
-                    // price: {
-                    //     title: "Price",
-                    //     className: " font-normal text-secondary-500",
-                    //     mapper: FORMATTER.toCurrency,
-                    // },
-                    // quantity: {
-                    //     title: "Quantity",
-                    //     mapper: (value: number) => value || "0",
-                    // },
-                    // modifiedDate: {
-                    //     title: "Last update",
-                    //     className: " font-normal text-secondary-500",
-                    //     mapper: FORMATTER.toShortDate,
-                    // },
-                    // warrantyPeriod: {
-                    //     title: "Warranty period",
-                    //     mapper: (value: number) => `${value} months`,
-                    // },
                 }}
             />
         </div>

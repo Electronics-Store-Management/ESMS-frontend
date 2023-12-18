@@ -64,7 +64,7 @@ export type IModalState = {
     updateStaff: IModalStateItem & { staffId?: string };
     updateProduct: IModalStateItem & { productId?: string };
     addCategory: IModalStateItem;
-    updateCategory: IModalStateItem & { productId?: string };
+    updateCategory: IModalStateItem & { categoryId?: string };
     claim: IModalStateItem & {
         message?: ReactNode;
         onResponse?: (confirm: boolean) => any;

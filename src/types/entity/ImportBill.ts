@@ -1,6 +1,7 @@
 import BaseEntity from "./BaseEntity";
+import ProductPreview from "./ProductPreview";
 
-export default interface ImportProduct {
+export default interface ImportProduct extends ProductPreview {
     productId: string;
     quantity: number;
     price: number;

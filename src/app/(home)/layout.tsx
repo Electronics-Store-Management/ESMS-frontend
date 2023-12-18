@@ -35,7 +35,7 @@ export default async function Layout({ children }: ReactNodeChildren) {
             <div className=" w-max z-50">
                 <SideBar staffInfo={staffInfo} />
             </div>
-            <div className=" pt-8 px-5 pr-8 w-full bg-background-normal">
+            <div className=" pt-8 px-5 pr-8 w-full bg-background-normal overflow-hidden">
                 <ModalProvider>{children}</ModalProvider>
             </div>
         </div>

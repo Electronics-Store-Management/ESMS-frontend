@@ -42,7 +42,7 @@ export default function Page() {
     const deleteProductMutation = useDeleteProductMutation(refetch);
 
     return (
-        <div className="w-full">
+        <div className="w-full h-full flex flex-col">
             <div className=" w-full grid grid-cols-2">
                 <ProductSearch className="" />
                 <div className=" flex justify-end gap-8">
@@ -57,7 +57,7 @@ export default function Page() {
                     </Button>
                 </div>
             </div>
-            <div className=" flex gap-5 mt-10">
+            <div className=" flex gap-5 mt-5">
                 <FilterBadge
                     title="Product name"
                     type="search"
@@ -74,12 +74,13 @@ export default function Page() {
                     type="filter"
                 />
             </div>
-            <p className=" mt-8 mb-4 font-semibold text-yellow-500">
+            <p className=" mt-5 font-semibold text-yellow-500">
                 {data && !isLoading ? `${data.length} items` : "Loading..."}
             </p>
             <DataTable
                 data={data || []}
                 isLoading={isLoading}
+                className="-mr-8 pr-8 mt-4"
                 onDelete={(product) => {
                     openClaimModal(
                         <>

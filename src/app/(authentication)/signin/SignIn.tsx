@@ -1,5 +1,7 @@
 "use client";
 import { setCookie } from "cookies-next";
+import Image from "next/image";
+import LOGO from "../../../assets/logo.png";
 
 import Button from "@/components/Button/Button";
 import CheckBox from "@/components/Checkbox/CheckBox";
@@ -80,6 +82,13 @@ export default function SignIn() {
             <div className=" w-max min-w-[550px] rounded-3xl bg-white grid place-items-center">
                 <div className=" w-full px-20 py-16">
                     <div className="relative w-fit mx-auto">
+                        <Image
+                            className="absolute top-0 -left-10"
+                            src={LOGO}
+                            width={30}
+                            height={30}
+                            alt="logo"
+                        />
                         <h1 className=" mb-14 text-3xl text-center font-semibold text-secondary-900">
                             Electronic Store
                         </h1>

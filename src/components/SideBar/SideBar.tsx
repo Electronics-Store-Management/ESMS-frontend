@@ -8,6 +8,7 @@ import {
     HiChevronLeft,
     HiDocumentSearch,
     HiShoppingBag,
+    HiSave,
     HiUserGroup,
     HiClipboardCheck,
 } from "react-icons/hi";
@@ -114,6 +115,7 @@ export default function SideBar({ staffInfo }: PropTypes) {
                                 active={routeName === ROUTES.import}
                                 theme={sideBarCollapsedItemTheme?.item}
                                 href={ROUTES.import}
+                                icon={HiSave}
                             >
                                 Import goods
                             </Sidebar.Item>

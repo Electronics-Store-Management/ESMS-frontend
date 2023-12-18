@@ -138,7 +138,7 @@ const Page = () => {
                     readOnly
                 />
             </div>
-            <div className="col-span-2">
+            <div className="col-span-2 overflow-y-auto">
                 <div className=" flex gap-5 items-center">
                     <ProductSearch className=" " />
                     <FilterBadge

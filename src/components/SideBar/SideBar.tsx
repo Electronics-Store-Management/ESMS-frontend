@@ -90,9 +90,9 @@ export default function SideBar() {
                         </Sidebar.Collapse>
                         <Sidebar.Collapse
                             theme={sideBarTheme?.collapse}
-                            href={isCollapse ? ROUTES.product : ""}
+                            href={isCollapse ? ROUTES.import : ""}
                             open={
-                                [ROUTES.category, ROUTES.product].includes(
+                                [ROUTES.category, ROUTES.import].includes(
                                     routeName,
                                 ) && !isCollapse
                             }

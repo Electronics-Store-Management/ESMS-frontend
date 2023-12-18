@@ -73,9 +73,11 @@ export default React.forwardRef(function TextInput(
 
     return (
         <div className={className}>
-            <div className="mb-2 block">
-                <Label htmlFor={title} value={title} />
-            </div>
+            {title && (
+                <div className="mb-2 block">
+                    <Label htmlFor={title} value={title} />
+                </div>
+            )}
             <div className="flex w-full">
                 <_TextInput
                     theme={customTheme}
@@ -100,7 +102,7 @@ export default React.forwardRef(function TextInput(
 });
 
 type PropTypes = {
-    title: string;
+    title?: string;
     type?: HTMLInputTypeAttribute;
     placeholder?: string;
     error?: boolean;

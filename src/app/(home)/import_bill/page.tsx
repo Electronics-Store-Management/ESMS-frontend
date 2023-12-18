@@ -3,8 +3,6 @@
 import viewImportList from "@/api/import/viewImportList.api";
 import DataTable from "@/components/DataTable/DataTable";
 import ImportBillDateFilter from "@/components/ImportBillDateFilter/ImportBillDateFilter";
-import ImportBillSearch from "@/components/ImportBillSearch/ImportBillSearch";
-import SEARCH_PARAMS from "@/constants/searchParams";
 import ImportBill from "@/types/entity/ImportBill";
 import { useSearchParams } from "next/navigation";
 import React from "react";

@@ -55,7 +55,6 @@ const Page = () => {
                         id: { title: "Code" },
                         supplierId: { title: "Supplier" },
                         staffId: { title: "Staff" },
-                        createdDate: { title: "Created Date" },
                     }}
                 />
             </div>
@@ -64,4 +63,3 @@ const Page = () => {
 };
 
 export default Page;
-

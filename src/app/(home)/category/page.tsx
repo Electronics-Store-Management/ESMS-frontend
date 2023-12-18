@@ -13,11 +13,12 @@ import DataTable from "@/components/DataTable/DataTable";
 import CategorySearch from "@/components/CategorySearch/CategorySearch";
 import { useDeleteCategoryMutation } from "@/api/category/deleteCategory.api";
 import { useUpdateCategoryModal } from "@/components/UpdateCategoryForm/UpdateCategoryFormModal";
+import FilterBadge from "@/components/FilterBadge/FilterBadge";
 
 export default function Page() {
     const searchParams = useSearchParams();
 
-    const categoryKeyword = searchParams.get(SEARCH_PARAMS.name) || "";
+    const categoryKeyword = searchParams.get(SEARCH_PARAMS.categoryName) || "";
 
     const { openCreateCategoryModal } = useCreateCategoryModal();
     const { openUpdateCategoryModal } = useUpdateCategoryModal();
@@ -37,10 +38,13 @@ export default function Page() {
         <div className="grid grid-cols-4 gap-5">
             <div></div>
             <div className="col-span-2">
-                <CategorySearch className="w-full mb-8" />
-                <p className="text-yellow-500 text-sm font-semibold mb-4">
-                    {data?.length} items
-                </p>
+                <CategorySearch className="w-full mb-4" />
+                <FilterBadge
+                    title={"Category name"}
+                    searchParamName={SEARCH_PARAMS.categoryName}
+                    type={"search"}
+                    className=" mb-6"
+                />
                 <DataTable
                     data={data || []}
                     isLoading={isLoading}
@@ -76,4 +80,3 @@ export default function Page() {
         </div>
     );
 }
-

@@ -9,7 +9,7 @@ import Button from "../Button/Button";
 import SEARCH_PARAMS from "@/constants/searchParams";
 import withQuery from "@/utils/withQuery";
 import Category from "@/types/entity/Category";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function CategorySearchUI({
     onSearch = () => {},
@@ -19,6 +19,7 @@ export default function CategorySearchUI({
     ...props
 }: PropTypes) {
     const router = useRouter();
+    const pathname = usePathname();
     const searchParams = useSearchParams();
 
     const categoryNameRef = useRef<HTMLInputElement>(null);
@@ -29,7 +30,9 @@ export default function CategorySearchUI({
                 <TextInputFlowbite
                     ref={categoryNameRef}
                     theme={textInputTheme}
-                    defaultValue={searchParams.get(SEARCH_PARAMS.name) || ""}
+                    defaultValue={
+                        searchParams.get(SEARCH_PARAMS.categoryName) || ""
+                    }
                     placeholder="Enter category name here..."
                     sizing="md"
                 />
@@ -39,8 +42,8 @@ export default function CategorySearchUI({
                     isLoading={isCategoryLoading}
                     onClick={() => {
                         router.push(
-                            withQuery("/category", {
-                                [SEARCH_PARAMS.name]:
+                            withQuery(pathname, {
+                                [SEARCH_PARAMS.categoryName]:
                                     categoryNameRef.current?.value,
                             }),
                         );
@@ -71,4 +74,3 @@ type PropTypes = React.ComponentPropsWithRef<"div"> & {
     categories?: Category[];
     className?: string;
 };
-

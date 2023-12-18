@@ -17,11 +17,14 @@ export default function DataTable<T extends Object & BaseEntity>({
     ...props
 }: PropTypes<T>) {
     return (
-        <div className={`overflow-y-auto ${className}`} {...props}>
+        <div className={`overflow-y-auto pb-8 ${className}`} {...props}>
+            <p className="text-yellow-500 text-sm font-semibold mb-4">
+                {data?.length} items
+            </p>
             {isLoading ? (
-                <TableSketon />
+                <TableSketon col={Object.keys(pick).length} />
             ) : (
-                <Table className="mb-5" theme={tableTheme} hoverable>
+                <Table theme={tableTheme} hoverable>
                     <Table.Head theme={tableTheme?.head}>
                         <Table.HeadCell
                             theme={tableTheme?.head?.cell}

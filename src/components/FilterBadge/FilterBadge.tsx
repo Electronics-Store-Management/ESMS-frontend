@@ -1,5 +1,5 @@
 import { withoutQuery } from "@/utils/withQuery";
-import { Badge, CustomFlowbiteTheme } from "flowbite-react";
+import { Badge, BadgeProps, CustomFlowbiteTheme } from "flowbite-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { HiFilter, HiSearch, HiOutlineX } from "react-icons/hi";
 
@@ -9,6 +9,7 @@ export default function FilterBadge({
     type,
     onClick = () => {},
     onClose = () => {},
+    ...props
 }: PropTypes) {
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -20,6 +21,7 @@ export default function FilterBadge({
             onClick={onClick}
             size="sm"
             {...badgeStyle[type]}
+            {...props}
             theme={customBadgeThem}
         >
             <div className=" flex gap-2 items-end">
@@ -59,7 +61,7 @@ const badgeStyle: {
 
 const customBadgeThem: CustomFlowbiteTheme["badge"] = {
     root: {
-        base: "flex h-fit items-center gap-1 font-semibold",
+        base: "flex w-fit h-fit items-center gap-1 font-semibold",
         color: {
             info: "bg-cyan-100 text-cyan-800 dark:bg-cyan-200 dark:text-cyan-800 group-hover:bg-cyan-200 dark:group-hover:bg-cyan-300",
             gray: "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 group-hover:bg-gray-200 dark:group-hover:bg-gray-600",
@@ -98,7 +100,7 @@ const customBadgeThem: CustomFlowbiteTheme["badge"] = {
     },
 };
 
-type PropTypes = {
+type PropTypes = BadgeProps & {
     title: string;
     searchParamName: string;
     type: FilterBadgeType;

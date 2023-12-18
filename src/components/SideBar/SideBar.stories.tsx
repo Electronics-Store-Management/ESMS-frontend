@@ -68,7 +68,21 @@ export const Products: Story = {
 };
 
 export const Imports: Story = {
-    args: {},
+    args: {
+        staffInfo: {
+            name: "",
+            phone: "",
+            email: "",
+            role: "ADMIN",
+            lastOnline: "",
+            citizenId: "",
+            accountNonExpired: false,
+            credentialsNonExpired: false,
+            accountNonLocked: false,
+            enabled: false,
+            id: "",
+        },
+    },
     parameters: {
         nextjs: {
             appDirectory: true,
@@ -78,4 +92,3 @@ export const Imports: Story = {
         },
     },
 };
-

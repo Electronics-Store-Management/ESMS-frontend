@@ -105,11 +105,11 @@ export default function Page() {
                         title: "Quantity",
                         mapper: (value: number) => value || "0",
                     },
-                    modifiedDate: {
-                        title: "Last update",
-                        className: " font-normal text-secondary-500",
-                        mapper: FORMATTER.toShortDate,
-                    },
+                    // modifiedDate: {
+                    //     title: "Last update",
+                    //     className: " font-normal text-secondary-500",
+                    //     mapper: FORMATTER.toShortDate,
+                    // },
                     warrantyPeriod: {
                         title: "Warranty period",
                         mapper: (value: number) => `${value} months`,

@@ -66,3 +66,16 @@ export const Products: Story = {
         },
     },
 };
+
+export const Imports: Story = {
+    args: {},
+    parameters: {
+        nextjs: {
+            appDirectory: true,
+            navigation: {
+                pathname: "/import_bill",
+            },
+        },
+    },
+};
+

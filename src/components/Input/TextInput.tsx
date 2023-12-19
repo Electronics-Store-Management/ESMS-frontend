@@ -6,8 +6,7 @@ import {
     TextInputProps,
     TextInput as _TextInput,
 } from "flowbite-react";
-import React, { ForwardedRef, ReactNode } from "react";
-import { HTMLInputTypeAttribute } from "react";
+import React, { ForwardedRef, HTMLInputTypeAttribute, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
 export default React.forwardRef(function TextInput(
@@ -75,7 +74,11 @@ export default React.forwardRef(function TextInput(
         <div className={className}>
             {title && (
                 <div className="mb-2 block">
-                    <Label htmlFor={title} value={title} />
+                    <Label
+                        htmlFor={title}
+                        className="font-semibold "
+                        value={title}
+                    />
                 </div>
             )}
             <div className="flex w-full">
@@ -92,6 +95,7 @@ export default React.forwardRef(function TextInput(
                     addon={addon}
                     {...props}
                     required
+                    autoComplete="off"
                 />
                 {rightAddon && (
                     <span className={theme.rightAddon}>{rightAddon}</span>
@@ -112,4 +116,3 @@ type PropTypes = {
     rightAddonClassName?: string;
 } & React.ComponentPropsWithRef<"input"> &
     TextInputProps;
-

@@ -1,7 +1,7 @@
 import BaseEntity from "./BaseEntity";
 import ProductPreview from "./ProductPreview";
 
-export default interface ImportProduct extends ProductPreview {
+export interface ImportProduct extends ProductPreview {
     productId: string;
     quantity: number;
     price: number;
@@ -14,4 +14,3 @@ export default interface ImportBill extends BaseEntity {
     paymentMethod: string;
     importProducts: ImportProduct[];
 }
-

@@ -66,7 +66,7 @@ export default function UpdateCategoryForm({ categoryId }: PropTypes) {
     return (
         <>
             {isCategoryLoading ? (
-                <Loading />
+                <Loading className="p-8" />
             ) : (
                 <UpdateCategoryFormUI
                     onSubmitData={(data) => mutate(data)}
@@ -81,4 +81,3 @@ export default function UpdateCategoryForm({ categoryId }: PropTypes) {
 type PropTypes = {
     categoryId: string;
 };
-

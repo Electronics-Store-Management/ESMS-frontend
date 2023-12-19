@@ -72,7 +72,7 @@ export default function UpdateStaffForm({ staffId }: PropTypes) {
     });
 
     return isStaffLoading ? (
-        <Loading />
+        <Loading className="p-8" />
     ) : (
         <UpdateStaffFormUI
             staff={staff}

@@ -1,10 +1,10 @@
 import { ReactNodeChildren } from "@/types/ReactNodeChildren";
-import FONT from "../../utils/fontFamily";
-import { CustomFlowbiteTheme, Dropdown } from "flowbite-react";
-import { Controller } from "react-hook-form";
-import React, { useState } from "react";
 import BaseEntity from "@/types/entity/BaseEntity";
 import Category from "@/types/entity/Category";
+import { CustomFlowbiteTheme, Dropdown } from "flowbite-react";
+import React, { useState } from "react";
+import { Controller } from "react-hook-form";
+import FONT from "../../utils/fontFamily";
 
 export default function ControllerSelectInput<
     T extends BaseEntity & { name: string },
@@ -20,7 +20,7 @@ export default function ControllerSelectInput<
     className,
     ...props
 }: PropTypes<T>) {
-    const [selected, setSelected] = useState<string>(defaultValue?.name || "");
+    const [selected, setSelected] = useState<string>(defaultValue || "");
 
     return (
         <div className={` py-[10px] ${className}`} {...props}>
@@ -116,5 +116,5 @@ type PropTypes<T> = Omit<
         choseValue?: string;
         isLoading?: boolean;
         onValueChange?: (value?: string) => any;
-        defaultValue?: any;
+        defaultValue?: string;
     };

@@ -11,6 +11,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@floating-ui/react": "^0.26.4",
     "axios": "^1.6.2",
     "cookies-next": "^4.1.0",
     "flowbite": "^2.1.1",

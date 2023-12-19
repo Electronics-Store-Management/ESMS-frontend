@@ -6,6 +6,7 @@ import {
     CustomFlowbiteTheme,
     Button as _Button,
     Spinner,
+    ButtonProps,
 } from "flowbite-react";
 
 import React from "react";
@@ -57,7 +58,7 @@ const getTheme = (isFill: boolean): CustomFlowbiteTheme["button"] => {
 };
 
 type PropTypes = ReactNodeChildren &
-    React.ComponentProps<typeof _Button> &
+    ButtonProps &
     React.ComponentPropsWithRef<"button"> & {
         fill?: boolean;
         size?: keyof ButtonSizes;

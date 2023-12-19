@@ -31,13 +31,15 @@ export default async function Layout({ children }: ReactNodeChildren) {
     const staffInfo: Staff = await staffInfoResponse.json();
 
     return (
-        <div className=" w-screen h-screen flex">
-            <div className=" w-max z-50">
-                <SideBar staffInfo={staffInfo} />
+        <ModalProvider>
+            <div className=" w-screen h-screen flex">
+                <div className=" w-max z-50">
+                    <SideBar staffInfo={staffInfo} />
+                </div>
+                <div className=" py-8 pl-10 pr-8 w-full h-screen bg-background-normal overflow-hidden">
+                    {children}
+                </div>
             </div>
-            <div className=" pt-8 px-5 pr-8 w-full bg-background-normal overflow-hidden">
-                <ModalProvider>{children}</ModalProvider>
-            </div>
-        </div>
+        </ModalProvider>
     );
 }

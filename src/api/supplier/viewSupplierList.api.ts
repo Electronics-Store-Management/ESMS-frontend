@@ -8,7 +8,7 @@ export default async function viewSupplierList({
 }) {
     const [_key, name] = queryKey;
     const response = await apiInstance.get("/supplier", {
-        // params: { name },
+        params: { name },
     });
 
     const suppliers = response.data as Supplier[];
@@ -17,4 +17,3 @@ export default async function viewSupplierList({
 
     return suppliers;
 }
-

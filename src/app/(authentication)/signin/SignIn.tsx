@@ -5,19 +5,17 @@ import LOGO from "../../../assets/logo.png";
 
 import Button from "@/components/Button/Button";
 import CheckBox from "@/components/Checkbox/CheckBox";
-import TextInput from "@/components/Input/TextInput";
 import Link from "@/components/Typography/Link";
 import API from "@/constants/apiEnpoint";
-import TokenContext from "@/contexts/TokenContext";
 import { publicFetcher } from "@/hooks/usePublicRoute";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useContext, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { HiArrowRight, HiMail } from "react-icons/hi";
 
-import { Yesteryear } from "next/font/google";
 import ControllerTextInput from "@/components/ControllerInput/ControllerTextInput";
 import SEARCH_PARAMS from "@/constants/searchParams";
+import { Yesteryear } from "next/font/google";
 
 const yesteryear = Yesteryear({
     weight: "400",
@@ -28,8 +26,6 @@ const yesteryear = Yesteryear({
 export default function SignIn() {
     const router = useRouter();
     const searchParams = useSearchParams();
-
-    const { setToken } = useContext(TokenContext);
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -55,11 +51,8 @@ export default function SignIn() {
 
         if (res.status === 200) {
             const token = await res.json();
-            setToken({
-                accessToken: token.access_token,
-                refreshToken: token.refresh_token,
-            });
             setCookie("accessToken", token.access_token);
+            setCookie("refreshToken", token.refresh_token);
             router.push(
                 decodeURI(searchParams.get(SEARCH_PARAMS.redirectUri) || "/"),
             );

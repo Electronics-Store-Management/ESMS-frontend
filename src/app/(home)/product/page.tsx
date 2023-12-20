@@ -1,4 +1,5 @@
 "use client";
+
 import { HiPlus } from "react-icons/hi";
 
 import { useDeleteProductMutation } from "@/api/product/deleteProduct.api";
@@ -19,8 +20,6 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useQuery } from "react-query";
 
 export default function Page() {
-    const router = useRouter();
-    const pathname = usePathname();
     const searchParams = useSearchParams();
 
     const category = searchParams.get(SEARCH_PARAMS.categoryName) || "";
@@ -74,9 +73,6 @@ export default function Page() {
                     type="filter"
                 />
             </div>
-            <p className=" mt-5 font-semibold text-yellow-500">
-                {data && !isLoading ? `${data.length} items` : "Loading..."}
-            </p>
             <DataTable
                 data={data || []}
                 isLoading={isLoading}
@@ -106,11 +102,6 @@ export default function Page() {
                         title: "Quantity",
                         mapper: (value: number) => value || "0",
                     },
-                    // modifiedDate: {
-                    //     title: "Last update",
-                    //     className: " font-normal text-secondary-500",
-                    //     mapper: FORMATTER.toShortDate,
-                    // },
                     warrantyPeriod: {
                         title: "Warranty period",
                         mapper: (value: number) => `${value} months`,

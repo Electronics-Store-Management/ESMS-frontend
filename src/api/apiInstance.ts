@@ -4,7 +4,7 @@ import axios from "axios";
 import { ILoginResponse } from "./types";
 import IToken from "@/types/Token";
 import SEARCH_PARAMS from "@/constants/searchParams";
-import { setCookie } from "cookies-next";
+import { getCookie, setCookie } from "cookies-next";
 
 const apiInstance = axios.create({
     baseURL: API.baseUrl,
@@ -13,29 +13,30 @@ const apiInstance = axios.create({
 apiInstance.defaults.headers.common["Content-Type"] = "application/json";
 
 export const refreshAccessTokenFn = async () => {
-    const tokenStr = localStorage.getItem("token") || "";
-    if (tokenStr) {
-        const token = JSON.parse(tokenStr) as IToken;
+    const refreshToken = getCookie("refreshToken");
+    if (refreshToken) {
         try {
             const response = await apiInstance.post<ILoginResponse>(
                 `auth/refresh-token`,
                 {},
                 {
                     headers: {
-                        Authorization: `Bearer ${token.refreshToken}`,
+                        Authorization: `Bearer ${refreshToken}`,
                     },
                     baseURL: API.baseUrl,
                 },
             );
             const tokenRes = response.data;
-            localStorage.setItem(
-                "token",
-                JSON.stringify({
-                    accessToken: tokenRes.access_token,
-                    refreshToken: tokenRes.refresh_token,
-                } as IToken),
-            );
+            // getCookie("accessToken")
+            // localStorage.setItem(
+            //     "token",
+            //     JSON.stringify({
+            //         accessToken: tokenRes.access_token,
+            //         refreshToken: tokenRes.refresh_token,
+            //     } as IToken),
+            // );
             setCookie("accessToken", tokenRes.access_token);
+            setCookie("refreshToken", tokenRes.refresh_token);
         } catch (error) {
             localStorage.setItem("token", "{}");
             window.location.replace(
@@ -47,10 +48,11 @@ export const refreshAccessTokenFn = async () => {
 
 const authenticationInterceptor = apiInstance.interceptors.request.use(
     (request) => {
-        const tokenStr = localStorage.getItem("token") || "";
-        if (tokenStr && !request.headers.getAuthorization()) {
-            const token = JSON.parse(tokenStr) as IToken;
-            request.headers.setAuthorization(`Bearer ${token.accessToken}`);
+        // const tokenStr = localStorage.getItem("token") || "";
+        const accessToken = getCookie("accessToken");
+        if (accessToken && !request.headers.getAuthorization()) {
+            // const token = JSON.parse(tokenStr) as IToken;
+            request.headers.setAuthorization(`Bearer ${accessToken}`);
             request.withCredentials = true;
         }
         return request;

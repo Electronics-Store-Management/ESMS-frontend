@@ -64,8 +64,6 @@ const Page = () => {
         return request;
     }
 
-    console.log({ a: getRequest() });
-
     return (
         <div className=" h-full col-span-2 flex flex-col overflow-y-auto pl-2">
             <p className=" font-semibold text-color-heading text-2xl">

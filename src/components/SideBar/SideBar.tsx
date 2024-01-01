@@ -13,6 +13,8 @@ import {
     HiClipboardCheck,
 } from "react-icons/hi";
 
+import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
+
 import COOKIE_NAME from "@/constants/cookies";
 import Staff from "@/types/entity/Staff";
 import { deleteCookie } from "cookies-next";
@@ -108,6 +110,7 @@ export default function SideBar({ staffInfo }: PropTypes) {
                                 active={routeName === ROUTES.import_bill}
                                 theme={sideBarCollapsedItemTheme?.item}
                                 href={ROUTES.import_bill}
+                                icon={LiaFileInvoiceDollarSolid}
                             >
                                 Invoices
                             </Sidebar.Item>

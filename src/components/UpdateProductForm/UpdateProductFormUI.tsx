@@ -60,7 +60,7 @@ export default function UpdateProductFormUI({
                             control={control}
                             name="categoryId"
                             title="Category"
-                            defaultValue={product?.category}
+                            defaultValue={product?.category?.name}
                             isLoading={isCategoryLoading}
                             items={categories}
                             choseValue={getValues("categoryId")}

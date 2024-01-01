@@ -31,7 +31,6 @@ export default function SearchInput({
     return (
         <div className={`relative ${className}`}>
             <TextInput
-                onRightIconClick={() => setQuerySearchText("")}
                 onFocus={() => setIsOpen(true)}
                 onBlur={() => setTimeout(() => setIsOpen(false), 300)}
                 value={searchText}
@@ -48,6 +47,7 @@ export default function SearchInput({
                                 <p
                                     className=" px-3 py-2 text-sm hover:bg-background-hover transition-all duration-200 cursor-pointer"
                                     onClick={() => {
+                                        setSearchText("");
                                         onSelect?.(item);
                                     }}
                                     key={item.id}

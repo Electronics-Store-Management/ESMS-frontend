@@ -25,33 +25,35 @@ export default function Page() {
                 className="w-full mt-5"
                 onSelect={(supplier) => setSupplier(supplier)}
             />
+            {supplier ? (
+                <div className=" p-5 mt-10 flex flex-col gap-3 border-[1px] rounded-2xl ">
+                    <TextInput
+                        title="Name"
+                        icon={HiUser}
+                        value={supplier?.name}
+                        readOnly
+                    />
+                    <TextInput
+                        title="Email"
+                        icon={HiMail}
+                        value={supplier?.email}
+                        readOnly
+                    />
+                    <TextInput
+                        title="Phone number"
+                        icon={HiPhone}
+                        value={supplier?.phone}
+                        readOnly
+                    />
+                    <TextInput
+                        title="Address"
+                        icon={HiLocationMarker}
+                        value={supplier?.address}
+                        readOnly
+                    />
+                </div>
+            ) : null}
 
-            <br />
-
-            <TextInput
-                title="Name"
-                icon={HiUser}
-                value={supplier?.name}
-                readOnly
-            />
-            <TextInput
-                title="Email"
-                icon={HiMail}
-                value={supplier?.email}
-                readOnly
-            />
-            <TextInput
-                title="Phone number"
-                icon={HiPhone}
-                value={supplier?.phone}
-                readOnly
-            />
-            <TextInput
-                title="Address"
-                icon={HiLocationMarker}
-                value={supplier?.address}
-                readOnly
-            />
             <br />
         </div>
     );

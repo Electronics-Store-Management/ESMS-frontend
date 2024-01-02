@@ -50,7 +50,7 @@ export default async function Page({ params: { id } }: PropTypes) {
                 {products.map(({ product, quantity, price }) => (
                     <div
                         key={product.id}
-                        className=" py-2 px-4 rounded-lg flex justify-between items-center duration-150 hover:bg-background-hover cursor-pointer"
+                        className=" py-2 -mx-3 px-3 rounded-lg flex justify-between items-center duration-150 hover:bg-background-hover cursor-pointer"
                     >
                         <div>
                             <p className=" font-semibold">{product.name}</p>
@@ -68,7 +68,7 @@ export default async function Page({ params: { id } }: PropTypes) {
                         </p>
                     </div>
                 ))}
-                <div className=" mt-4 py-2 px-4 rounded-lg flex justify-between items-center bg-secondary-50">
+                <div className=" mt-4 py-2 -mx-3 px-3 rounded-lg flex justify-between items-center bg-secondary-50">
                     <p className=" font-semibold">Total</p>
                     <p className=" text-base font-semibold">
                         {FORMATTER.toCurrency(totalPrice)}

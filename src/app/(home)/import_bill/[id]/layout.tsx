@@ -8,10 +8,10 @@ export default function Layout(props: {
     supplier: ReactNode;
 }) {
     return (
-        <div className=" col-span-2 overflow-auto p-5 flex flex-col gap-3 rounded-lg border-[1px] border-secondary-200">
+        <div className=" w-1/3 overflow-auto py-5 px-8 flex flex-col gap-3 rounded-lg border-[1px] border-secondary-200">
             {props.supplier}
             {props.staff}
-            {props.basicInfo}
+            <div className="mt-3">{props.basicInfo}</div>
         </div>
     );
 }

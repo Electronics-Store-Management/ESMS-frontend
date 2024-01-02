@@ -70,11 +70,11 @@ const Layout = ({ children }: ReactNodeChildren) => {
                     onSearch={(start, end) => onDateFilter(start, end)}
                 />
             </div>
-            <div className=" w-full h-full overflow-auto grid grid-cols-6 gap-5">
+            <div className=" w-full h-full overflow-auto flex gap-5">
                 <DataTable
                     data={data || []}
                     isLoading={isLoading}
-                    className=" col-span-4"
+                    className="flex-1"
                     isEdit={false}
                     onClickRow={(row: ImportBillResponse) => {
                         router.push(

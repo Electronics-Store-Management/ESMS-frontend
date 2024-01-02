@@ -23,7 +23,7 @@ export default async function Page({ params: { id } }: PropTypes) {
 
         return (
             <Avatar
-                className="p-3 flex justify-start items-start rounded-lg hover:bg-background-hover cursor-pointer "
+                className="p-3 -mx-3 flex justify-start items-start rounded-lg hover:bg-background-hover cursor-pointer "
                 rounded
                 
                 placeholderInitials={supplier.name

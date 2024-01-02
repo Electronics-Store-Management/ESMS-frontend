@@ -75,9 +75,13 @@ export default React.forwardRef(function TextInput(
     return (
         <div className={className}>
             {readOnly ? (
-                <div className=" flex flex-col gap-1">
-                    <p className=" text-sm text-secondary-600">{title}</p>
-                    <p className=" text-base font-medium">{value}</p>
+                <div className=" flex flex-col gap-[2px]">
+                    <p className=" text-sm text-secondary-600 flex gap-1 items-center">
+                        {title}
+                    </p>
+                    <p className=" text-base font-medium flex gap-1 items-center">
+                        {value}
+                    </p>
                 </div>
             ) : (
                 <>
@@ -119,14 +123,13 @@ export default React.forwardRef(function TextInput(
     );
 });
 
-type PropTypes = {
-    title?: string;
-    type?: HTMLInputTypeAttribute;
-    placeholder?: string;
-    error?: boolean;
-    onRightIconClick?: () => void;
-    rightAddon?: ReactNode;
-    addonClassName?: string;
-    rightAddonClassName?: string;
-} & React.ComponentPropsWithRef<"input"> &
-    TextInputProps;
+type PropTypes = React.ComponentPropsWithRef<"input"> &
+    TextInputProps & {
+        type?: HTMLInputTypeAttribute;
+        placeholder?: string;
+        error?: boolean;
+        onRightIconClick?: () => void;
+        rightAddon?: ReactNode;
+        addonClassName?: string;
+        rightAddonClassName?: string;
+    };

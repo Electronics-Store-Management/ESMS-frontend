@@ -8,6 +8,14 @@ const API = {
     },
     staff: {
         getStaffProfile: `${BASE_API}/staff/profile`,
+        getDetailByUsername: (email: string) =>
+            `${BASE_API}/staff/username?email=${email}`,
+    },
+    supplier: {
+        getDetail: (id: string) => `${BASE_API}/supplier/${id}`,
+    },
+    importBill: {
+        getDetail: (id: string) => `${BASE_API}/import/${id}`,
     },
 };
 

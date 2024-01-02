@@ -17,10 +17,10 @@ export default function DataTable<T extends Object & BaseEntity>({
     ...props
 }: PropTypes<T>) {
     return (
-        <div className={`overflow-y-auto pb-8 ${className}`} {...props}>
-            <p className="text-yellow-500 text-sm font-semibold mb-4">
+        <div className={`overflow-y-auto w-full pb-8 ${className}`} {...props}>
+            {/* <p className="text-yellow-500 text-sm font-semibold mb-4">
                 {data?.length} items
-            </p>
+            </p> */}
             {isLoading ? (
                 <TableSketon col={Object.keys(pick).length} />
             ) : (

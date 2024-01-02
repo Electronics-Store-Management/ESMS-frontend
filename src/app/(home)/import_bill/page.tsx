@@ -3,21 +3,35 @@
 import viewImportList from "@/api/import/viewImportList.api";
 import DataTable from "@/components/DataTable/DataTable";
 import ImportBillDateFilter from "@/components/ImportBillDateFilter/ImportBillDateFilter";
-import ImportBill from "@/types/entity/ImportBill";
-import { useSearchParams } from "next/navigation";
-import React from "react";
+import SEARCH_PARAMS from "@/constants/searchParams";
+import Revision from "@/types/Revision";
+import ImportBill, { ImportProductResponse } from "@/types/entity/ImportBill";
+import FORMATTER from "@/utils/formatter";
+import _ from "lodash";
+import { usePathname, useSearchParams } from "next/navigation";
+import React, { useMemo, useState } from "react";
 import { useQuery } from "react-query";
 
 const Page = () => {
-    const onDateFilter = (start: Date, end: Date) => {
-        //TODO: Filter by date
-    };
+    // const [startDate, setStartDate] = useState<Date>(new Date());
+    // const [endDate, setEndDate] = useState<Date>(new Date());
 
+    const pathname = usePathname();
     const searchParams = useSearchParams();
+
+    const onDateFilter = (start: Date, end: Date) => {
+        // setStartDate(start);
+        // setEndDate(end);
+        searchParams.set();
+    };
 
     // const rangeDate = searchParams.get(SEARCH_PARAMS.rangeDate) || "";
 
-    const { data, isLoading, refetch } = useQuery<ImportBill[]>(
+    const {
+        data: preData,
+        isLoading,
+        refetch,
+    } = useQuery<Revision<ImportBill<ImportProductResponse>>[]>(
         ["import"],
         viewImportList,
         {
@@ -25,10 +39,21 @@ const Page = () => {
         },
     );
 
+    const data: ImportBillResponse[] = useMemo(
+        () =>
+            preData?.map(
+                (value: Revision<ImportBill<ImportProductResponse>>) => ({
+                    ..._.pick(value, ["id", "timestamp", "username"]),
+                    supplierId: value.revision.supplierId || "",
+                    importProducts: value.revision.importProducts.length,
+                }),
+            ) || [],
+        [preData],
+    );
+
     return (
         <>
             <div className="w-full mb-8">
-                {/* <ImportBillSearch /> */}
                 <ImportBillDateFilter
                     onSearch={(start, end) => onDateFilter(start, end)}
                 />
@@ -37,29 +62,29 @@ const Page = () => {
                 <DataTable
                     data={data || []}
                     isLoading={isLoading}
-                    onDelete={(category) => {
-                        // openClaimModal(
-                        //     <>
-                        //         Do you want to delete category{" "}
-                        //         <span>{category.name}</span>
-                        //     </>,
-                        //     (confirm) =>
-                        //         confirm &&
-                        //         deleteCategoryMutation.mutate(category),
-                        // );
-                    }}
-                    onEdit={(category) => {
-                        // openUpdateCategoryModal(category.id, refetch);
-                    }}
                     pick={{
-                        id: { title: "Code" },
-                        supplierId: { title: "Supplier" },
-                        staffId: { title: "Staff" },
+                        username: { title: "Staff" },
+                        timestamp: {
+                            title: "Created date",
+                            mapper: FORMATTER.toShortDate,
+                        },
+                        importProducts: {
+                            title: "Products",
+                            mapper: (value: number) => `${value} products`,
+                        },
                     }}
                 />
             </div>
         </>
     );
+};
+
+type ImportBillResponse = {
+    id: string;
+    timestamp: number;
+    username: string;
+    supplierId: string;
+    importProducts: number;
 };
 
 export default Page;

@@ -1,5 +1,5 @@
 import BaseEntity from "./BaseEntity";
-import ProductPreview from "./ProductPreview";
+import Product from "./Product";
 
 export interface ImportProduct {
     productId: string;
@@ -7,10 +7,16 @@ export interface ImportProduct {
     price: number;
 }
 
-export default interface ImportBill extends BaseEntity {
+export interface ImportProductResponse {
+    product: Product;
+    quantity: number;
+    price: number;
+}
+
+export default interface ImportBill<T> extends BaseEntity {
     note?: string;
     staffId?: string;
     supplierId?: string;
     paymentMethod: string;
-    importProducts: ImportProduct[];
+    importProducts: T[];
 }

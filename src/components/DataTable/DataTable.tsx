@@ -11,8 +11,8 @@ export default function DataTable<T extends Object & BaseEntity>({
     pick,
     className,
     isEdit = true,
-    onEdit = () => {},
-    onDelete = () => {},
+    onEdit,
+    onDelete,
     onClickRow = () => {},
     ...props
 }: PropTypes<T>) {
@@ -53,7 +53,7 @@ export default function DataTable<T extends Object & BaseEntity>({
                         {data.map((row, index) => (
                             <Table.Row
                                 key={row.id}
-                                className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                                className="bg-white cursor-pointer hover:bg-background-hover duration-100"
                                 onClick={() => onClickRow(row)}
                             >
                                 <Table.Cell
@@ -118,7 +118,7 @@ export default function DataTable<T extends Object & BaseEntity>({
                                         >
                                             <Dropdown.Item
                                                 icon={HiPencil}
-                                                onClick={() => onEdit(row)}
+                                                onClick={() => onEdit?.(row)}
                                             >
                                                 Edit
                                             </Dropdown.Item>
@@ -127,7 +127,7 @@ export default function DataTable<T extends Object & BaseEntity>({
                                                     icon: " text-red-600 mr-2 h-4 w-4",
                                                 }}
                                                 icon={HiTrash}
-                                                onClick={() => onDelete(row)}
+                                                onClick={() => onDelete?.(row)}
                                             >
                                                 <p className=" text-red-600">
                                                     Delete

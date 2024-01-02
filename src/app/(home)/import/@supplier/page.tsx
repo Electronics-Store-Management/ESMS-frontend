@@ -3,12 +3,13 @@
 import viewSupplierList from "@/api/supplier/viewSupplierList.api";
 import TextInput from "@/components/Input/TextInput";
 import SearchInput from "@/components/SearchInput/SearchInput.tsx";
+import { SupplierContext } from "@/contexts/SupplierContext";
 import Supplier from "@/types/entity/Supplier";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { HiLocationMarker, HiMail, HiPhone, HiUser } from "react-icons/hi";
 
 export default function Page() {
-    const [supplier, setSupplier] = useState<Supplier>();
+    const { supplier, setSupplier } = useContext(SupplierContext);
 
     return (
         <div className="h-full">
@@ -23,7 +24,7 @@ export default function Page() {
                     queryFunc: viewSupplierList,
                 }}
                 className="w-full mt-5"
-                onSelect={(supplier) => setSupplier(supplier)}
+                onSelect={(supplier) => setSupplier?.(supplier)}
             />
             {supplier ? (
                 <div className=" p-5 mt-10 flex flex-col gap-3 border-[1px] rounded-2xl ">

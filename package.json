@@ -17,6 +17,7 @@
     "flowbite": "^2.1.1",
     "flowbite-react": "^0.6.4",
     "framer-motion": "^10.16.12",
+    "lodash": "^4.17.21",
     "next": "14.0.2",
     "next-themes": "^0.2.1",
     "react": "^18",

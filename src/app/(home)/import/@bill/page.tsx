@@ -6,14 +6,55 @@ import Button from "@/components/Button/Button";
 import ControllerSelectInput from "@/components/ControllerInput/ControllerSelectInput";
 import SearchInput from "@/components/SearchInput/SearchInput.tsx";
 import ImportBill, { ImportProduct } from "@/types/entity/ImportBill";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { HiCheck } from "react-icons/hi";
 
+import addNewImport from "@/api/import/addNewImport.api";
+import {
+    createFailToast,
+    createSuccessToast,
+} from "@/components/OperationStateToast/OperationStateToast";
+import Link from "@/components/Typography/Link";
+import { SupplierContext } from "@/contexts/SupplierContext";
+import useLoading from "@/hooks/useLoading";
+import _ from "lodash";
+import { useMutation } from "react-query";
+import ProductPreview from "@/types/entity/ProductPreview";
+
 const Page = () => {
     const [billProducts, setBillProducts] = useState<
-        Map<string, ImportProduct>
-    >(new Map<string, ImportProduct>());
+        Map<string, ProductPreview>
+    >(new Map<string, ProductPreview>());
+
+    const { supplier } = useContext(SupplierContext);
+
+    const { openLoading, closeLoading } = useLoading();
+
+    const addNewImportMutation = useMutation(addNewImport, {
+        onMutate: () => {
+            openLoading("Deleting product...");
+        },
+        onSettled: () => {
+            closeLoading();
+        },
+        onSuccess: (res: ImportBill, data) => {
+            closeLoading();
+            const link = `${window.location.origin}/import_bill/${res.id}`;
+            createSuccessToast(
+                "Successfully",
+                <>
+                    You can view your bill here <Link href={link}>{link}</Link>
+                </>,
+            );
+        },
+        onError: (error: any, data) => {
+            closeLoading();
+            createFailToast("Fail to create bill", error.message, () =>
+                addNewImportMutation.mutate(data),
+            );
+        },
+    });
 
     function getTotalInfo() {
         let quantity = 0;
@@ -25,43 +66,31 @@ const Page = () => {
 
         return { quantity, price };
     }
+
     const {
         control: billControll,
         getValues,
         setValue,
     } = useForm<ImportBill>();
 
-    // const onSelectSupplier = (supplier: string) => {
-    //     setSupplier(supplier);
-    // };
-
-    // const onSelectProducts = (
-    //     productId: string,
-    //     quantity: number,
-    //     price: number,
-    // ) => {
-    //     const convertedProduct = {
-    //         productId: productId,
-    //         quantity: quantity,
-    //         price: price,
-    //         paymentMethod: "",
-    //         importProducts: [],
-    //     };
-    // };
-
     function getRequest() {
         const importProducts = Array.from(billProducts.values()).map(
             (product) => ({
-                ...product,
+                ..._.pick(product, ["price", "quantity"]),
                 productId: product.id,
             }),
         );
 
-        const request: Omit<ImportBill, "id"> = {
+        return {
             paymentMethod: getValues("paymentMethod"),
-            importProducts: { ...importProducts },
+            supplierId: supplier?.id,
+            importProducts: [ ...importProducts ],
         };
-        return request;
+    }
+
+    function onSubmit() {
+        const request = getRequest();
+        addNewImportMutation.mutate(request);
     }
 
     return (
@@ -152,7 +181,7 @@ const Page = () => {
                 </div>
                 <div className=" flex gap-5">
                     <Button btnType="secondary">Cancel</Button>
-                    <Button className=" flex">
+                    <Button className=" flex" onClick={() => onSubmit()}>
                         <HiCheck size={20} />
                         <p className=" ml-1">Submit</p>
                     </Button>

@@ -1,8 +1,7 @@
-import TextInput from "@/components/Input/TextInput";
 import LabeledText from "@/components/Typography/LabeledText";
 import API from "@/constants/apiEnpoint";
 import Revision from "@/types/Revision";
-import ImportBill, { ImportProductResponse } from "@/types/entity/ImportBill";
+import SaleBill, { SaleProductResponse } from "@/types/entity/SaleBill";
 import fetchWithToken from "@/utils/fetchWithToken";
 import FORMATTER from "@/utils/formatter";
 
@@ -10,22 +9,20 @@ import { IoCalendarNumberOutline } from "react-icons/io5";
 import { MdOutlinePayment } from "react-icons/md";
 
 export default async function Page({ params: { id } }: PropTypes) {
-    const importBillResponse = await fetchWithToken(
-        API.importBill.getDetail(id),
-    );
+    const saleBillResponse = await fetchWithToken(API.saleBill.getDetail(id));
 
-    if (importBillResponse.status != 200) {
+    if (saleBillResponse.status != 200) {
         throw "error";
     }
 
-    const importBillHistory: Revision<ImportBill<ImportProductResponse>>[] =
-        await importBillResponse.json();
+    const saleBillHistory: Revision<SaleBill<SaleProductResponse>>[] =
+        await saleBillResponse.json();
 
-    const importBill = importBillHistory?.[0];
-    const products = importBill.revision.importProducts;
+    const saleBill = saleBillHistory?.[0];
+    const products = saleBill.revision.saleProducts;
 
     const totalPrice = products.reduce(
-        (total: number, { quantity, price }: ImportProductResponse) =>
+        (total: number, { quantity, price }: SaleProductResponse) =>
             total + quantity * price,
         0,
     );
@@ -34,17 +31,18 @@ export default async function Page({ params: { id } }: PropTypes) {
         <div className=" flex flex-col gap-4">
             <div className=" flex gap-2 items-end">
                 <LabeledText
-                    title="Import date"
-                    value={FORMATTER.toShortDate(importBill.timestamp)}
+                    title="Sale date"
+                    value={FORMATTER.toShortDate(saleBill.timestamp)}
                     icon={<IoCalendarNumberOutline size={20} />}
                 />
             </div>
             <LabeledText
                 title="Payment method"
-                value={importBill.revision.paymentMethod}
+                value={saleBill.revision.paymentMethod}
                 icon={<MdOutlinePayment size={20} />}
             />
-            <LabeledText title="Note" value={importBill.revision.note} />
+            <LabeledText title="Note" value={saleBill.revision.note} />
+            <hr />
             <div className=" mt-2">
                 <p className=" font-semibold mb-2">Product list</p>
                 {products.map(({ product, quantity, price }) => (

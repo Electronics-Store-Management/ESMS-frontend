@@ -1,17 +1,19 @@
 "use client";
 
 import viewImportList from "@/api/import/viewImportList.api";
+import viewSaleBillList from "@/api/sale/viewSaleBillList.api";
 import DataTable from "@/components/DataTable/DataTable";
 import ImportBillDateFilter from "@/components/ImportBillDateFilter/ImportBillDateFilter";
 import SEARCH_PARAMS from "@/constants/searchParams";
 import { ReactNodeChildren } from "@/types/ReactNodeChildren";
 import Revision from "@/types/Revision";
 import ImportBill, { ImportProductResponse } from "@/types/entity/ImportBill";
+import SaleBill, { SaleProductResponse } from "@/types/entity/SaleBill";
 import FORMATTER from "@/utils/formatter";
 import withQuery from "@/utils/withQuery";
 import _ from "lodash";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useQuery } from "react-query";
 
 const Layout = ({ children }: ReactNodeChildren) => {
@@ -22,7 +24,7 @@ const Layout = ({ children }: ReactNodeChildren) => {
     const onDateFilter = (start: Date, end: Date) => {
         router.replace(
             withQuery(
-                "/import_bill",
+                "/sale-invoice",
                 {
                     [SEARCH_PARAMS.startDate]: start.getTime(),
                     [SEARCH_PARAMS.endDate]: end.getTime(),
@@ -42,24 +44,22 @@ const Layout = ({ children }: ReactNodeChildren) => {
         data: preData,
         isLoading,
         refetch,
-    } = useQuery<Revision<ImportBill<ImportProductResponse>>[]>(
-        ["import", startDate?.getTime(), endDate?.getTime()],
-        viewImportList,
+    } = useQuery<Revision<SaleBill<SaleProductResponse>>[]>(
+        ["sale", startDate?.getTime(), endDate?.getTime()],
+        viewSaleBillList,
         {
             retry: false,
         },
     );
 
-    const data: ImportBillResponse[] = useMemo(
+    const data: SaleBillResponse[] = useMemo(
         () =>
-            preData?.map(
-                (value: Revision<ImportBill<ImportProductResponse>>) => ({
-                    ..._.pick(value, ["timestamp", "username"]),
-                    id: value.revision.id,
-                    supplierId: value.revision.supplierId || "",
-                    importProducts: value.revision.importProducts.length,
-                }),
-            ) || [],
+            preData?.map((value: Revision<SaleBill<SaleProductResponse>>) => ({
+                ..._.pick(value, ["timestamp", "username"]),
+                id: value.revision.id,
+                customerId: value.revision.customerId || "",
+                saleProducts: value.revision.saleProducts.length,
+            })) || [],
         [preData],
     );
 
@@ -76,10 +76,10 @@ const Layout = ({ children }: ReactNodeChildren) => {
                     isLoading={isLoading}
                     className="flex-1"
                     isEdit={false}
-                    onClickRow={(row: ImportBillResponse) => {
+                    onClickRow={(row: SaleBillResponse) => {
                         router.push(
                             withQuery(
-                                `/import_bill/${row.id}`,
+                                `/sale-invoice/${row.id}`,
                                 {},
                                 searchParams,
                             ),
@@ -91,7 +91,7 @@ const Layout = ({ children }: ReactNodeChildren) => {
                             mapper: FORMATTER.toShortDate,
                         },
                         username: { title: "Staff" },
-                        importProducts: {
+                        saleProducts: {
                             title: "Products",
                             mapper: (value: number) => `${value} products`,
                         },
@@ -103,12 +103,12 @@ const Layout = ({ children }: ReactNodeChildren) => {
     );
 };
 
-type ImportBillResponse = {
+type SaleBillResponse = {
     id: string;
     timestamp: number;
     username: string;
-    supplierId: string;
-    importProducts: number;
+    customerId: string;
+    saleProducts: number;
 };
 
 export default Layout;

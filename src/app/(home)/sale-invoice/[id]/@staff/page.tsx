@@ -1,19 +1,22 @@
 import StaffAvatar from "@/components/StaffAvatar/StaffAvatar";
 import API from "@/constants/apiEnpoint";
 import Revision from "@/types/Revision";
-import ImportBill, { ImportProductResponse } from "@/types/entity/ImportBill";
+import SaleBill, { SaleProductResponse } from "@/types/entity/SaleBill";
 import fetchWithToken from "@/utils/fetchWithToken";
 
 export default async function Page({ params: { id } }: PropTypes) {
-    const importBillResponse = await fetchWithToken(
-        API.importBill.getDetail(id),
-    );
+    const saleBillResponse = await fetchWithToken(API.saleBill.getDetail(id));
 
-    const importBillHistory = await importBillResponse.json();
-    const importBill: Revision<ImportBill<ImportProductResponse>> =
-        importBillHistory?.[0];
+    if (saleBillResponse.status != 200) {
+        throw "error";
+    }
 
-    return <StaffAvatar username={importBill.username} />;
+    const saleBillHistory: Revision<SaleBill<SaleProductResponse>>[] =
+        await saleBillResponse.json();
+
+    const saleBill = saleBillHistory?.[0];
+
+    return <StaffAvatar username={saleBill.username} />;
 }
 
 type PropTypes = {

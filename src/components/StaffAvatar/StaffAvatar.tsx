@@ -18,7 +18,7 @@ export default async function StaffAvatar({
 
     return (
         <Avatar
-            className={`p-3 -mx-3 flex justify-start rounded-lg hover:bg-background-hover cursor-pointer ${className}`}
+            className={`p-3 -mx-3 flex w-fit justify-start rounded-lg hover:bg-background-hover cursor-pointer ${className}`}
             {...props}
             rounded
             placeholderInitials={staff.name

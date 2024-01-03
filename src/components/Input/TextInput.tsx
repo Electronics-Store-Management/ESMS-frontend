@@ -23,6 +23,7 @@ export default React.forwardRef(function TextInput(
         addon,
         rightAddon,
         addonClassName,
+        onRightAddonClick,
         rightAddonClassName,
         readOnly,
         value,
@@ -112,7 +113,10 @@ export default React.forwardRef(function TextInput(
                             autoComplete="off"
                         />
                         {rightAddon && (
-                            <span className={theme.rightAddon}>
+                            <span
+                                onClick={onRightAddonClick}
+                                className={`${theme.rightAddon} cursor-pointer hover:bg-primary-200 active:bg-primary-300`}
+                            >
                                 {rightAddon}
                             </span>
                         )}
@@ -129,6 +133,7 @@ type PropTypes = React.ComponentPropsWithRef<"input"> &
         placeholder?: string;
         error?: boolean;
         onRightIconClick?: () => void;
+        onRightAddonClick?: () => void;
         rightAddon?: ReactNode;
         addonClassName?: string;
         rightAddonClassName?: string;

@@ -1,82 +1,101 @@
 "use client";
 
+import { HiOutlineSearch, HiPlus } from "react-icons/hi";
+
+import { useDeleteProductMutation } from "@/api/product/deleteProduct.api";
+import viewSupplierList from "@/api/supplier/viewSupplierList.api";
 import Button from "@/components/Button/Button";
-import { useSearchParams } from "next/navigation";
-import { HiPlus } from "react-icons/hi";
-import { useQuery } from "react-query";
-import Category from "@/types/entity/Category";
-import SEARCH_PARAMS from "@/constants/searchParams";
-import viewCategoryList from "@/api/category/viewCategoryList.api";
-import { useCreateCategoryModal } from "@/components/CreateCategoryForm/CreateCategoryFormModal";
 import { useClaimModal } from "@/components/ClaimModal/ClaimModal";
+import { useCreateProductModal } from "@/components/CreateProductForm/CreateProductFormModal";
 import DataTable from "@/components/DataTable/DataTable";
-import CategorySearch from "@/components/CategorySearch/CategorySearch";
-import { useDeleteCategoryMutation } from "@/api/category/deleteCategory.api";
-import { useUpdateCategoryModal } from "@/components/UpdateCategoryForm/UpdateCategoryFormModal";
 import FilterBadge from "@/components/FilterBadge/FilterBadge";
+import TextInput from "@/components/Input/TextInput";
+import { useUpdateProductModal } from "@/components/UpdateProductForm/UpdateProductFormModal";
+import SEARCH_PARAMS from "@/constants/searchParams";
+import Supplier from "@/types/entity/Supplier";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useQuery } from "react-query";
+import { useRef } from "react";
+import withQuery from "@/utils/withQuery";
+import { useCreateSupplierModal } from "@/components/CreateSupplierForm/CreateSupplierFormModal";
 
 export default function Page() {
+    const router = useRouter();
     const searchParams = useSearchParams();
 
-    const categoryKeyword = searchParams.get(SEARCH_PARAMS.categoryName) || "";
+    const searchRef = useRef<HTMLInputElement>(null);
+    const supplierKeyword = searchParams.get(SEARCH_PARAMS.supplierName) || "";
 
-    const { openCreateCategoryModal } = useCreateCategoryModal();
-    const { openUpdateCategoryModal } = useUpdateCategoryModal();
-    const { openClaimModal } = useClaimModal();
+    const { open } = useCreateSupplierModal();
 
-    const { data, isLoading, refetch } = useQuery<Category[]>(
-        ["categories", categoryKeyword],
-        viewCategoryList,
+    const { data, isLoading, refetch } = useQuery<Supplier[]>(
+        ["suppliers", supplierKeyword],
+        viewSupplierList,
         {
             retry: false,
         },
     );
 
-    const deleteCategoryMutation = useDeleteCategoryMutation(refetch);
+    const deleteProductMutation = useDeleteProductMutation(refetch);
 
     return (
-        <div className="grid grid-cols-4 gap-5">
-            <div></div>
-            <div className="col-span-2">
-                <CategorySearch className="w-full mb-4" />
+        <div className="w-full h-full flex flex-col">
+            <div className=" w-full grid grid-cols-2">
+                <TextInput
+                    ref={searchRef}
+                    className=" w-96"
+                    defaultValue={
+                        searchParams.get(SEARCH_PARAMS.supplierName) || ""
+                    }
+                    rightAddon={<HiOutlineSearch />}
+                    onRightAddonClick={() =>
+                        router.push(
+                            withQuery("/supplier", {
+                                [SEARCH_PARAMS.supplierName]:
+                                    searchRef?.current?.value,
+                            }),
+                        )
+                    }
+                    placeholder="Search supplier by name here..."
+                />
+                <div className=" flex justify-end gap-8">
+                    <Button size="sm" onClick={() => open(refetch)}>
+                        <HiPlus className=" w-4 h-4 mr-2" />
+                        Add supplier
+                    </Button>
+                </div>
+            </div>
+            <div className=" flex gap-5 mt-5">
                 <FilterBadge
-                    title={"Category name"}
-                    searchParamName={SEARCH_PARAMS.categoryName}
-                    type={"search"}
-                    className=" mb-6"
-                />
-                <DataTable
-                    data={data || []}
-                    isLoading={isLoading}
-                    onDelete={(category) => {
-                        openClaimModal(
-                            <>
-                                Do you want to delete category{" "}
-                                <span>{category.name}</span>
-                            </>,
-                            (confirm) =>
-                                confirm &&
-                                deleteCategoryMutation.mutate(category),
-                        );
-                    }}
-                    onEdit={(category) => {
-                        openUpdateCategoryModal(category.id, refetch);
-                    }}
-                    pick={{
-                        name: { title: "Name" },
-                    }}
+                    title="Supplier name"
+                    type="search"
+                    searchParamName={SEARCH_PARAMS.supplierName}
                 />
             </div>
-
-            <div className="flex justify-end items-start">
-                <Button
-                    size="md"
-                    onClick={() => openCreateCategoryModal(refetch)}
-                >
-                    <HiPlus className=" w-4 h-4 mr-2" />
-                    New category
-                </Button>
-            </div>
+            <DataTable
+                data={data || []}
+                isLoading={isLoading}
+                className="-mr-8 pr-8 mt-4"
+                // onDelete={(product) => {
+                //     openClaimModal(
+                //         <>
+                //             Do you want to delete product{" "}
+                //             <span>{product.name}</span>
+                //         </>,
+                //         (confirm) =>
+                //             confirm && deleteProductMutation.mutate(product),
+                //     );
+                // }}
+                // onEdit={(product) => {
+                //     openUpdateProductModal(product.id, refetch);
+                // }}
+                pick={{
+                    name: { title: "Name" },
+                    phone: { title: "Phone" },
+                    email: { title: "Email" },
+                    address: { title: "Address" },
+                }}
+            />
         </div>
     );
 }

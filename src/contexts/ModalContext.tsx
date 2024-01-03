@@ -4,6 +4,7 @@ import ClaimModal from "@/components/ClaimModal/ClaimModal";
 import CreateCategoryFormModal from "@/components/CreateCategoryForm/CreateCategoryFormModal";
 import CreateProductFormModal from "@/components/CreateProductForm/CreateProductFormModal";
 import CreateStaffFormModal from "@/components/CreateStaffForm/CreateStaffFormModal";
+import CreateSupplierFormModal from "@/components/CreateSupplierForm/CreateSupplierFormModal";
 import UpdateCategoryFormModal from "@/components/UpdateCategoryForm/UpdateCategoryFormModal";
 import UpdateProductFormModal from "@/components/UpdateProductForm/UpdateProductFormModal";
 import UpdateStaffFormModal from "@/components/UpdateStaffForm/UpdateStaffFormModal";
@@ -26,11 +27,14 @@ export function ModalProvider({ children }: ReactNodeChildren) {
         >
             {children}
             <CreateProductFormModal />
-            <UpdateProductFormModal />
             <CreateCategoryFormModal />
-            <UpdateCategoryFormModal />
             <CreateStaffFormModal />
+            <CreateSupplierFormModal />
+
+            <UpdateProductFormModal />
+            <UpdateCategoryFormModal />
             <UpdateStaffFormModal />
+
             <ClaimModal />
         </ModalStateContext.Provider>
     );
@@ -38,6 +42,7 @@ export function ModalProvider({ children }: ReactNodeChildren) {
 
 export const defaultModalStateValue = {
     addProduct: { isOpen: false },
+    addSupplier: { isOpen: false },
     addStaff: { isOpen: false },
     updateStaff: { isOpen: false },
     updateProduct: { isOpen: false },
@@ -60,6 +65,7 @@ export type IModalStateContext = {
 
 export type IModalState = {
     addProduct: IModalStateItem;
+    addSupplier: IModalStateItem;
     addStaff: IModalStateItem;
     updateStaff: IModalStateItem & { staffId?: string };
     updateProduct: IModalStateItem & { productId?: string };

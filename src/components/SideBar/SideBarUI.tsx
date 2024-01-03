@@ -6,11 +6,11 @@ import {
     HiBookmark,
     HiChartPie,
     HiChevronLeft,
-    HiDocumentSearch,
-    HiShoppingBag,
-    HiSave,
-    HiUserGroup,
     HiClipboardCheck,
+    HiDocumentSearch,
+    HiSave,
+    HiShoppingBag,
+    HiUserGroup,
 } from "react-icons/hi";
 import { PiTruckDuotone } from "react-icons/pi";
 
@@ -20,10 +20,10 @@ import COOKIE_NAME from "@/constants/cookies";
 import Staff from "@/types/entity/Staff";
 import { deleteCookie, setCookie } from "cookies-next";
 import { usePathname, useRouter } from "next/navigation";
-import LOGO from "../../assets/logo.png";
-import useLocalStorage from "../../hooks/useLocalStorage";
-import FONT from "../../utils/fontFamily";
 import { useEffect, useState } from "react";
+import { MdOutlineCurrencyExchange } from "react-icons/md";
+import LOGO from "../../assets/logo.png";
+import FONT from "../../utils/fontFamily";
 
 export default function SideBarUI({
     staffInfo,
@@ -137,6 +137,34 @@ export default function SideBarUI({
                                 Import goods
                             </Sidebar.Item>
                         </Sidebar.Collapse>
+                        <Sidebar.Collapse
+                            theme={sideBarTheme?.collapse}
+                            href={isCollapse ? ROUTES.sale : ""}
+                            open={
+                                [ROUTES.sale_invoice, ROUTES.sale].includes(
+                                    routeName,
+                                ) && !isCollapse
+                            }
+                            icon={MdOutlineCurrencyExchange}
+                            label="Export"
+                        >
+                            <Sidebar.Item
+                                active={routeName === ROUTES.sale_invoice}
+                                theme={sideBarCollapsedItemTheme?.item}
+                                href={ROUTES.sale_invoice}
+                                icon={LiaFileInvoiceDollarSolid}
+                            >
+                                Invoices
+                            </Sidebar.Item>
+                            <Sidebar.Item
+                                active={routeName === ROUTES.sale}
+                                theme={sideBarCollapsedItemTheme?.item}
+                                href={ROUTES.sale}
+                                icon={MdOutlineCurrencyExchange}
+                            >
+                                Export
+                            </Sidebar.Item>
+                        </Sidebar.Collapse>
                     </Sidebar.ItemGroup>
                 </Sidebar.Items>
                 <div className="absolute w-full left-0 bottom-5 bg-transparent">
@@ -225,6 +253,8 @@ const ROUTES = {
     staff: "/staff",
     import_bill: "/import_bill",
     import: "/import",
+    sale_invoice: "/sale-invoice",
+    sale: "/sale",
 };
 
 const sideBarTheme: CustomFlowbiteTheme["sidebar"] = {
@@ -290,7 +320,9 @@ const sideBarTheme: CustomFlowbiteTheme["sidebar"] = {
         label: "",
         listItem: "",
     },
+    //@ts-ignore
     items: "",
+    //@ts-ignore
     itemGroup:
         "mt-4 space-y-2 border-t border-gray-200 pt-4 first:mt-0 first:border-t-0 first:pt-0 dark:border-gray-700",
     logo: {

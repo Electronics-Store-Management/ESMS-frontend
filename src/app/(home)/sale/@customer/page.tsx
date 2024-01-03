@@ -1,51 +1,46 @@
 "use client";
 
-import viewSupplierList from "@/api/supplier/viewSupplierList.api";
+import viewCustomerList from "@/api/customer/viewCustomerList.api";
 import SearchInput from "@/components/SearchInput/SearchInput.tsx";
 import LabeledText from "@/components/Typography/LabeledText";
-import { SupplierContext } from "@/contexts/SupplierContext";
+import { CustomerContext } from "@/contexts/CustomerContext";
 import { useContext } from "react";
-import { HiLocationMarker, HiMail, HiPhone, HiUser } from "react-icons/hi";
+import { HiLocationMarker, HiPhone, HiUser } from "react-icons/hi";
 
 export default function Page() {
-    const { supplier, setSupplier } = useContext(SupplierContext);
+    const { customer, setCustomer } = useContext(CustomerContext);
 
     return (
         <div className="h-full">
             <p className="font-semibold text-color-heading text-2xl">
-                Supplier info
+                Customer info
             </p>
             <SearchInput
-                title="Search for supplier"
-                placeholder="Enter placeholder name here"
+                title="Search for customer"
+                placeholder="Enter customer name here..."
                 queryInfo={{
-                    queryKeys: ["suppliers"],
-                    queryFunc: viewSupplierList,
+                    queryKeys: ["customers"],
+                    queryFunc: viewCustomerList,
                 }}
                 className="w-full mt-5"
-                onSelect={(supplier) => setSupplier?.(supplier)}
+                onSelect={(customer) => setCustomer?.(customer)}
             />
-            {supplier ? (
+            {customer ? (
                 <div className=" p-5 mt-10 flex flex-col gap-3 border-[1px] rounded-2xl ">
                     <LabeledText
                         title="Name"
                         icon={HiUser}
-                        value={supplier?.name}
-                    />
-                    <LabeledText
-                        title="Email"
-                        icon={HiMail}
-                        value={supplier?.email}
+                        value={customer?.name}
                     />
                     <LabeledText
                         title="Phone number"
                         icon={HiPhone}
-                        value={supplier?.phone}
+                        value={customer?.phone}
                     />
                     <LabeledText
                         title="Address"
                         icon={HiLocationMarker}
-                        value={supplier?.address}
+                        value={customer?.address}
                     />
                 </div>
             ) : null}

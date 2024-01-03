@@ -46,7 +46,7 @@ export default function SupplierFunction({ id }: { id: string }) {
                     className=" w-full flex"
                 >
                     <p className=" mr-2">View detail</p>
-                    <IoArrowForwardSharp size={20} />
+                    {/* <IoArrowForwardSharp size={20} /> */}
                 </Button>
                 <Button
                     onClick={() => {

@@ -8,6 +8,7 @@ import CreateSupplierFormModal from "@/components/CreateSupplierForm/CreateSuppl
 import UpdateCategoryFormModal from "@/components/UpdateCategoryForm/UpdateCategoryFormModal";
 import UpdateProductFormModal from "@/components/UpdateProductForm/UpdateProductFormModal";
 import UpdateStaffFormModal from "@/components/UpdateStaffForm/UpdateStaffFormModal";
+import UpdateSupplierFormModal from "@/components/UpdateSupplierForm/UpdateSupplierFormModal";
 import { ReactNodeChildren } from "@/types/ReactNodeChildren";
 import { ReactNode, createContext, useState } from "react";
 
@@ -34,6 +35,7 @@ export function ModalProvider({ children }: ReactNodeChildren) {
             <UpdateProductFormModal />
             <UpdateCategoryFormModal />
             <UpdateStaffFormModal />
+            <UpdateSupplierFormModal />
 
             <ClaimModal />
         </ModalStateContext.Provider>
@@ -42,12 +44,14 @@ export function ModalProvider({ children }: ReactNodeChildren) {
 
 export const defaultModalStateValue = {
     addProduct: { isOpen: false },
-    addSupplier: { isOpen: false },
-    addStaff: { isOpen: false },
-    updateStaff: { isOpen: false },
-    updateProduct: { isOpen: false },
     addCategory: { isOpen: false },
+    addStaff: { isOpen: false },
+    addSupplier: { isOpen: false },
+
+    updateProduct: { isOpen: false },
     updateCategory: { isOpen: false },
+    updateStaff: { isOpen: false },
+    updateSupplier: { isOpen: false },
     claim: { isOpen: false },
 };
 
@@ -65,12 +69,14 @@ export type IModalStateContext = {
 
 export type IModalState = {
     addProduct: IModalStateItem;
-    addSupplier: IModalStateItem;
-    addStaff: IModalStateItem;
-    updateStaff: IModalStateItem & { staffId?: string };
-    updateProduct: IModalStateItem & { productId?: string };
     addCategory: IModalStateItem;
+    addStaff: IModalStateItem;
+    addSupplier: IModalStateItem;
+
+    updateProduct: IModalStateItem & { productId?: string };
     updateCategory: IModalStateItem & { categoryId?: string };
+    updateStaff: IModalStateItem & { staffId?: string };
+    updateSupplier: IModalStateItem & { supplierId?: string };
     claim: IModalStateItem & {
         message?: ReactNode;
         onResponse?: (confirm: boolean) => any;

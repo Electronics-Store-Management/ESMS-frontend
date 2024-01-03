@@ -18,6 +18,8 @@ import { useQuery } from "react-query";
 import { useRef } from "react";
 import withQuery from "@/utils/withQuery";
 import { useCreateSupplierModal } from "@/components/CreateSupplierForm/CreateSupplierFormModal";
+import { useUpdateSupplierModal } from "@/components/UpdateSupplierForm/UpdateSupplierFormModal";
+import { useDeleteSupplierMutation } from "@/api/supplier/deleteSupplier.api";
 
 export default function Page() {
     const router = useRouter();
@@ -26,7 +28,8 @@ export default function Page() {
     const searchRef = useRef<HTMLInputElement>(null);
     const supplierKeyword = searchParams.get(SEARCH_PARAMS.supplierName) || "";
 
-    const { open } = useCreateSupplierModal();
+    const { open: openCreateSupplierModal } = useCreateSupplierModal();
+    const { open: openUpdateSupplierModal } = useUpdateSupplierModal();
 
     const { data, isLoading, refetch } = useQuery<Supplier[]>(
         ["suppliers", supplierKeyword],
@@ -36,7 +39,8 @@ export default function Page() {
         },
     );
 
-    const deleteProductMutation = useDeleteProductMutation(refetch);
+    const deleteSupplierMutation = useDeleteSupplierMutation(refetch);
+    const { openClaimModal } = useClaimModal();
 
     return (
         <div className="w-full h-full flex flex-col">
@@ -59,7 +63,10 @@ export default function Page() {
                     placeholder="Search supplier by name here..."
                 />
                 <div className=" flex justify-end gap-8">
-                    <Button size="sm" onClick={() => open(refetch)}>
+                    <Button
+                        size="sm"
+                        onClick={() => openCreateSupplierModal(refetch)}
+                    >
                         <HiPlus className=" w-4 h-4 mr-2" />
                         Add supplier
                     </Button>
@@ -76,19 +83,19 @@ export default function Page() {
                 data={data || []}
                 isLoading={isLoading}
                 className="-mr-8 pr-8 mt-4"
-                // onDelete={(product) => {
-                //     openClaimModal(
-                //         <>
-                //             Do you want to delete product{" "}
-                //             <span>{product.name}</span>
-                //         </>,
-                //         (confirm) =>
-                //             confirm && deleteProductMutation.mutate(product),
-                //     );
-                // }}
-                // onEdit={(product) => {
-                //     openUpdateProductModal(product.id, refetch);
-                // }}
+                onDelete={(supplier) => {
+                    openClaimModal(
+                        <>
+                            Do you want to delete supplier{" "}
+                            <span>{supplier.name}</span>
+                        </>,
+                        (confirm) =>
+                            confirm && deleteSupplierMutation.mutate(supplier),
+                    );
+                }}
+                onEdit={(supplier) => {
+                    openUpdateSupplierModal(supplier.id, refetch);
+                }}
                 pick={{
                     name: { title: "Name" },
                     phone: { title: "Phone" },

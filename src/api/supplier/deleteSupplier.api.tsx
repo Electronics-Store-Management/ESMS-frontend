@@ -7,8 +7,9 @@ import OperationStateToast, {
     createFailToast,
     createSuccessToast,
 } from "@/components/OperationStateToast/OperationStateToast";
+import Supplier from "@/types/entity/Supplier";
 
-export default async function deleteSupplierAPI(supplier?: ProductPreview) {
+export default async function deleteSupplierAPI(supplier?: Supplier) {
     if (!supplier?.id) throw new Error("Invalid supplier");
 
     const response = await apiInstance.delete(`/supplier/${supplier.id}`);

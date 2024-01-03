@@ -109,7 +109,10 @@ export default function DataTable<T extends Object & BaseEntity>({
                                     </Table.Cell>
                                 ))}
                                 {isEdit && (
-                                    <Table.Cell theme={tableTheme?.body?.cell}>
+                                    <Table.Cell
+                                        theme={tableTheme?.body?.cell}
+                                        onClick={(e) => e.preventDefault()}
+                                    >
                                         <Dropdown
                                             label=""
                                             renderTrigger={() => (

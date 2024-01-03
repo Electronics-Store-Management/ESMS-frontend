@@ -1,29 +1,21 @@
 "use client";
 import { HiPlus } from "react-icons/hi";
 
-import { useDeleteProductMutation } from "@/api/product/deleteProduct.api";
-import viewProductList from "@/api/product/viewProductList.api";
+import {
+    useDeleteStaffMutation,
+} from "@/api/staff/deleteStaff.api";
+import viewStaffList from "@/api/staff/viewStaffList.api";
 import Button from "@/components/Button/Button";
-import CategoryFilter from "@/components/CategoryFilter/CategoryFilter";
 import { useClaimModal } from "@/components/ClaimModal/ClaimModal";
-import { useCreateProductModal } from "@/components/CreateProductForm/CreateProductFormModal";
+import { useCreateStaffModal } from "@/components/CreateStaffForm/CreateStaffFormModal";
 import DataTable from "@/components/DataTable/DataTable";
 import FilterBadge from "@/components/FilterBadge/FilterBadge";
-import PriceRangeFilter from "@/components/PriceRangeFilter/PriceRangeFilter";
-import ProductSearch from "@/components/ProductSearch/ProductSearch";
-import { useUpdateProductModal } from "@/components/UpdateProductForm/UpdateProductFormModal";
+import { useUpdateStaffModal } from "@/components/UpdateStaffForm/UpdateStaffFormModal";
 import SEARCH_PARAMS from "@/constants/searchParams";
-import ProductPreview from "@/types/entity/ProductPreview";
+import Staff from "@/types/entity/Staff";
 import FORMATTER from "@/utils/formatter";
 import { useSearchParams } from "next/navigation";
 import { useQuery } from "react-query";
-import Staff from "@/types/entity/Staff";
-import viewStaffList from "@/api/staff/viewStaffList.api";
-import { useCreateStaffModal } from "@/components/CreateStaffForm/CreateStaffFormModal";
-import deleteStaffAPI, {
-    useDeleteStaffMutation,
-} from "@/api/staff/deleteStaff.api";
-import { useUpdateStaffModal } from "@/components/UpdateStaffForm/UpdateStaffFormModal";
 
 export default function Page() {
     const searchParams = useSearchParams();

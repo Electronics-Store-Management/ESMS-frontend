@@ -20,10 +20,10 @@ export default function BillProductTable<T extends Object & BaseEntity>({
             className={`flex flex-col gap-2 overflow-y-auto overflow-x-hidden ${className} `}
         >
             <div className={` flex gap-5`}>
-                <p className={` flex-none w-10 font-semibold`}>ID</p>
+                <p className={` text-secondary-950 flex-none w-10 font-semibold`}>ID</p>
                 {Object.entries(fields).map(([key, { title, size }]) => (
                     <div
-                        className={` font-semibold py-1`}
+                        className={` text-secondary-950 font-semibold py-1`}
                         style={{
                             width: (size || 1) * 1000,
                             flexGrow: size || 1,
@@ -38,7 +38,7 @@ export default function BillProductTable<T extends Object & BaseEntity>({
             {Array.from(data.values()).map(
                 (row: T & Object & BaseEntity, index) => (
                     <div key={row.id} className={` flex gap-5 items-center`}>
-                        <p className={` flex-none w-10 font-semibold`}>
+                        <p className={` text-secondary-950 flex-none w-10 font-semibold`}>
                             {index + 1}.
                         </p>
                         {Object.entries(fields).map(
@@ -61,7 +61,7 @@ export default function BillProductTable<T extends Object & BaseEntity>({
                                     key={title}
                                 >
                                     {calculateFunc || editable === false ? (
-                                        <p className=" font-medium">
+                                        <p className=" text-secondary-950 font-medium">
                                             {calculateFunc?.(row) ||
                                                 getRowItem(row, key) ||
                                                 0}

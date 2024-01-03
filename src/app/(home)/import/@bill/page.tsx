@@ -18,9 +18,10 @@ import {
 import Link from "@/components/Typography/Link";
 import { SupplierContext } from "@/contexts/SupplierContext";
 import useLoading from "@/hooks/useLoading";
+import ProductPreview from "@/types/entity/ProductPreview";
+import FORMATTER from "@/utils/formatter";
 import _ from "lodash";
 import { useMutation } from "react-query";
-import ProductPreview from "@/types/entity/ProductPreview";
 
 const Page = () => {
     const [billProducts, setBillProducts] = useState<
@@ -84,7 +85,7 @@ const Page = () => {
         return {
             paymentMethod: getValues("paymentMethod"),
             supplierId: supplier?.id,
-            importProducts: [ ...importProducts ],
+            importProducts: [...importProducts],
         };
     }
 
@@ -147,25 +148,24 @@ const Page = () => {
                         title: "Total price",
                         size: 2,
                         calculateFunc: ({ price, quantity }) =>
-                            price * quantity,
+                            FORMATTER.toCurrency(price * quantity),
                     },
                 }}
             />
             <div className=" mt-4 flex-none flex items-end w-full">
                 <div className="flex-1 flex flex-col gap-1">
                     <div className="flex flex-col gap-1">
-                        <p>
+                        <p className=" text-secondary-950">
                             Total items:{"  "}
                             <span className=" text-lg font-semibold text-secondary-950">
                                 {getTotalInfo().quantity}
                             </span>
                         </p>
-                        <p>
+                        <p className=" text-secondary-950">
                             Total price:{"  "}
                             <span className=" text-lg font-semibold text-primary-500">
-                                {getTotalInfo().price}
+                                {FORMATTER.toCurrency(getTotalInfo().price)}
                             </span>
-                            {"  "}đ
                         </p>
                     </div>
                     <ControllerSelectInput
@@ -196,8 +196,6 @@ const PAYMENT_METHOD = [
     { name: "Momo", id: "Momo" },
     { name: "Paypal", id: "Paypal" },
     { name: "Visa", id: "Visa" },
-    { name: "Con cac", id: "Con cac" },
-    { name: "Lo dit", id: "Lo dit" },
 ];
 
 export default Page;

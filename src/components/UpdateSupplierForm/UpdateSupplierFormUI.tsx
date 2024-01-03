@@ -39,7 +39,7 @@ export default function UpdateSupplierFormUI({
             <h1
                 className={` text-secondary-950 text-2xl text-center font-semibold ${FONT.primary.className}`}
             >
-                Add supplier
+                Update supplier
             </h1>
             <form onSubmit={handleSubmit(onSubmitData)}>
                 <div className=" grid grid-cols-2 gap-5 mt-5">
@@ -124,7 +124,7 @@ export default function UpdateSupplierFormUI({
                     <Button btnType="secondary" onClick={() => close()}>
                         Back
                     </Button>
-                    <Button type="submit">Create supplier</Button>
+                    <Button type="submit">Update supplier</Button>
                 </div>
             </form>
         </div>

@@ -95,7 +95,7 @@ export default React.forwardRef(function TextInput(
                             />
                         </div>
                     )}
-                    <div className="flex w-full">
+                    <div className=" relative flex w-full">
                         <_TextInput
                             theme={customTheme}
                             className="w-full"
@@ -103,7 +103,6 @@ export default React.forwardRef(function TextInput(
                             id={title}
                             type={type}
                             icon={icon}
-                            rightIcon={rightIcon}
                             placeholder={placeholder}
                             sizing={sizing}
                             addon={addon}
@@ -112,6 +111,12 @@ export default React.forwardRef(function TextInput(
                             required
                             autoComplete="off"
                         />
+                        <div
+                            onClick={onRightIconClick}
+                            className=" absolute p-1 top-1/2 -translate-y-1/2 right-3 rounded-full hover:bg-background-hover active:bg-background-active duration-150 cursor-pointer"
+                        >
+                            {rightIcon}
+                        </div>
                         {rightAddon && (
                             <span
                                 onClick={onRightAddonClick}
@@ -127,14 +132,17 @@ export default React.forwardRef(function TextInput(
     );
 });
 
-type PropTypes = React.ComponentPropsWithRef<"input"> &
-    TextInputProps & {
-        type?: HTMLInputTypeAttribute;
-        placeholder?: string;
-        error?: boolean;
-        onRightIconClick?: () => void;
-        onRightAddonClick?: () => void;
-        rightAddon?: ReactNode;
-        addonClassName?: string;
-        rightAddonClassName?: string;
-    };
+type PropTypes = Omit<
+    React.ComponentPropsWithRef<"input"> & TextInputProps,
+    "rightIcon"
+> & {
+    type?: HTMLInputTypeAttribute;
+    placeholder?: string;
+    error?: boolean;
+    onRightIconClick?: () => void;
+    onRightAddonClick?: () => void;
+    rightAddon?: ReactNode;
+    addonClassName?: string;
+    rightAddonClassName?: string;
+    rightIcon?: ReactNode;
+};

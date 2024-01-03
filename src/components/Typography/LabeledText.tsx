@@ -7,7 +7,7 @@ export default function LabeledText({ title, value, icon }: PropTypes) {
                 {title}
             </p>
             {value ? (
-                <p className=" text-base font-medium flex gap-2 items-center">
+                <p className=" text-secondary-950 text-base font-medium flex gap-2 items-center">
                     {icon}
                     {value}
                 </p>

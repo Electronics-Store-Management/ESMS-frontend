@@ -1,12 +1,11 @@
 "use client";
 
-import viewProductList from "@/api/product/viewProductList.api";
-import ProductPreview from "@/types/entity/ProductPreview";
 import { useState } from "react";
 import { QueryFunction, useQuery } from "react-query";
 import { useDebounce } from "react-use";
 import TextInput from "../Input/TextInput";
 import Loading from "../Loading/Loading";
+import { IoMdClose } from "react-icons/io";
 
 export default function SearchInput({
     title,
@@ -36,6 +35,8 @@ export default function SearchInput({
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
                 title={title}
+                rightIcon={searchText ? <IoMdClose className=" text-secondary-950" size={20} /> : undefined}
+                onRightIconClick={() => setSearchText("")}
                 placeholder={placeholder}
                 sizing="md"
             />
@@ -45,7 +46,7 @@ export default function SearchInput({
                         data?.length ? (
                             data?.map((item) => (
                                 <p
-                                    className=" px-3 py-2 text-sm hover:bg-background-hover transition-all duration-200 cursor-pointer"
+                                    className=" px-3 py-2 text-secondary-950 text-sm hover:bg-background-hover transition-all duration-200 cursor-pointer"
                                     onClick={() => {
                                         setSearchText("");
                                         onSelect?.(item);
@@ -56,7 +57,7 @@ export default function SearchInput({
                                 </p>
                             ))
                         ) : isFetched ? (
-                            <p className=" px-3 py-3 text-sm italic transition-all duration-200">
+                            <p className=" px-3 py-3 text-secondary-950 text-sm italic transition-all duration-200">
                                 No item found
                             </p>
                         ) : null

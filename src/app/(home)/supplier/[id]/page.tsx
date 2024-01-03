@@ -10,7 +10,7 @@ export default async function Page({ params: { id } }: PropTypes) {
     const supplier: Supplier = await supplierResponse.json();
 
     return (
-        <div className="  w-full flex-1 overflow-auto flex flex-col gap-5 rounded-lg border-[1px] border-secondary-200  py-5 pl-5">
+        <div className=" py-5 pl-5 relative w-full flex-1 overflow-auto flex flex-col gap-5 rounded-lg border-[1px] border-secondary-2005">
             <LabeledText title="Name" value={supplier.name} />
             <LabeledText title="Email" value={supplier.email} />
             <LabeledText title="Phone" value={supplier.phone} />

@@ -27,7 +27,7 @@ export default async function Layout({
     const history: Revision<Supplier>[] = await historyResponse.json();
 
     return (
-        <div className=" w-2/3 overflow-y-auto flex flex-col-reverse xl:flex-row gap-1 ">
+        <div className=" w-1/2 overflow-y-auto flex flex-col-reverse xl:flex-row gap-1 ">
             <div className=" flex-none xl:max-h-full h-fit pl-1 pr-8 pb-2 overflow-x-hidden xl:overflow-y-auto">
                 <Timeline>
                     {history.map(({ id, timestamp, username }) => (

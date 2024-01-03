@@ -55,12 +55,14 @@ export default async function Page({ params: { id } }: PropTypes) {
                         <div>
                             <p className=" font-semibold">{product.name}</p>
                             <p className=" mt-1 text-sm text-secondary-600">
-                                <span>{FORMATTER.toCurrency(price)}</span>
-                                <span>{" x "}</span>
-                                <span>{quantity}</span>
                                 <span className=" font-medium text-secondary-800">
-                                    {` ${product.unit}`}
+                                    {FORMATTER.toCurrency(price)}
                                 </span>
+                                <span>{" x "}</span>
+                                <span className=" font-medium text-secondary-800">
+                                    {quantity}
+                                </span>
+                                <span className="">{` ${product.unit}`}</span>
                             </p>
                         </div>
                         <p className=" text-base font-semibold">

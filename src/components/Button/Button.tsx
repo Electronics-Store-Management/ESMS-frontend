@@ -16,6 +16,7 @@ export default function Button({
     size = "md",
     btnType = "primary",
     children = "Untitle",
+    hiddenTitle,
     className,
     ref,
     isLoading = false,
@@ -25,12 +26,23 @@ export default function Button({
         <_Button
             theme={getTheme(fill)}
             color={btnType}
-            className={`${className} transition-all duration-300`}
+            className={`${className} group transition-all duration-300`}
             size={size}
             disabled={isLoading}
             {...props}
         >
-            {isLoading ? <Spinner size={size} /> : children}
+            {isLoading ? (
+                <Spinner size={size} />
+            ) : (
+                <div className=" flex items-center">
+                    {children}
+                    {hiddenTitle && (
+                        <p className=" font-semibola overflow-hidden w-fit max-w-0 group-hover:max-w-[70px] group-hover:ml-2 transition-all duration-300">
+                            {hiddenTitle}
+                        </p>
+                    )}
+                </div>
+            )}
         </_Button>
     );
 }
@@ -64,4 +76,5 @@ type PropTypes = ReactNodeChildren &
         size?: keyof ButtonSizes;
         btnType?: "primary" | "secondary" | "error";
         isLoading?: boolean;
+        hiddenTitle?: string;
     };

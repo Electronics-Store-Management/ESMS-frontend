@@ -20,7 +20,7 @@ export default function DataTable<T extends Object & BaseEntity>({
 }: PropTypes<T>) {
     return (
         <div
-            className={`overflow-auto max-w-full h-fit max-h-full mb-8 rounded-lg border-[1px] border-secondary-200 ${className}`}
+            className={`overflow-auto flex-1 max-w-full h-fit max-h-full rounded-lg border-[1px] border-secondary-200 ${className}`}
             {...props}
         >
             {/* <p className="text-yellow-500 text-sm font-semibold mb-4">

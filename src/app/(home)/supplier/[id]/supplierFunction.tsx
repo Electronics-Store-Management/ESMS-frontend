@@ -10,6 +10,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { LuArchive } from "react-icons/lu";
 import { RiPencilLine } from "react-icons/ri";
 import { useQuery } from "react-query";
+import { IoArrowForwardSharp } from "react-icons/io5";
 
 export default function SupplierFunction({ id }: { id: string }) {
     const router = useRouter();
@@ -29,25 +30,36 @@ export default function SupplierFunction({ id }: { id: string }) {
     const deleteSupplierMutation = useDeleteSupplierMutation(refetch);
 
     return (
-        <div className=" mt-5 pr-5 flex gap-5">
+        <div>
             <Button
                 onClick={() => openUpdateSupplierModal(id, refetch)}
-                className=" w-full flex"
+                btnType={"secondary"}
+                className=" absolute top-3 right-3 flex flex-1"
+                hiddenTitle="Edit"
             >
                 <RiPencilLine size={20} />
-                <p className=" ml-2">Edit</p>
             </Button>
-            <Button
-                onClick={() => {
-                    deleteSupplierMutation.mutate(id);
-                    router.replace("/supplier");
-                }}
-                btnType={"error"}
-                className=" w-full flex"
-            >
-                <LuArchive size={20} />
-                <p className=" ml-2">Delete</p>
-            </Button>
+            <div className=" mt-5 pr-5 flex gap-5">
+                <Button
+                    onClick={() => router.push(`/supplier/detail/${id}`)}
+                    btnType={"secondary"}
+                    className=" w-full flex"
+                >
+                    <p className=" mr-2">View detail</p>
+                    <IoArrowForwardSharp size={20} />
+                </Button>
+                <Button
+                    onClick={() => {
+                        deleteSupplierMutation.mutate(id);
+                        router.replace("/supplier");
+                    }}
+                    btnType={"error"}
+                    className=" flex-initial"
+                    hiddenTitle="Delete"
+                >
+                    <LuArchive size={20} />
+                </Button>
+            </div>
         </div>
     );
 }

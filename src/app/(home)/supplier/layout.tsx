@@ -14,13 +14,14 @@ import { useUpdateSupplierModal } from "@/components/UpdateSupplierForm/UpdateSu
 import SEARCH_PARAMS from "@/constants/searchParams";
 import Supplier from "@/types/entity/Supplier";
 import withQuery from "@/utils/withQuery";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useRef } from "react";
 import { useQuery } from "react-query";
 import { ReactNodeChildren } from "@/types/ReactNodeChildren";
 import useClient from "@/hooks/useClient";
 
 export default function Layout({ children }: ReactNodeChildren) {
+    const pathname = usePathname();
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -104,9 +105,13 @@ export default function Layout({ children }: ReactNodeChildren) {
                         }
                         pick={{
                             name: { title: "Name" },
-                            phone: { title: "Phone" },
                             email: { title: "Email" },
-                            address: { title: "Address" },
+                            ...(pathname.split("/").at(-1) != "supplier"
+                                ? {}
+                                : {
+                                      phone: { title: "Phone" },
+                                      address: { title: "Address" },
+                                  }),
                         }}
                     />
                 )}

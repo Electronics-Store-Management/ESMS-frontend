@@ -3,7 +3,13 @@ import API from "@/constants/apiEnpoint";
 import Staff from "@/types/entity/Staff";
 import fetchWithToken from "@/utils/fetchWithToken";
 
-export default async function StaffAvatar({ username }: { username: string }) {
+export default async function StaffAvatar({
+    username,
+    className,
+    ...props
+}: {
+    username: string;
+} & React.ComponentPropsWithoutRef<"div">) {
     const staffResponse = await fetchWithToken(
         API.staff.getDetailByUsername(username),
     );
@@ -12,7 +18,8 @@ export default async function StaffAvatar({ username }: { username: string }) {
 
     return (
         <Avatar
-            className="p-3 -mx-3 flex justify-start rounded-lg hover:bg-background-hover cursor-pointer "
+            className={`p-3 -mx-3 flex justify-start rounded-lg hover:bg-background-hover cursor-pointer ${className}`}
+            {...props}
             rounded
             placeholderInitials={staff.name
                 .split(" ")

@@ -1,3 +1,5 @@
+"use client";
+
 import BaseEntity from "@/types/entity/BaseEntity";
 import { CustomFlowbiteTheme, Dropdown, Table } from "flowbite-react";
 import { HiOutlineDotsVertical, HiPencil, HiTrash } from "react-icons/hi";
@@ -17,7 +19,10 @@ export default function DataTable<T extends Object & BaseEntity>({
     ...props
 }: PropTypes<T>) {
     return (
-        <div className={`overflow-y-auto w-full pb-8 ${className}`} {...props}>
+        <div
+            className={`overflow-auto max-w-full h-fit max-h-full mb-8 rounded-lg border-[1px] border-secondary-200 ${className}`}
+            {...props}
+        >
             {/* <p className="text-yellow-500 text-sm font-semibold mb-4">
                 {data?.length} items
             </p> */}
@@ -149,7 +154,7 @@ const tableTheme: CustomFlowbiteTheme["table"] = {
     root: {
         base: "w-full text-left rounded-lg text-sm text-secondary-500",
         shadow: "absolute bg-white dark:bg-black w-full h-full top-0 left-0 rounded-lg drop-shadow-md -z-10",
-        wrapper: "relative rounded-lg border-[1px] border-secondary-200",
+        wrapper: "relative ",
     },
     body: {
         base: "group/body",

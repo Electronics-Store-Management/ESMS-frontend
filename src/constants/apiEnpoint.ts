@@ -13,6 +13,7 @@ const API = {
     },
     supplier: {
         getDetail: (id: string) => `${BASE_API}/supplier/${id}`,
+        getHistory: (id: string) => `${BASE_API}/supplier/history/${id}`,
     },
     importBill: {
         getDetail: (id: string) => `${BASE_API}/import/${id}`,

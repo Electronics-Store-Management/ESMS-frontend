@@ -9,10 +9,10 @@ import OperationStateToast, {
 } from "@/components/OperationStateToast/OperationStateToast";
 import Supplier from "@/types/entity/Supplier";
 
-export default async function deleteSupplierAPI(supplier?: Supplier) {
-    if (!supplier?.id) throw new Error("Invalid supplier");
-
-    const response = await apiInstance.delete(`/supplier/${supplier.id}`);
+export default async function deleteSupplierAPI(supplier?: Supplier | string) {
+    const response = await apiInstance.delete(
+        `/supplier/${typeof supplier == "string" ? supplier : supplier?.id}`,
+    );
 
     return response.data;
 }
@@ -30,11 +30,11 @@ export function useDeleteSupplierMutation(refetch: () => any) {
         onSuccess: (res, data) => {
             refetch();
             closeLoading();
-            createSuccessToast("Success", "Create supplier successfully");
+            createSuccessToast("Success", "Delete supplier successfully");
         },
         onError: (error: any, data) => {
             closeLoading();
-            createFailToast("Fail to create supplier", error.message);
+            createFailToast("Fail to delete supplier", error.message);
         },
     });
 

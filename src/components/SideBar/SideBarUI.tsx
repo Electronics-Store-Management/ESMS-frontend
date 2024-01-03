@@ -13,7 +13,7 @@ import {
     HiUserGroup,
 } from "react-icons/hi";
 import { PiTruckDuotone } from "react-icons/pi";
-
+import { AiFillCustomerService } from "react-icons/ai";
 import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
 
 import COOKIE_NAME from "@/constants/cookies";
@@ -100,6 +100,14 @@ export default function SideBarUI({
                             icon={PiTruckDuotone}
                         >
                             Supplier
+                        </Sidebar.Item>
+                        <Sidebar.Item
+                            active={routeName === ROUTES.customer}
+                            theme={sideBarCollapsedItemTheme?.item}
+                            href={ROUTES.customer}
+                            icon={AiFillCustomerService}
+                        >
+                            Customer
                         </Sidebar.Item>
                         <Sidebar.Item
                             active={routeName === ROUTES.staff}
@@ -255,6 +263,7 @@ const ROUTES = {
     import: "/import",
     sale_invoice: "/sale-invoice",
     sale: "/sale",
+    customer: "/customer",
 };
 
 const sideBarTheme: CustomFlowbiteTheme["sidebar"] = {

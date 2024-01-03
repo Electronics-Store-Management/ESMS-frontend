@@ -42,7 +42,7 @@ const Page = () => {
         },
         onSuccess: (res: ImportBill<ImportProduct>, data) => {
             closeLoading();
-            const link = `${window.location.origin}/import_bill/${res.id}`;
+            const link = `${window.location.origin}/sale-invoice/${res.id}`;
             createSuccessToast(
                 "Successfully",
                 <>
@@ -85,7 +85,7 @@ const Page = () => {
 
         return {
             paymentMethod: getValues("paymentMethod"),
-            supplierId: customer?.id,
+            customerId: customer?.id,
             saleProducts,
         };
     }

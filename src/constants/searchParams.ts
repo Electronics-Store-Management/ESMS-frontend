@@ -3,6 +3,7 @@ const SEARCH_PARAMS = {
     productName: "product_name",
     supplierName: "supplier_name",
     categoryName: "category_name",
+    customerName: "customer_name",
     staffName: "staff_name",
     price: "price",
     name: "name",

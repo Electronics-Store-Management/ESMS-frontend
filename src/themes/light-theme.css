@@ -98,6 +98,9 @@
     --line-grey02: var(--secondary-300);
     --line-blue: var(--primary-600);
 
+    --revenue: var(--primary-500);
+    --cost: var(--yellow-400);
+
     --background: #ffffff;
     --background-hover: #f4f4f4;
     --background-active: #d9d9d9;

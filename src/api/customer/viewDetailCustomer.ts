@@ -1,6 +1,5 @@
-import Supplier from "@/types/entity/Supplier";
-import apiInstance from "../apiInstance";
 import Customer from "@/types/entity/Customer";
+import apiInstance from "../apiInstance";
 
 export default async function viewDetailCustomer({
     queryKey,

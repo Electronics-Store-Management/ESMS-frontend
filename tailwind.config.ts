@@ -60,10 +60,11 @@ const config: Config = {
                     hover: "var(--background-hover)",
                     active: "var(--background-active)",
                 },
+                revenue: "var(--revenue)",
+                cost: "var(--cost)",
             },
         },
     },
     plugins: [require("flowbite/plugin")],
 };
 export default config;
-

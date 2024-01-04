@@ -80,7 +80,7 @@ function BusinessStateItem({
                 )}
             </p>
             <p className=" absolute bottom-4 left-4 font-semibold text-secondary-400">
-                {type === "revenue" ? "Incoming" : "Expense"}
+                {type === "revenue" ? "Revenue" : "Expense"}
             </p>
         </div>
     );

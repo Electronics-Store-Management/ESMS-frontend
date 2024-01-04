@@ -28,9 +28,13 @@ ChartJS.register(
 
 export const options = {
     responsive: true,
+    interaction: {
+        intersect: false,
+    },
     plugins: {
         legend: {
             position: "top" as const,
+            align: "end" as const,
         },
         title: {
             display: false,
@@ -62,18 +66,19 @@ export default function BusinessChart({}: {}) {
         labels,
         datasets: [
             {
-                label: "Cost",
+                label: "Expense",
                 data: costs || labels.map(() => 0),
                 borderColor: "#FFCB1B",
                 backgroundColor: "#FFF6C5",
-                tension: 0.5,
+                tension: 0.35,
+                fill: true,
             },
             {
                 label: "Revenue",
                 data: revenues || labels.map(() => 0),
                 borderColor: "#3CAEF4",
                 backgroundColor: "#E1F0FD",
-                tension: 0.5,
+                tension: 0.35,
             },
         ],
     };
@@ -81,7 +86,7 @@ export default function BusinessChart({}: {}) {
     return (
         <>
             <div className=" w-full flex justify-between">
-                <p className=" font-medium">Quantity</p>
+                <p className=" font-semibold text-lg">Business state</p>
                 <div></div>
             </div>
             <Line options={options} data={data} />

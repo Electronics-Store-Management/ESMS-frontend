@@ -3,14 +3,12 @@
 import viewProductList from "@/api/product/viewProductList.api";
 import BillProductTable from "@/components/BillProductTable/BillProductTable";
 import Button from "@/components/Button/Button";
-import ControllerSelectInput from "@/components/ControllerInput/ControllerSelectInput";
 import SearchInput from "@/components/SearchInput/SearchInput.tsx";
-import ImportBill, { ImportProduct } from "@/types/entity/ImportBill";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { HiCheck } from "react-icons/hi";
 
-import addNewSaleBill from "@/api/sale/addNewSaleBill.api";
+import addNewWarrantyBill from "@/api/warranty/addNewWarrantyBill.api";
 import {
     createFailToast,
     createSuccessToast,
@@ -18,31 +16,29 @@ import {
 import Link from "@/components/Typography/Link";
 import { CustomerContext } from "@/contexts/CustomerContext";
 import useLoading from "@/hooks/useLoading";
-import ProductPreview from "@/types/entity/ProductPreview";
-import SaleBill, { SaleProduct } from "@/types/entity/SaleBill";
-import FORMATTER from "@/utils/formatter";
+import WarrantyBill, { WarrantyProduct } from "@/types/entity/WarrantyBill";
 import _ from "lodash";
 import { useMutation } from "react-query";
 
 const Page = () => {
     const [billProducts, setBillProducts] = useState<
-        Map<string, ProductPreview>
-    >(new Map<string, ProductPreview>());
+        Map<string, WarrantyProduct>
+    >(new Map<string, WarrantyProduct>());
 
     const { customer } = useContext(CustomerContext);
 
     const { openLoading, closeLoading } = useLoading();
 
-    const addNewSaleBillMutation = useMutation(addNewSaleBill, {
+    const addNewWarrantyBillMutation = useMutation(addNewWarrantyBill, {
         onMutate: () => {
-            openLoading("Adding new sale bill...");
+            openLoading("Adding new warranty bill...");
         },
         onSettled: () => {
             closeLoading();
         },
-        onSuccess: (res: SaleBill<SaleProduct>, data) => {
+        onSuccess: (res: WarrantyBill<WarrantyProduct>, data) => {
             closeLoading();
-            const link = `${window.location.origin}/sale-invoice/${res.id}`;
+            const link = `${window.location.origin}/warranty-invoice/${res.id}`;
             createSuccessToast(
                 "Successfully",
                 <>
@@ -53,46 +49,39 @@ const Page = () => {
         onError: (error: any, data) => {
             closeLoading();
             createFailToast("Fail to create bill", error.message, () =>
-                addNewSaleBillMutation.mutate(data),
+                addNewWarrantyBillMutation.mutate(data),
             );
         },
     });
 
     function getTotalInfo() {
         let quantity = 0;
-        let price = 0;
         billProducts.forEach((product) => {
-            quantity += product.quantity * 1;
-            price += product.price * product.quantity;
+            quantity += 1 * product.quantity;
         });
 
-        return { quantity, price };
+        return { quantity };
     }
 
-    const {
-        control: billControll,
-        getValues,
-        setValue,
-    } = useForm<SaleBill<SaleProduct>>();
-
     function getRequest() {
-        const saleProducts = Array.from(billProducts.values()).map(
+        const warrantyProducts = Array.from(billProducts.values()).map(
             (product) => ({
-                ..._.pick(product, ["price", "quantity"]),
+                ..._.pick(product, ["warrantyContent", "quantity", "note"]),
                 productId: product.id,
+                id: product.id,
+                status: "pending",
             }),
         );
 
         return {
-            paymentMethod: getValues("paymentMethod"),
             customerId: customer?.id,
-            saleProducts,
+            warrantyProducts,
         };
     }
 
     function onSubmit() {
         const request = getRequest();
-        addNewSaleBillMutation.mutate(request);
+        addNewWarrantyBillMutation.mutate(request);
     }
 
     return (
@@ -133,7 +122,6 @@ const Page = () => {
                         size: 3,
                         editable: false,
                     },
-                    price: { title: "Price", size: 2, type: "number" },
                     quantity: {
                         title: "Quantity",
                         defaultValue: 1,
@@ -145,11 +133,15 @@ const Page = () => {
                             return "";
                         },
                     },
-                    totalPrice: {
-                        title: "Total price",
+                    warrantyContent: {
+                        title: "Reason",
+                        type: "textarea",
+                        size: 4,
+                    },
+                    note: {
+                        title: "Note",
+                        type: "textarea",
                         size: 2,
-                        calculateFunc: ({ price, quantity }) =>
-                            FORMATTER.toCurrency(price * quantity),
                     },
                 }}
             />
@@ -162,23 +154,7 @@ const Page = () => {
                                 {getTotalInfo().quantity}
                             </span>
                         </p>
-                        <p className=" text-secondary-950">
-                            Total price:{"  "}
-                            <span className=" text-lg font-semibold text-primary-500">
-                                {FORMATTER.toCurrency(getTotalInfo().price)}
-                            </span>
-                        </p>
                     </div>
-                    <ControllerSelectInput
-                        className="mt-4 w-1/2"
-                        control={billControll}
-                        name="payment"
-                        title="Payment"
-                        items={PAYMENT_METHOD}
-                        onValueChange={(value) =>
-                            value && setValue("paymentMethod", value)
-                        }
-                    />
                 </div>
                 <div className=" flex gap-5">
                     <Button btnType="secondary">Cancel</Button>
@@ -191,12 +167,5 @@ const Page = () => {
         </div>
     );
 };
-
-const PAYMENT_METHOD = [
-    { name: "Cash", id: "Cash" },
-    { name: "Momo", id: "Momo" },
-    { name: "Paypal", id: "Paypal" },
-    { name: "Visa", id: "Visa" },
-];
 
 export default Page;

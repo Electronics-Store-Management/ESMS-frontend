@@ -15,6 +15,7 @@ import {
 import { PiTruckDuotone } from "react-icons/pi";
 import { AiFillCustomerService } from "react-icons/ai";
 import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
+import { RiToolsLine } from "react-icons/ri";
 
 import COOKIE_NAME from "@/constants/cookies";
 import Staff from "@/types/entity/Staff";
@@ -172,6 +173,35 @@ export default function SideBarUI({
                             >
                                 Export
                             </Sidebar.Item>
+                        </Sidebar.Collapse>{" "}
+                        <Sidebar.Collapse
+                            theme={sideBarTheme?.collapse}
+                            href={isCollapse ? ROUTES.warranty : ""}
+                            open={
+                                [
+                                    ROUTES.warranty_invoice,
+                                    ROUTES.warranty,
+                                ].includes(routeName) && !isCollapse
+                            }
+                            icon={RiToolsLine}
+                            label="Warranty"
+                        >
+                            <Sidebar.Item
+                                active={routeName === ROUTES.warranty_invoice}
+                                theme={sideBarCollapsedItemTheme?.item}
+                                href={ROUTES.warranty_invoice}
+                                icon={LiaFileInvoiceDollarSolid}
+                            >
+                                Invoices
+                            </Sidebar.Item>
+                            <Sidebar.Item
+                                active={routeName === ROUTES.warranty}
+                                theme={sideBarCollapsedItemTheme?.item}
+                                href={ROUTES.warranty}
+                                icon={RiToolsLine}
+                            >
+                                Warranty
+                            </Sidebar.Item>
                         </Sidebar.Collapse>
                     </Sidebar.ItemGroup>
                 </Sidebar.Items>
@@ -263,6 +293,8 @@ const ROUTES = {
     import: "/import",
     sale_invoice: "/sale-invoice",
     sale: "/sale",
+    warranty_invoice: "/warranty-invoice",
+    warranty: "/warranty",
     customer: "/customer",
 };
 

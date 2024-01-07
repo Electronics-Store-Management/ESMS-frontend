@@ -15,3 +15,15 @@ export default async function viewCustomerList({
 
     return customer;
 }
+
+export async function findCustomer({ queryKey }: { queryKey: any }) {
+    const [_key, method, value] = queryKey;
+
+    const response = await apiInstance.get("/customer", {
+        params: { [method]: value },
+    });
+
+    const customer = response.data as Customer[];
+
+    return customer;
+}

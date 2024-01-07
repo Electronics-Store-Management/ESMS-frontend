@@ -21,6 +21,9 @@ const API = {
     saleBill: {
         getDetail: (id: string) => `${BASE_API}/sale/${id}`,
     },
+    warrantyBill: {
+        getDetail: (id: string) => `${BASE_API}/warranty/${id}`,
+    },
 };
 
 export default API;

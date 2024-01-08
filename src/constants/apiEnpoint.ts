@@ -11,6 +11,10 @@ const API = {
         getDetailByUsername: (email: string) =>
             `${BASE_API}/staff/username?email=${email}`,
     },
+    permission: {
+        getStaffPermission: (staffId: string) =>
+            `${BASE_API}/staff/${staffId}/permission`,
+    },
     supplier: {
         getDetail: (id: string) => `${BASE_API}/supplier/${id}`,
         getHistory: (id: string) => `${BASE_API}/supplier/history/${id}`,

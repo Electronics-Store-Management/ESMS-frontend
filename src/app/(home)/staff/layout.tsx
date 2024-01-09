@@ -11,12 +11,12 @@ import DataTable from "@/components/DataTable/DataTable";
 import FilterBadge from "@/components/FilterBadge/FilterBadge";
 import { useUpdateStaffModal } from "@/components/UpdateStaffForm/UpdateStaffFormModal";
 import SEARCH_PARAMS from "@/constants/searchParams";
+import { ReactNodeChildren } from "@/types/ReactNodeChildren";
 import Staff from "@/types/entity/Staff";
 import FORMATTER from "@/utils/formatter";
-import { useQuery } from "react-query";
-import { ReactNodeChildren } from "@/types/ReactNodeChildren";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import withQuery from "@/utils/withQuery";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useQuery } from "react-query";
 
 export default function Layout({ children }: ReactNodeChildren) {
     const router = useRouter();

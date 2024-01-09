@@ -1,6 +1,6 @@
 import Staff from "./Staff";
 
-export const PermissionTypeList = [
+export const PermissionTypeList: PermissionType[] = [
     "CREATE",
     "VIEW_ITEM",
     "VIEW_ALL",
@@ -10,7 +10,7 @@ export const PermissionTypeList = [
     "DELETE_ALL",
 ];
 
-export const EntityTypeList = [
+export const EntityTypeList: EntityType[] = [
     "PRODUCT",
     "CATEGORY",
     "CUSTOMER",

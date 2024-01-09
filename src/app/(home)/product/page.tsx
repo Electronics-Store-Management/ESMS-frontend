@@ -16,8 +16,9 @@ import { useUpdateProductModal } from "@/components/UpdateProductForm/UpdateProd
 import SEARCH_PARAMS from "@/constants/searchParams";
 import ProductPreview from "@/types/entity/ProductPreview";
 import FORMATTER from "@/utils/formatter";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useQuery } from "react-query";
+import { usePermission } from "@/hooks/usePermission";
 
 export default function Page() {
     const searchParams = useSearchParams();
@@ -40,6 +41,8 @@ export default function Page() {
 
     const deleteProductMutation = useDeleteProductMutation(refetch);
 
+    const isAllowedCreate = usePermission("PRODUCT", ["CREATE"]);
+
     return (
         <div className="w-full h-full flex flex-col">
             <div className=" w-full grid grid-cols-2">
@@ -47,13 +50,15 @@ export default function Page() {
                 <div className=" flex justify-end gap-8">
                     <CategoryFilter className="" />
                     <PriceRangeFilter />
-                    <Button
-                        size="sm"
-                        onClick={() => openCreateProductModal(refetch)}
-                    >
-                        <HiPlus className=" w-4 h-4 mr-2" />
-                        Add product
-                    </Button>
+                    {isAllowedCreate ? (
+                        <Button
+                            size="sm"
+                            onClick={() => openCreateProductModal(refetch)}
+                        >
+                            <HiPlus className=" w-4 h-4 mr-2" />
+                            Add product
+                        </Button>
+                    ) : null}
                 </div>
             </div>
             <div className=" flex gap-5 mt-5">
@@ -77,6 +82,7 @@ export default function Page() {
                 data={data || []}
                 isLoading={isLoading}
                 className="-mr-8 pr-8 mt-4"
+                entityType={"PRODUCT"}
                 onDelete={(product) => {
                     openClaimModal(
                         <>

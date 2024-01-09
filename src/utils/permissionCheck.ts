@@ -1,10 +1,20 @@
+import API from "@/constants/apiEnpoint";
 import {
     Authority,
     EntityType,
     EntityTypeList,
     PermissionResponse,
+    PermissionType,
     PermissionTypeList,
 } from "@/types/entity/PermissionResponse";
+import fetchWithToken from "./fetchWithToken";
+import { cookies, headers } from "next/headers";
+import COOKIE_NAME from "@/constants/cookies";
+import Staff from "@/types/entity/Staff";
+import { redirect } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useDeepCompareEffect } from "react-use";
+import { getCookie } from "cookies-next";
 
 export const GroupedPermissionTypeList = ["update", "create", "view", "delete"];
 
@@ -15,6 +25,38 @@ export type GroupedPermission = {
     entityId?: string[];
     id?: string;
 };
+
+export async function hasPermission(
+    entityType: EntityType,
+    permissionTypes: PermissionType[],
+): Promise<boolean> {
+    const accessToken = cookies().get("accessToken")?.value || "";
+    const staffInfoResponse = await fetch(API.staff.getStaffProfile, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        },
+    });
+    const staffInfo: Staff = await staffInfoResponse.json();
+    const permissionResponse = await fetchWithToken(
+        API.permission.getStaffPermission(staffInfo.id),
+        { next: { tags: ["permissions"] } },
+    );
+
+    const { permissions, authorities } = await permissionResponse.json();
+    const isAdmin = authorities.some(
+        ({ authority }: { authority: string }) => authority === "ADMIN",
+    );
+
+    // console.log({ isAdmin, permissions, permissionTypes, entityType });
+
+    if (isAdmin) return true;
+
+    return permissions.some(
+        (permission: PermissionResponse) =>
+            permission.entityType === entityType &&
+            permissionTypes.includes(permission.permissionType),
+    );
+}
 
 export function groupPermissionByEntityType(
     permissions: PermissionResponse[],
@@ -90,4 +132,7 @@ export function groupPermissionByEntityType(
     return Array.from(Object.entries(groupedPermissions));
 }
 
-export default function permissionCheck() {}
+export default async function checkPermission(entityType: EntityType) {
+    if (!(await hasPermission(entityType, PermissionTypeList)))
+        redirect("/not-permitted");
+}

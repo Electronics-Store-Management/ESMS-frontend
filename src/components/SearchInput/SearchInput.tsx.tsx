@@ -50,7 +50,11 @@ export default function SearchInput<T>({
                 <div className=" w-full text-start absolute -bottom-2 translate-y-full bg-background-normal z-50 shadow-lg rounded-md">
                     {toggleCreating && searchText != "" ? (
                         <p
-                            onClick={() => toggleCreating(searchText)}
+                            onClick={() => {
+                                toggleCreating(searchText);
+                                setSearchText("");
+                                setQuerySearchText("");
+                            }}
                             className=" px-3 py-2 text-secondary-950 text-sm hover:bg-background-hover transition-all duration-200 cursor-pointer"
                         >
                             {`Create "${searchText}"`}

@@ -23,6 +23,7 @@ import SaleBill, { SaleProduct } from "@/types/entity/SaleBill";
 import FORMATTER from "@/utils/formatter";
 import _ from "lodash";
 import { useMutation } from "react-query";
+import addNewCustomer from "@/api/customer/addNewCustomer.api";
 
 const Page = () => {
     const [billProducts, setBillProducts] = useState<
@@ -75,7 +76,15 @@ const Page = () => {
         setValue,
     } = useForm<SaleBill<SaleProduct>>();
 
-    function getRequest() {
+    async function getRequest() {
+        let newCustomer;
+
+        if (!customer?.id) {
+            if (customer) {
+                newCustomer = await addNewCustomer(customer);
+            }
+        }
+
         const saleProducts = Array.from(billProducts.values()).map(
             (product) => ({
                 ..._.pick(product, ["price", "quantity"]),
@@ -85,13 +94,13 @@ const Page = () => {
 
         return {
             paymentMethod: getValues("paymentMethod"),
-            customerId: customer?.id,
+            customerId: customer?.id || newCustomer?.id,
             saleProducts,
         };
     }
 
-    function onSubmit() {
-        const request = getRequest();
+    async function onSubmit() {
+        const request = await getRequest();
         addNewSaleBillMutation.mutate(request);
     }
 

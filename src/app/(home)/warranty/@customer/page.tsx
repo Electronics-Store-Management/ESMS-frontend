@@ -19,7 +19,7 @@ export default function Page() {
                 Customer info
             </p>
             <CustomerSelection
-                className=" mt-5"
+                className=" mt-[52px]"
                 onSearch={(customer: Customer) => {
                     setCustomer?.(customer);
                     setIsCreateCustomer(false);

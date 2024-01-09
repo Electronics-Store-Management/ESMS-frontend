@@ -30,7 +30,6 @@ const Page = () => {
 
     const { openLoading, closeLoading } = useLoading();
 
-    const addNewCustomerMutation = useMutation(addNewCustomer);
     const addNewWarrantyBillMutation = useMutation(addNewWarrantyBill, {
         onMutate: () => {
             openLoading("Adding new warranty bill...");
@@ -65,7 +64,15 @@ const Page = () => {
         return { quantity };
     }
 
-    function getRequest() {
+    async function getRequest() {
+        let newCustomer;
+
+        if (!customer?.id) {
+            if (customer) {
+                newCustomer = await addNewCustomer(customer);
+            }
+        }
+
         const warrantyProducts = Array.from(billProducts.values()).map(
             (product) => ({
                 ..._.pick(product, ["warrantyContent", "quantity", "note"]),
@@ -76,13 +83,13 @@ const Page = () => {
         );
 
         return {
-            customerId: customer?.id,
+            customerId: customer?.id || newCustomer?.id,
             warrantyProducts,
         };
     }
 
     async function onSubmit() {
-        const request = getRequest();
+        const request = await getRequest();
         addNewWarrantyBillMutation.mutate(request);
     }
 

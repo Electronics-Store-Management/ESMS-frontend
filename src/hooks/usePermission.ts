@@ -12,8 +12,8 @@ import { useState } from "react";
 import { useDeepCompareEffect } from "react-use";
 
 export function usePermission(
-    entityType: EntityType,
-    permissionTypes: PermissionType[],
+    entityType?: EntityType,
+    permissionTypes?: PermissionType[],
     ids?: string[],
 ) {
     const [isAllowed, setIsAllowed] = useState<boolean>();
@@ -44,19 +44,23 @@ export function usePermission(
             );
 
             if (isAdmin) setIsAllowed(true);
-
-            setIsAllowed(
-                permissions.some(
-                    (permission: PermissionResponse) =>
-                        permission.entityType === entityType &&
-                        permissionTypes.includes(permission.permissionType) &&
-                        (permission.entityId && ids
-                            ? ids.includes(permission.entityId)
-                            : true),
-                ),
-            );
-
-            console.log({ authorities });
+            else
+                setIsAllowed(
+                    permissions.some(
+                        (permission: PermissionResponse) =>
+                            (entityType
+                                ? permission.entityType === entityType
+                                : true) &&
+                            (permissionTypes
+                                ? permissionTypes?.includes(
+                                      permission.permissionType,
+                                  )
+                                : true) &&
+                            (permission.entityId && ids
+                                ? ids.includes(permission.entityId)
+                                : true),
+                    ),
+                );
         })();
     }, [entityType, permissionTypes]);
 

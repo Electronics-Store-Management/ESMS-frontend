@@ -103,7 +103,7 @@ export const tableTheme: CustomFlowbiteTheme["table"] = {
 
 type PropTypes<T> = {
     data: T[];
-    entityType: EntityType;
+    entityType?: EntityType;
     isLoading?: boolean;
     onEdit?: (product: T) => any;
     onDelete?: (product: T) => any;

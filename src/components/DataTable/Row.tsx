@@ -20,7 +20,7 @@ export function Row<T>({
     onEdit,
     onDelete,
 }: {
-    entityType: EntityType;
+    entityType?: EntityType;
     row: any;
     isEdit: boolean;
     index: number;

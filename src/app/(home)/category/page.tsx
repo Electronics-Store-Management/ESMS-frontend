@@ -14,6 +14,7 @@ import CategorySearch from "@/components/CategorySearch/CategorySearch";
 import { useDeleteCategoryMutation } from "@/api/category/deleteCategory.api";
 import { useUpdateCategoryModal } from "@/components/UpdateCategoryForm/UpdateCategoryFormModal";
 import FilterBadge from "@/components/FilterBadge/FilterBadge";
+import { usePermission } from "@/hooks/usePermission";
 
 export default function Page() {
     const searchParams = useSearchParams();
@@ -34,6 +35,8 @@ export default function Page() {
 
     const deleteCategoryMutation = useDeleteCategoryMutation(refetch);
 
+    const isAllowedCreate = usePermission("CATEGORY", ["CREATE"]);
+
     return (
         <div className="grid grid-cols-4 gap-5">
             <div></div>
@@ -47,6 +50,7 @@ export default function Page() {
                 />
                 <DataTable
                     data={data || []}
+                    entityType="CATEGORY"
                     isLoading={isLoading}
                     onDelete={(category) => {
                         openClaimModal(
@@ -69,13 +73,15 @@ export default function Page() {
             </div>
 
             <div className="flex justify-end items-start">
-                <Button
-                    size="md"
-                    onClick={() => openCreateCategoryModal(refetch)}
-                >
-                    <HiPlus className=" w-4 h-4 mr-2" />
-                    New category
-                </Button>
+                {isAllowedCreate ? (
+                    <Button
+                        size="md"
+                        onClick={() => openCreateCategoryModal(refetch)}
+                    >
+                        <HiPlus className=" w-4 h-4 mr-2" />
+                        New category
+                    </Button>
+                ) : null}
             </div>
         </div>
     );

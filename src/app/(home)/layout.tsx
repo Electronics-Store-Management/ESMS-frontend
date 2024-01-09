@@ -4,7 +4,11 @@ import COOKIE_NAME from "@/constants/cookies";
 import SEARCH_PARAMS from "@/constants/searchParams";
 import { ModalProvider } from "@/contexts/ModalContext";
 import { ReactNodeChildren } from "@/types/ReactNodeChildren";
-import { EntityType } from "@/types/entity/PermissionResponse";
+import {
+    EntityType,
+    PermissionType,
+    PermissionTypeList,
+} from "@/types/entity/PermissionResponse";
 import Staff from "@/types/entity/Staff";
 import checkPermission from "@/utils/permissionCheck";
 import withQuery from "@/utils/withQuery";
@@ -36,7 +40,10 @@ export default async function Layout({ children }: ReactNodeChildren) {
         .split("/")
         .at(3) as keyof typeof PageEntityType;
     if ((currentPage as string) !== "not-permitted")
-        await checkPermission(PageEntityType[currentPage] as EntityType);
+        await checkPermission(
+            PageEntityType[currentPage].type as EntityType,
+            PageEntityType[currentPage].permissions as PermissionType[],
+        );
 
     return (
         <ModalProvider>
@@ -53,12 +60,19 @@ export default async function Layout({ children }: ReactNodeChildren) {
 }
 
 const PageEntityType = {
-    product: "PRODUCT",
-    category: "CATEGORY",
-    customer: "CUSTOMER",
-    staff: "STAFF",
-    import_bill: "IMPORT_BILL",
-    "sale-invoice": "SALE_BILL",
-    "warranty-invoice": "WARRANTY_BILL",
-    home: "DASHBOARD",
+    product: { type: "PRODUCT", permissions: PermissionTypeList },
+    category: { type: "CATEGORY", permissions: PermissionTypeList },
+    customer: { type: "CUSTOMER", permissions: PermissionTypeList },
+    supplier: { type: "SUPPLIER", permissions: PermissionTypeList },
+    staff: { type: "STAFF", permissions: PermissionTypeList },
+    import: { type: "IMPORT_BILL", permissions: ["CREATE"] },
+    import_bill: { type: "IMPORT_BILL", permissions: PermissionTypeList },
+    sale: { type: "SALE_BILL", permissions: ["CREATE"] },
+    "sale-invoice": { type: "SALE_BILL", permissions: PermissionTypeList },
+    warranty: { type: "WARRANTY_BILL", permissions: ["CREATE"] },
+    "warranty-invoice": {
+        type: "WARRANTY_BILL",
+        permissions: PermissionTypeList,
+    },
+    home: { type: "DASHBOARD", permissions: PermissionTypeList },
 };

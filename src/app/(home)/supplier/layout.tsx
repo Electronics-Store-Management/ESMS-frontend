@@ -19,6 +19,7 @@ import { useRef } from "react";
 import { useQuery } from "react-query";
 import { ReactNodeChildren } from "@/types/ReactNodeChildren";
 import useClient from "@/hooks/useClient";
+import { usePermission } from "@/hooks/usePermission";
 
 export default function Layout({ children }: ReactNodeChildren) {
     const pathname = usePathname();
@@ -44,6 +45,8 @@ export default function Layout({ children }: ReactNodeChildren) {
     const deleteSupplierMutation = useDeleteSupplierMutation(refetch);
     const { openClaimModal } = useClaimModal();
 
+    const isAllowedCreate = usePermission("SUPPLIER", ["CREATE"]);
+
     return (
         <div className="w-full h-full flex flex-col">
             <div className=" w-full grid grid-cols-2">
@@ -65,13 +68,15 @@ export default function Layout({ children }: ReactNodeChildren) {
                     placeholder="Search supplier by name here..."
                 />
                 <div className=" flex justify-end gap-8">
-                    <Button
-                        size="sm"
-                        onClick={() => openCreateSupplierModal(refetch)}
-                    >
-                        <HiPlus className=" w-4 h-4 mr-2" />
-                        Add supplier
-                    </Button>
+                    {isAllowedCreate ? (
+                        <Button
+                            size="sm"
+                            onClick={() => openCreateSupplierModal(refetch)}
+                        >
+                            <HiPlus className=" w-4 h-4 mr-2" />
+                            Add supplier
+                        </Button>
+                    ) : null}
                 </div>
             </div>
             <div className=" flex gap-5 mt-5">

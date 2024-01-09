@@ -14,6 +14,7 @@ export const EntityTypeList: EntityType[] = [
     "PRODUCT",
     "CATEGORY",
     "CUSTOMER",
+    "SUPPLIER",
     "STAFF",
     "IMPORT_BILL",
     "SALE_BILL",
@@ -34,6 +35,7 @@ export type EntityType =
     | "PRODUCT"
     | "CATEGORY"
     | "CUSTOMER"
+    | "SUPPLIER"
     | "STAFF"
     | "IMPORT_BILL"
     | "SALE_BILL"

@@ -6,12 +6,9 @@ import ControllerSelectInput from "@/components/ControllerInput/ControllerSelect
 import { Permission } from "@/types/entity/PermissionResponse";
 import { Modal } from "flowbite-react";
 import { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { LuPlus } from "react-icons/lu";
 import { useMutation } from "react-query";
-import { GoDash } from "react-icons/go";
-
-// import { PermissionTypeList } from "@/types/entity/PermissionResponse";
 
 export default function AddPermissionBtn({
     onCreated,
@@ -82,6 +79,9 @@ export default function AddPermissionBtn({
                             setValue("entityType", d);
                         }}
                     />
+                    {getValues("permissionType")?.split("_").at(1) == "ITEM" ? (
+                        <div>Choose item</div>
+                    ) : null}
 
                     <div className="flex justify-between mt-8">
                         <Button
@@ -114,6 +114,7 @@ const EntityTypeList = [
     { id: "PRODUCT", name: "PRODUCT" },
     { id: "CATEGORY", name: "CATEGORY" },
     { id: "CUSTOMER", name: "CUSTOMER" },
+    { id: "SUPPLIER", name: "SUPPLIER" },
     { id: "STAFF", name: "STAFF" },
     { id: "IMPORT_BILL", name: "IMPORT_BILL" },
     { id: "SALE_BILL", name: "SALE_BILL" },

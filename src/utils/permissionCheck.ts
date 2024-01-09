@@ -132,7 +132,10 @@ export function groupPermissionByEntityType(
     return Array.from(Object.entries(groupedPermissions));
 }
 
-export default async function checkPermission(entityType: EntityType) {
-    if (!(await hasPermission(entityType, PermissionTypeList)))
+export default async function checkPermission(
+    entityType: EntityType,
+    permissions: PermissionType[],
+) {
+    if (!(await hasPermission(entityType, permissions)))
         redirect("/not-permitted");
 }

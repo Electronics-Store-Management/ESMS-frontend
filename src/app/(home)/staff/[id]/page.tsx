@@ -34,6 +34,9 @@ export default async function Page({
 
     const { permissions, authorities } = await permissionResponse.json();
 
+    console.log({ permissions, authorities });
+    console.log(groupPermissionByEntityType(permissions, authorities).at(-1));
+
     return (
         <div className=" w-1/3 overflow-auto py-5 px-8 flex flex-col gap-3 rounded-lg border-[1px] border-secondary-200">
             <div className=" grid gap-2">

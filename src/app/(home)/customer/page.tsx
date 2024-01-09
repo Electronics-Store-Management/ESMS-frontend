@@ -2,30 +2,22 @@
 
 import { HiOutlineSearch, HiPlus } from "react-icons/hi";
 
-import { useDeleteProductMutation } from "@/api/product/deleteProduct.api";
-import viewProductList from "@/api/product/viewProductList.api";
+import { useDeleteCustomerMutation } from "@/api/customer/deleteCustomer.api";
+import viewCustomerList from "@/api/customer/viewCustomerList.api";
 import Button from "@/components/Button/Button";
-import CategoryFilter from "@/components/CategoryFilter/CategoryFilter";
 import { useClaimModal } from "@/components/ClaimModal/ClaimModal";
-import { useCreateProductModal } from "@/components/CreateProductForm/CreateProductFormModal";
+import { useCreateCustomerModal } from "@/components/CreateCustomerForm/CreateCustomerFormModal";
 import DataTable from "@/components/DataTable/DataTable";
 import FilterBadge from "@/components/FilterBadge/FilterBadge";
-import PriceRangeFilter from "@/components/PriceRangeFilter/PriceRangeFilter";
-import ProductSearch from "@/components/ProductSearch/ProductSearch";
-import { useUpdateProductModal } from "@/components/UpdateProductForm/UpdateProductFormModal";
-import SEARCH_PARAMS from "@/constants/searchParams";
-import ProductPreview from "@/types/entity/ProductPreview";
-import FORMATTER from "@/utils/formatter";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useQuery } from "react-query";
 import TextInput from "@/components/Input/TextInput";
-import { useRef } from "react";
-import withQuery from "@/utils/withQuery";
-import Customer from "@/types/entity/Customer";
-import viewCustomerList from "@/api/customer/viewCustomerList.api";
-import { useCreateCustomerModal } from "@/components/CreateCustomerForm/CreateCustomerFormModal";
 import { useUpdateCustomerModal } from "@/components/UpdateCustomerForm/UpdateCustomerFormModal";
-import { useDeleteCustomerMutation } from "@/api/customer/deleteCustomer.api";
+import SEARCH_PARAMS from "@/constants/searchParams";
+import Customer from "@/types/entity/Customer";
+import withQuery from "@/utils/withQuery";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useRef } from "react";
+import { useQuery } from "react-query";
+import { usePermission } from "@/hooks/usePermission";
 
 export default function Page() {
     const router = useRouter();
@@ -48,6 +40,8 @@ export default function Page() {
 
     const deleteCustomerMutation = useDeleteCustomerMutation(refetch);
 
+    const isAllowedCreate = usePermission("CUSTOMER", ["CREATE"]);
+
     return (
         <div className="w-full h-full flex flex-col">
             <div className=" w-full grid grid-cols-2">
@@ -69,13 +63,15 @@ export default function Page() {
                     placeholder="Search customer by name here..."
                 />
                 <div className=" flex justify-end gap-8">
-                    <Button
-                        size="sm"
-                        onClick={() => openCreateCustomerModal(refetch)}
-                    >
-                        <HiPlus className=" w-4 h-4 mr-2" />
-                        Add customer
-                    </Button>
+                    {isAllowedCreate ? (
+                        <Button
+                            size="sm"
+                            onClick={() => openCreateCustomerModal(refetch)}
+                        >
+                            <HiPlus className=" w-4 h-4 mr-2" />
+                            Add customer
+                        </Button>
+                    ) : null}
                 </div>
             </div>
             <div className=" flex gap-5 mt-5">
@@ -88,6 +84,7 @@ export default function Page() {
             <div className=" w-full h-full overflow-auto flex gap-5">
                 <DataTable
                     data={data || []}
+                    entityType="CUSTOMER"
                     isLoading={isLoading}
                     className=""
                     onDelete={(customer) => {

@@ -10,12 +10,11 @@ import ImportBill, { ImportProductResponse } from "@/types/entity/ImportBill";
 import FORMATTER from "@/utils/formatter";
 import withQuery from "@/utils/withQuery";
 import _ from "lodash";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useMemo } from "react";
 import { useQuery } from "react-query";
 
 const Layout = ({ children }: ReactNodeChildren) => {
-    const pathname = usePathname();
     const searchParams = useSearchParams();
     const router = useRouter();
 

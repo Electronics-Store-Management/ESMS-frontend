@@ -19,6 +19,7 @@ import useLoading from "@/hooks/useLoading";
 import WarrantyBill, { WarrantyProduct } from "@/types/entity/WarrantyBill";
 import _ from "lodash";
 import { useMutation } from "react-query";
+import addNewCustomer from "@/api/customer/addNewCustomer.api";
 
 const Page = () => {
     const [billProducts, setBillProducts] = useState<
@@ -29,6 +30,7 @@ const Page = () => {
 
     const { openLoading, closeLoading } = useLoading();
 
+    const addNewCustomerMutation = useMutation(addNewCustomer);
     const addNewWarrantyBillMutation = useMutation(addNewWarrantyBill, {
         onMutate: () => {
             openLoading("Adding new warranty bill...");
@@ -79,7 +81,7 @@ const Page = () => {
         };
     }
 
-    function onSubmit() {
+    async function onSubmit() {
         const request = getRequest();
         addNewWarrantyBillMutation.mutate(request);
     }

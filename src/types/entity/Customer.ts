@@ -5,3 +5,10 @@ export default interface Customer extends BaseEntity {
     phone: string;
     address: string;
 }
+
+export interface CustomerRequest {
+    id?: string;
+    name?: string;
+    phone?: string;
+    address?: string;
+}

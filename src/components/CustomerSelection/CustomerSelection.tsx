@@ -6,22 +6,21 @@ import {
 
 import { findCustomer } from "@/api/customer/viewCustomerList.api";
 import Customer from "@/types/entity/Customer";
-import React, { useRef, useState } from "react";
-import SearchInput from "../SearchInput/SearchInput.tsx";
 import { capitalize } from "lodash";
+import React, { useState } from "react";
+import SearchInput from "../SearchInput/SearchInput.tsx";
 
 export default function CustomerSelection({
     onSearch = (id: Customer) => {},
+    toggleCreating,
+    className,
     ...props
 }: PropTypes) {
     const [chosen, setChosen] = useState<number>(0);
-    const searchRef = useRef<HTMLInputElement>(null);
-
-    const customerRef = useRef<string>("");
 
     return (
-        <div {...props}>
-            <ButtonFlowbite.Group>
+        <div className={` w-full ${className}`} {...props}>
+            <ButtonFlowbite.Group className=" w-full">
                 <Dropdown
                     theme={dropdownTheme}
                     label={capitalize(findingMethod[chosen])}
@@ -58,6 +57,12 @@ export default function CustomerSelection({
                     )}
                     className="w-full"
                     onSelect={(customer: Customer) => onSearch?.(customer)}
+                    toggleCreating={
+                        toggleCreating
+                            ? (value: string) =>
+                                  toggleCreating(value, findingMethod[chosen])
+                            : undefined
+                    }
                 />
             </ButtonFlowbite.Group>
         </div>
@@ -110,4 +115,5 @@ const findingMethod = ["name", "phone"] as const;
 
 interface PropTypes extends React.ComponentPropsWithRef<"div"> {
     onSearch?: (id: Customer) => any;
+    toggleCreating?: (value: string, type: string) => any;
 }

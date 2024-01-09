@@ -12,6 +12,7 @@ export default function SearchInput<T>({
     placeholder,
     queryInfo: { queryKeys, queryFunc },
     onSelect,
+    toggleCreating,
     className,
     template,
     ...props
@@ -47,6 +48,14 @@ export default function SearchInput<T>({
             />
             {isOpen ? (
                 <div className=" w-full text-start absolute -bottom-2 translate-y-full bg-background-normal z-50 shadow-lg rounded-md">
+                    {toggleCreating && searchText != "" ? (
+                        <p
+                            onClick={() => toggleCreating(searchText)}
+                            className=" px-3 py-2 text-secondary-950 text-sm hover:bg-background-hover transition-all duration-200 cursor-pointer"
+                        >
+                            {`Create "${searchText}"`}
+                        </p>
+                    ) : null}
                     {!isLoading ? (
                         data?.length ? (
                             data?.map((item) =>
@@ -75,9 +84,11 @@ export default function SearchInput<T>({
                                 ),
                             )
                         ) : isFetched ? (
-                            <p className=" px-3 py-3 text-secondary-950 text-sm italic transition-all duration-200">
-                                No item found
-                            </p>
+                            <>
+                                <p className=" px-3 py-3 text-secondary-950 text-sm italic transition-all duration-200">
+                                    No item found
+                                </p>
+                            </>
                         ) : null
                     ) : (
                         <Loading size="sm" className=" p-3" />
@@ -97,4 +108,5 @@ type PropTypes<T> = Omit<React.ComponentPropsWithoutRef<"div">, "onSelect"> & {
     };
     template?: (value: T) => ReactNode;
     onSelect?: (item: any) => any;
+    toggleCreating?: (value: string) => any;
 };

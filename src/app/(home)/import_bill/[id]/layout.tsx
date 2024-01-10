@@ -3,7 +3,6 @@ import { ReactNode } from "react";
 
 export default function Layout(props: {
     basicInfo: ReactNode;
-    historyInfo: ReactNode;
     staff: ReactNode;
     supplier: ReactNode;
 }) {

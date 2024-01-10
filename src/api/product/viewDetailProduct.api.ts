@@ -11,6 +11,6 @@ export default async function viewDetailProduct({
 
     return {
         ...response.data,
-        specifications: JSON.parse(response.data.specifications),
+        specifications: JSON.parse(response.data.specifications) || [],
     };
 }

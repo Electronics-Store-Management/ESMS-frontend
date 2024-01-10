@@ -2,6 +2,7 @@
 
 import viewStaffProfile from "@/api/staff/getProfile";
 import BusinessChart from "@/components/BusinessChart/BusinessChart";
+import CategoryPieChart from "@/components/PieChart/PieChart";
 import PreviewBusinessState from "@/components/PreviewBusinessState/PreviewBusinessState";
 import useClient from "@/hooks/useClient";
 
@@ -21,13 +22,17 @@ export default function Home() {
                 <div className=" shadow-md"></div>
             </div>
             <div className=" flex gap-5 h-fit">
-                <div className=" flex-initial rounded-xl shadow-lg bg-background-normal">
+                <div className=" flex-initial rounded-xl shadow-md bg-background-normal">
                     <PreviewBusinessState />
                 </div>
-                <div className=" flex-1 max-w-[800px] relative p-5 pb-10 bg-background-normal rounded-xl shadow-lg ">
-                    {isClient ? <BusinessChart /> : null}
+                <div className=" flex-1 max-w-[1000px] relative p-5 pb-10 bg-background-normal rounded-xl shadow-md ">
+                    {isClient ? (
+                        <BusinessChart title={"Business chart"} />
+                    ) : null}
                 </div>
-                <div></div>
+                <div className=" flex-1 max-w-[350px] relative p-5 pb-10 bg-background-normal rounded-xl shadow-md ">
+                    {isClient ? <CategoryPieChart title="Category" /> : null}
+                </div>
             </div>
         </div>
     );

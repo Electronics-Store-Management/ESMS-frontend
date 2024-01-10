@@ -15,6 +15,8 @@ import { Line } from "react-chartjs-2";
 import { useQuery } from "react-query";
 import { viewWeekCost } from "@/api/statistic/cost.api";
 import { viewWeekRevenue } from "@/api/statistic/revenue.api";
+import { Be_Vietnam_Pro } from "next/font/google";
+import FONT from "@/utils/fontFamily";
 
 ChartJS.register(
     CategoryScale,
@@ -35,15 +37,40 @@ export const options = {
         legend: {
             position: "top" as const,
             align: "end" as const,
+            labels: {
+                pointStyle: "circle" as const,
+                usePointStyle: true,
+                font: {
+                    size: 14,
+                    weight: "normal",
+                },
+            },
         },
         title: {
             display: false,
             text: "",
         },
     },
+    scales: {
+        x: {
+            ticks: {
+                font: {
+                    // family: "Be Vietnam Pro",
+                    size: 14 as const,
+                    weight: "bold" as const,
+                    color: "#999fa8" as const,
+                } as const,
+                color: "#999fa8" as const,
+                padding: 10,
+            },
+        },
+        y: {},
+    },
 };
 
-export default function BusinessChart({}: {}) {
+const font = FONT.primary;
+
+export default function BusinessChart({ title }: { title: string }) {
     const { data: costs } = useQuery(["cost-week"], viewWeekCost);
     const { data: revenues } = useQuery(["revenue-week"], viewWeekRevenue);
 
@@ -86,10 +113,15 @@ export default function BusinessChart({}: {}) {
     return (
         <>
             <div className=" w-full flex justify-between">
-                <p className=" font-semibold text-lg">Business state</p>
+                <p className={` font-semibold text-lg ${font.className}`}>
+                    Business state
+                </p>
                 <div></div>
             </div>
-            <Line options={options} data={data} />
+            {
+                //@ts-ignore
+                <Line options={options} data={data} />
+            }
         </>
     );
 }

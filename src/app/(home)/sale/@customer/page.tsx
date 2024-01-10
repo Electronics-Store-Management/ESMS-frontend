@@ -23,7 +23,7 @@ export default function Page() {
                 onSearch={(customer: Customer) => {
                     setCustomer?.(customer);
                     setIsCreateCustomer(false);
-                    setCustomer?.({ ...customer, id: undefined });
+                    setCustomer?.({ ...customer });
                 }}
                 toggleCreating={(value, type) => {
                     setIsCreateCustomer(true);
@@ -39,11 +39,14 @@ export default function Page() {
                                 ? { ...customer, phone: value }
                                 : { phone: value },
                         );
+                    setCustomer?.((prev) => ({ ...prev, id: undefined }));
                 }}
             />
             {isCreateCustomer ? (
                 <>
-                    <p className=" mt-10 p-2 px-3 rounded-lg bg-primary-100 text-primary-700 font-medium">Will create new customer profile</p>
+                    <p className=" mt-10 p-2 px-3 rounded-lg bg-primary-100 text-primary-700 font-medium">
+                        Will create new customer profile
+                    </p>
                     <div className=" mt-4 p-5 flex flex-col gap-3 border-[1px] rounded-2xl ">
                         <TextInput
                             title="Name"

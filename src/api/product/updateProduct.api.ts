@@ -1,11 +1,16 @@
+import { Specification } from "@/types/entity/Product";
 import apiInstance from "../apiInstance";
 
 export default async function updateProductAPI(product: UpdatedProduct) {
-    const response = await apiInstance.put(`/product/${product.id}`, product, {
-        headers: {
-            "Content-Type": "multipart/form-data",
+    const response = await apiInstance.put(
+        `/product/${product.id}`,
+        { ...product, specifications: JSON.stringify(product.specifications) },
+        {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
         },
-    });
+    );
 
     return {
         ...response.data,
@@ -21,4 +26,5 @@ export type UpdatedProduct = {
     unit: string;
     warrantyPeriod: number;
     photo: File[];
+    specifications: Specification[];
 };

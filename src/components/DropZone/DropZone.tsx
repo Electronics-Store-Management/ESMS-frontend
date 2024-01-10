@@ -34,6 +34,7 @@ export default function DropZone({
                     file ? (
                         <Image
                             src={URL.createObjectURL(file)}
+                            className=" h-full object-contain"
                             width={500}
                             height={256}
                             alt="Uploaded image"
@@ -41,6 +42,7 @@ export default function DropZone({
                     ) : (
                         <Image
                             src={defaultValue || ""}
+                            className=" h-full object-contain"
                             width={500}
                             height={256}
                             alt="Uploaded image"

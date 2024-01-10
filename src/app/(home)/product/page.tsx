@@ -14,11 +14,11 @@ import PriceRangeFilter from "@/components/PriceRangeFilter/PriceRangeFilter";
 import ProductSearch from "@/components/ProductSearch/ProductSearch";
 import { useUpdateProductModal } from "@/components/UpdateProductForm/UpdateProductFormModal";
 import SEARCH_PARAMS from "@/constants/searchParams";
+import { usePermission } from "@/hooks/usePermission";
 import ProductPreview from "@/types/entity/ProductPreview";
 import FORMATTER from "@/utils/formatter";
 import { useSearchParams } from "next/navigation";
 import { useQuery } from "react-query";
-import { usePermission } from "@/hooks/usePermission";
 
 export default function Page() {
     const searchParams = useSearchParams();

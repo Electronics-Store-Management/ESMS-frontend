@@ -1,6 +1,7 @@
+import { UpdatedProduct } from "@/api/product/updateProduct.api";
+import Product from "@/types/entity/Product";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { NewProduct } from "../../api/product/addNewProduct.api";
 import Category from "../../types/entity/Category";
 import FONT from "../../utils/fontFamily";
 import Button from "../Button/Button";
@@ -8,8 +9,6 @@ import ControllerSelectInput from "../ControllerInput/ControllerSelectInput";
 import ControllerTextInput from "../ControllerInput/ControllerTextInput";
 import DropZone from "../DropZone/DropZone";
 import { useUpdateProductModal } from "./UpdateProductFormModal";
-import Product from "@/types/entity/Product";
-import { UpdatedProduct } from "@/api/product/updateProduct.api";
 
 export default function UpdateProductFormUI({
     categories = [],
@@ -128,10 +127,45 @@ export default function UpdateProductFormUI({
                     </div>
                     <div className=" pt-10">
                         <DropZone
-                            file={getValues("photo")}
-                            defaultValue={product?.photoURL}
-                            onFileChange={(file) => setValue("photo", file)}
+                            file={getValues("photo")?.[0]}
+                            defaultValue={
+                                product?.photoURL
+                                    ?.split(";")
+                                    ?.filter((v: any) => v)[0] || undefined
+                            }
+                            onFileChange={(file) => {
+                                if (!file) return;
+                                const photoList = getValues("photo");
+                                photoList[0] = file;
+                                setValue("photo", photoList);
+                            }}
                         />
+                        <div className=" mt-10 flex gap-5">
+                            {Array(4)
+                                .fill("")
+                                .map((_, index) => (
+                                    <DropZone
+                                        index={index + 1}
+                                        key={index}
+                                        isCompact
+                                        file={getValues("photo")?.[index + 1]}
+                                        defaultValue={
+                                            product?.photoURL
+                                                ?.split(";")
+                                                ?.filter((v: any) => v)[
+                                                index + 1
+                                            ] || undefined
+                                        }
+                                        onFileChange={(file) => {
+                                            if (!file) return;
+                                            const photoList =
+                                                getValues("photo");
+                                            photoList[index + 1] = file;
+                                            setValue("photo", photoList);
+                                        }}
+                                    />
+                                ))}
+                        </div>
                     </div>
                 </div>
                 <div className=" flex justify-between mt-12">

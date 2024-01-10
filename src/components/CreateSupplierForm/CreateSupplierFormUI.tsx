@@ -1,16 +1,12 @@
+import { NewSupplier } from "@/api/supplier/addNewSupplier.api";
+import { Label } from "flowbite-react";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { NewProduct } from "../../api/product/addNewProduct.api";
-import Category from "../../types/entity/Category";
 import FONT from "../../utils/fontFamily";
 import Button from "../Button/Button";
-import ControllerSelectInput from "../ControllerInput/ControllerSelectInput";
 import ControllerTextInput from "../ControllerInput/ControllerTextInput";
-import DropZone from "../DropZone/DropZone";
-import { useCreateSupplierModal } from "./CreateSupplierFormModal";
-import { NewSupplier } from "@/api/supplier/addNewSupplier.api";
-import { Label, Textarea } from "flowbite-react";
 import ControllerTextarea from "../ControllerTextarea/ControllerTextarea";
+import { useCreateSupplierModal } from "./CreateSupplierFormModal";
 
 export default function CreateSupplierFormUI({
     onSubmitData,

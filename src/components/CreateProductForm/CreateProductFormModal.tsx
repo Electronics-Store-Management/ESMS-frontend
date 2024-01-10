@@ -26,7 +26,7 @@ export default function CreateProductFormModal() {
     return (
         <Modal
             theme={{ content: { inner: " rounded-2xl" } }}
-            size="3xl"
+            size="4xl"
             show={isCreateProductModalOpen}
             onClose={closeCreateProductModal}
         >

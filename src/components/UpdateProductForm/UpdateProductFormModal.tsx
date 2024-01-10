@@ -32,7 +32,7 @@ export default function UpdateProductFormModal() {
     return (
         <Modal
             theme={{ content: { inner: " rounded-2xl" } }}
-            size="3xl"
+            size="4xl"
             show={isUpdateProductModalOpen}
             onClose={closeUpdateProductModal}
         >

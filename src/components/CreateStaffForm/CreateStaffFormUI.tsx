@@ -1,15 +1,13 @@
+import { NewStaff } from "@/api/staff/addNewStaff";
+import { emailRegex } from "@/utils/regex";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { NewProduct } from "../../api/product/addNewProduct.api";
-import Category from "../../types/entity/Category";
 import FONT from "../../utils/fontFamily";
 import Button from "../Button/Button";
 import ControllerSelectInput from "../ControllerInput/ControllerSelectInput";
 import ControllerTextInput from "../ControllerInput/ControllerTextInput";
 import DropZone from "../DropZone/DropZone";
-import { NewStaff } from "@/api/staff/addNewStaff";
 import { useCreateStaffModal } from "./CreateStaffFormModal";
-import { emailRegex } from "@/utils/regex";
 
 export default function CreateStaffFormUI({
     onSubmitData,

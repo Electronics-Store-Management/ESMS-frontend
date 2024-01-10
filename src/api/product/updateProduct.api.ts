@@ -7,7 +7,10 @@ export default async function updateProductAPI(product: UpdatedProduct) {
         },
     });
 
-    return response.data;
+    return {
+        ...response.data,
+        photo: response.data.split(";").filter((v: any) => v),
+    };
 }
 
 export type UpdatedProduct = {
@@ -17,5 +20,5 @@ export type UpdatedProduct = {
     price: number;
     unit: string;
     warrantyPeriod: number;
-    photo?: File | null;
+    photo: File[];
 };

@@ -24,7 +24,13 @@ export default function CreateProductFormUI({
         getValues,
         setValue,
         clearErrors,
-    } = useForm<NewProduct>();
+    } = useForm<NewProduct>({
+        defaultValues: {
+            photo: Array(5).fill(""),
+        },
+    });
+
+    console.log({ photo: getValues("photo") });
 
     const { closeCreateProductModal } = useCreateProductModal();
 
@@ -124,9 +130,35 @@ export default function CreateProductFormUI({
                     </div>
                     <div className=" pt-10">
                         <DropZone
-                            file={getValues("photo")}
-                            onFileChange={(file) => setValue("photo", file)}
+                            index={0}
+                            file={getValues("photo")?.[0]}
+                            onFileChange={(file) => {
+                                if (!file) return;
+                                const photoList = getValues("photo");
+                                photoList[0] = file;
+                                setValue("photo", photoList);
+                            }}
                         />
+                        <div className=" mt-10 flex gap-5">
+                            {Array(4)
+                                .fill("")
+                                .map((_, index) => (
+                                    <DropZone
+                                        index={index + 1}
+                                        key={index}
+                                        isCompact
+                                        file={getValues("photo")?.[index + 1]}
+                                        onFileChange={(file) => {
+                                            if (!file) return;
+                                            const photoList =
+                                                getValues("photo");
+                                            console.log({ index });
+                                            photoList[index + 1] = file;
+                                            setValue("photo", photoList);
+                                        }}
+                                    />
+                                ))}
+                        </div>
                     </div>
                 </div>
                 <div className=" flex justify-between mt-12">
@@ -136,11 +168,7 @@ export default function CreateProductFormUI({
                     >
                         Back
                     </Button>
-                    <Button
-                        type="submit"
-                    >
-                        Create
-                    </Button>
+                    <Button type="submit">Create</Button>
                 </div>
             </form>
         </div>

@@ -1,10 +1,10 @@
 "use client";
 
-import CustomerSelection from "@/components/CustomerSelection/CustomerSelection";
+import viewCustomerList from "@/api/customer/viewCustomerList.api";
 import TextInput from "@/components/Input/TextInput";
+import SearchInput from "@/components/SearchInput/SearchInput.tsx";
 import LabeledText from "@/components/Typography/LabeledText";
 import { CustomerContext } from "@/contexts/CustomerContext";
-import Customer from "@/types/entity/Customer";
 import { useContext, useState } from "react";
 import { HiLocationMarker, HiPhone, HiUser } from "react-icons/hi";
 
@@ -18,32 +18,21 @@ export default function Page() {
             <p className="font-semibold text-color-heading text-2xl">
                 Customer info
             </p>
-            <CustomerSelection
-                className=" mt-[52px]"
-                onSearch={(customer: Customer) => {
-                    setCustomer?.(customer);
-                    setIsCreateCustomer(false);
-                    setCustomer?.({ ...customer, id: undefined });
+            <SearchInput
+                title="Search for customer"
+                placeholder="Enter placeholder name here"
+                queryInfo={{
+                    queryKeys: ["customer"],
+                    queryFunc: viewCustomerList,
                 }}
-                toggleCreating={(value, type) => {
-                    setIsCreateCustomer(true);
-                    if (type === "name")
-                        setCustomer?.(
-                            customer
-                                ? { ...customer, name: value }
-                                : { name: value },
-                        );
-                    else
-                        setCustomer?.(
-                            customer
-                                ? { ...customer, phone: value }
-                                : { phone: value },
-                        );
-                }}
+                className="w-full mt-5"
+                onSelect={(customer) => setCustomer?.(customer)}
             />
             {isCreateCustomer ? (
                 <>
-                    <p className=" mt-10 p-2 px-3 rounded-lg bg-primary-100 text-primary-700 font-medium">Will create new customer profile</p>
+                    <p className=" mt-10 p-2 px-3 rounded-lg bg-primary-100 text-primary-700 font-medium">
+                        Will create new customer profile
+                    </p>
                     <div className=" mt-4 p-5 flex flex-col gap-3 border-[1px] rounded-2xl ">
                         <TextInput
                             title="Name"

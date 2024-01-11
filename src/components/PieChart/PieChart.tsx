@@ -2,11 +2,17 @@
 
 import { viewWeekCategory } from "@/api/statistic/category";
 import FONT from "@/utils/fontFamily";
-import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
+import {
+    ArcElement,
+    Chart as ChartJS,
+    Legend,
+    Tooltip,
+    RadialLinearScale,
+} from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import { useQuery } from "react-query";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, RadialLinearScale, Tooltip, Legend);
 
 export const options = {
     responsive: true,
@@ -19,8 +25,15 @@ export const options = {
         legend: {
             position: "bottom" as const,
             align: "center" as const,
+            padding: 100,
+            title: {
+                padding: 100,
+            },
             labels: {
+                padding: 10,
                 pointStyle: "circle" as const,
+                boxWidth: 6,
+                boxHeight: 6,
                 usePointStyle: true,
                 font: {
                     size: 14,
@@ -33,7 +46,8 @@ export const options = {
             text: "",
         },
     },
-    scales: {},
+    scales: {
+    },
 };
 
 const font = FONT.primary;
@@ -66,6 +80,7 @@ export default function CategoryPieChart({ title }: { title: string }) {
                 borderColor: "#FFCB1B",
                 backgroundColor: ["#3CAEF4", "#BBE1FC", "#42E68E", "#C7B8FF"],
                 hoverOffset: 8,
+                rAxisID: "r",
             },
         ],
     };
@@ -79,7 +94,7 @@ export default function CategoryPieChart({ title }: { title: string }) {
                 <div></div>
             </div>
             <div className=" relative mt-10 px-8 my-5">
-                <div className=" absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-2/3">
+                <div className=" absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[90%]">
                     <p className=" text-secondary-950 font-semibold text-3xl text-center">
                         {`${(
                             (categories?.reduce(

@@ -47,10 +47,8 @@ export default async function Layout({ children }: ReactNodeChildren) {
 
     return (
         <ModalProvider>
-            <div className=" w-screen h-screen flex">
-                <div className=" w-max z-50">
-                    <SideBar staffInfo={staffInfo} />
-                </div>
+            <div className=" w-screen h-screen relative flex">
+                <SideBar staffInfo={staffInfo} />
                 <div className=" py-8 pl-10 pr-8 w-full h-screen flex flex-col bg-background-normal overflow-hidden">
                     {children}
                 </div>

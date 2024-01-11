@@ -1,5 +1,3 @@
-import { CustomFlowbiteTheme } from "flowbite-react";
-
 import COOKIE_NAME from "@/constants/cookies";
 import Staff from "@/types/entity/Staff";
 import { cookies } from "next/headers";
@@ -9,7 +7,11 @@ export default function SideBar({ staffInfo }: PropTypes) {
     const isCollapse =
         cookies().get(COOKIE_NAME.SIDE_BAR_COLLAPSE)?.value == "true" || false;
 
-    return <SideBarUI staffInfo={staffInfo} isCollapse={isCollapse} />;
+    return (
+        <div className=" absolute top-0 left-0 h-screen sm:relative sm:w-max z-50">
+            <SideBarUI staffInfo={staffInfo} isCollapse={isCollapse} />
+        </div>
+    );
 }
 
 type PropTypes = {

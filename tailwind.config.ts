@@ -63,6 +63,9 @@ const config: Config = {
                 revenue: "var(--revenue)",
                 cost: "var(--cost)",
             },
+            animation: {
+                openSideBar: "openSideBar 1s linear forwards 1",
+            },
         },
     },
     plugins: [require("flowbite/plugin")],

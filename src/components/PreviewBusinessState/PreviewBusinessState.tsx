@@ -1,5 +1,6 @@
 import { viewCurrentCost } from "@/api/statistic/cost.api";
 import { viewCurrentRevenue } from "@/api/statistic/revenue.api";
+import useScreen from "@/hooks/useScreen";
 import { FaArrowUp } from "react-icons/fa6";
 import { useQuery } from "react-query";
 
@@ -7,8 +8,10 @@ export default function PreviewBusinessState() {
     const { data: cost } = useQuery(["current-cost"], viewCurrentCost);
     const { data: revenue } = useQuery(["current-revenue"], viewCurrentRevenue);
 
+    const screen = useScreen();
+
     return (
-        <div className=" p-6 grid gap-6">
+        <div className=" flex-initial rounded-xl shadow-md bg-background-normal w-full h-fit sm:w-fit md:h-full md:w-fit p-6 flex flex-col gap-6 sm:flex-row md:flex-col justify-evenly">
             <BusinessStateItem primary={revenue?.revenue} type="revenue" />
             <BusinessStateItem primary={cost?.cost} type="cost" />
         </div>

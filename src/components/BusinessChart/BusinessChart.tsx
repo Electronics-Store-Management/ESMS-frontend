@@ -1,24 +1,24 @@
 "use client";
 
-import React from "react";
+import { viewWeekCost } from "@/api/statistic/cost.api";
+import { viewWeekRevenue } from "@/api/statistic/revenue.api";
+import FONT from "@/utils/fontFamily";
 import {
-    Chart as ChartJS,
     CategoryScale,
+    Chart as ChartJS,
+    Legend,
+    LineElement,
     LinearScale,
     PointElement,
-    LineElement,
     Title,
     Tooltip,
-    Legend,
+    RadialLinearScale,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { useQuery } from "react-query";
-import { viewWeekCost } from "@/api/statistic/cost.api";
-import { viewWeekRevenue } from "@/api/statistic/revenue.api";
-import { Be_Vietnam_Pro } from "next/font/google";
-import FONT from "@/utils/fontFamily";
 
 ChartJS.register(
+    RadialLinearScale,
     CategoryScale,
     LinearScale,
     PointElement,
@@ -39,10 +39,13 @@ export const options = {
             align: "end" as const,
             labels: {
                 pointStyle: "circle" as const,
+                boxWidth: 3,
+                boxHeight: 3,
                 usePointStyle: true,
                 font: {
                     size: 14,
                     weight: "normal",
+                    family: "'Be Vietnam Pro', sans-serif",
                 },
             },
         },
@@ -55,16 +58,46 @@ export const options = {
         x: {
             ticks: {
                 font: {
-                    // family: "Be Vietnam Pro",
-                    size: 14 as const,
-                    weight: "bold" as const,
-                    color: "#999fa8" as const,
+                    family: "'Be Vietnam Pro', sans-serif",
+                    size: 15 as const,
+                    // weight: "bold" as const,
+                    color: "#6B7280" as const,
                 } as const,
-                color: "#999fa8" as const,
-                padding: 10,
+                color: "#6B7280" as const,
+                padding: 30,
+            },
+            gridLines: {
+                color: "rgba(0, 0, 0, 0)",
+            },
+            grid: {
+                display: false,
+            },
+            border: {
+                backdropPadding: 50,
+                backdropColor: "rgba(0, 0, 0, 0)",
+            },
+            major: {
+                enabled: true,
             },
         },
-        y: {},
+        y: {
+            ticks: {
+                font: {
+                    family: "'Be Vietnam Pro', sans-serif",
+                    size: 14 as const,
+                    // weight: "bold" as const,
+                    color: "#6B7280" as const,
+                } as const,
+                color: "#6B7280" as const,
+                padding: 30,
+            },
+            gridLines: {
+                color: "rgba(0, 0, 0, 0)",
+            },
+            border: {
+                width: 0,
+            },
+        },
     },
 };
 
@@ -85,7 +118,7 @@ export default function BusinessChart({ title }: { title: string }) {
             const monthName = date.toLocaleString("default", {
                 month: "short",
             });
-            return `${dayIndex} ${monthName}`;
+            return `${dayIndex.toString().padStart(2, "0")} ${monthName}`;
         })
         .reverse();
 
@@ -98,6 +131,7 @@ export default function BusinessChart({ title }: { title: string }) {
                 borderColor: "#FFCB1B",
                 backgroundColor: "#FFF6C5",
                 tension: 0.35,
+                borderWidth: 4,
                 fill: true,
             },
             {
@@ -105,14 +139,15 @@ export default function BusinessChart({ title }: { title: string }) {
                 data: revenues || labels.map(() => 0),
                 borderColor: "#3CAEF4",
                 backgroundColor: "#E1F0FD",
+                borderWidth: 4,
                 tension: 0.35,
             },
         ],
     };
 
     return (
-        <>
-            <div className=" w-full flex justify-between">
+        <div className=" flex-1 relative bg-background-normal rounded-xl shadow-md ">
+            <div className=" w-full p-4 flex justify-between">
                 <p className={` font-semibold text-lg ${font.className}`}>
                     Business state
                 </p>
@@ -122,6 +157,6 @@ export default function BusinessChart({ title }: { title: string }) {
                 //@ts-ignore
                 <Line options={options} data={data} />
             }
-        </>
+        </div>
     );
 }

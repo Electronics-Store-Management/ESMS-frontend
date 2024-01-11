@@ -25,6 +25,7 @@ import { useEffect, useState } from "react";
 import { MdOutlineCurrencyExchange } from "react-icons/md";
 import LOGO from "../../assets/logo.png";
 import FONT from "../../utils/fontFamily";
+import useScreen from "@/hooks/useScreen";
 
 export default function SideBarUI({
     staffInfo,
@@ -33,6 +34,7 @@ export default function SideBarUI({
     const router = useRouter();
     const pathname = usePathname();
     const routeName = (pathname.split("/").at(1) || "") + "/";
+    const screen = useScreen();
 
     const [isCollapse, setIsCollapse] = useState(_isCollapse);
 
@@ -41,244 +43,295 @@ export default function SideBarUI({
     }, [isCollapse]);
 
     return (
-        <div className=" relative h-full">
-            <Sidebar
-                theme={sideBarTheme}
-                collapsed={isCollapse}
-                aria-label="Sidebar with multi-level dropdown example"
-                className=" relative z-0"
-            >
-                <div className=" flex gap-2 pl-1 pt-2 mb-12">
-                    <Image src={LOGO} width={30} height={30} alt="logo" />
-                    <h1
-                        className={` ml-3 text-2xl text-secondary-950 font-semibold ${FONT.inter.className}`}
+        <div
+            className={`w-screen sm:w-fit h-full ${
+                !screen("sm") && !isCollapse ? " bg-[#000000a2]" : null
+            }`}
+            onClick={() => {
+                if (!screen("sm")) {
+                    setIsCollapse((prev) => !prev);
+                }
+            }}
+        >
+            <div className=" relative w-fit h-full">
+                {screen("sm") || !isCollapse ? (
+                    <Sidebar
+                        key={isCollapse.toString()}
+                        theme={sideBarTheme}
+                        collapsed={isCollapse}
+                        aria-label="Sidebar with multi-level dropdown example"
+                        className=" animate-openSideBar relative z-0"
                     >
-                        ESMS
-                    </h1>
-                </div>
-                <Sidebar.Items>
-                    <Sidebar.ItemGroup>
-                        <Sidebar.Item
-                            theme={sideBarTheme?.item}
-                            active={routeName === ROUTES.home}
-                            href={ROUTES.home}
-                            icon={HiChartPie}
-                        >
-                            Dashboard
-                        </Sidebar.Item>
-                        <Sidebar.Collapse
-                            theme={sideBarTheme?.collapse}
-                            href={isCollapse ? ROUTES.product : ""}
-                            open={
-                                [ROUTES.category, ROUTES.product].includes(
-                                    routeName,
-                                ) && !isCollapse
-                            }
-                            icon={HiShoppingBag}
-                            label="Product"
-                        >
-                            <Sidebar.Item
-                                active={routeName === ROUTES.product}
-                                theme={sideBarCollapsedItemTheme?.item}
-                                href={ROUTES.product}
-                                icon={HiDocumentSearch}
-                            >
-                                Product List
-                            </Sidebar.Item>
-                            <Sidebar.Item
-                                active={routeName === ROUTES.category}
-                                theme={sideBarCollapsedItemTheme?.item}
-                                href={ROUTES.category}
-                                icon={HiBookmark}
-                            >
-                                Category
-                            </Sidebar.Item>
-                        </Sidebar.Collapse>
-                        <Sidebar.Item
-                            active={routeName === ROUTES.supplier}
-                            theme={sideBarCollapsedItemTheme?.item}
-                            href={ROUTES.supplier}
-                            icon={PiTruckDuotone}
-                        >
-                            Supplier
-                        </Sidebar.Item>
-                        <Sidebar.Item
-                            active={routeName === ROUTES.customer}
-                            theme={sideBarCollapsedItemTheme?.item}
-                            href={ROUTES.customer}
-                            icon={AiFillCustomerService}
-                        >
-                            Customer
-                        </Sidebar.Item>
-                        <Sidebar.Item
-                            active={routeName === ROUTES.staff}
-                            theme={sideBarCollapsedItemTheme?.item}
-                            href={ROUTES.staff}
-                            icon={HiUserGroup}
-                        >
-                            Staff
-                        </Sidebar.Item>
-                        <Sidebar.Collapse
-                            theme={sideBarTheme?.collapse}
-                            href={isCollapse ? ROUTES.import : ""}
-                            open={
-                                [ROUTES.category, ROUTES.import].includes(
-                                    routeName,
-                                ) && !isCollapse
-                            }
-                            icon={HiClipboardCheck}
-                            label="Import"
-                        >
-                            <Sidebar.Item
-                                active={routeName === ROUTES.import_bill}
-                                theme={sideBarCollapsedItemTheme?.item}
-                                href={ROUTES.import_bill}
-                                icon={LiaFileInvoiceDollarSolid}
-                            >
-                                Invoices
-                            </Sidebar.Item>
-                            <Sidebar.Item
-                                active={routeName === ROUTES.import}
-                                theme={sideBarCollapsedItemTheme?.item}
-                                href={ROUTES.import}
-                                icon={HiSave}
-                            >
-                                Import goods
-                            </Sidebar.Item>
-                        </Sidebar.Collapse>
-                        <Sidebar.Collapse
-                            theme={sideBarTheme?.collapse}
-                            href={isCollapse ? ROUTES.sale : ""}
-                            open={
-                                [ROUTES.sale_invoice, ROUTES.sale].includes(
-                                    routeName,
-                                ) && !isCollapse
-                            }
-                            icon={MdOutlineCurrencyExchange}
-                            label="Export"
-                        >
-                            <Sidebar.Item
-                                active={routeName === ROUTES.sale_invoice}
-                                theme={sideBarCollapsedItemTheme?.item}
-                                href={ROUTES.sale_invoice}
-                                icon={LiaFileInvoiceDollarSolid}
-                            >
-                                Invoices
-                            </Sidebar.Item>
-                            <Sidebar.Item
-                                active={routeName === ROUTES.sale}
-                                theme={sideBarCollapsedItemTheme?.item}
-                                href={ROUTES.sale}
-                                icon={MdOutlineCurrencyExchange}
-                            >
-                                Export
-                            </Sidebar.Item>
-                        </Sidebar.Collapse>{" "}
-                        <Sidebar.Collapse
-                            theme={sideBarTheme?.collapse}
-                            href={isCollapse ? ROUTES.warranty : ""}
-                            open={
-                                [
-                                    ROUTES.warranty_invoice,
-                                    ROUTES.warranty,
-                                ].includes(routeName) && !isCollapse
-                            }
-                            icon={RiToolsLine}
-                            label="Warranty"
-                        >
-                            <Sidebar.Item
-                                active={routeName === ROUTES.warranty_invoice}
-                                theme={sideBarCollapsedItemTheme?.item}
-                                href={ROUTES.warranty_invoice}
-                                icon={LiaFileInvoiceDollarSolid}
-                            >
-                                Invoices
-                            </Sidebar.Item>
-                            <Sidebar.Item
-                                active={routeName === ROUTES.warranty}
-                                theme={sideBarCollapsedItemTheme?.item}
-                                href={ROUTES.warranty}
-                                icon={RiToolsLine}
-                            >
-                                Warranty
-                            </Sidebar.Item>
-                        </Sidebar.Collapse>
-                    </Sidebar.ItemGroup>
-                </Sidebar.Items>
-                <div className="absolute w-full left-0 bottom-5 bg-transparent">
-                    {isCollapse ? (
-                        <Avatar
-                            className="p-2 flex rounded-lg hover:bg-background-hover cursor-pointer "
-                            rounded
-                            onClick={() => setIsCollapse(false)}
-                            placeholderInitials={staffInfo.name
-                                .split(" ")
-                                .slice(-2)
-                                .map((word) => word[0])
-                                .join("")}
-                        ></Avatar>
-                    ) : (
-                        <div className="mx-4 ">
-                            <Dropdown
-                                label={
-                                    <Avatar
-                                        className="p-2 flex rounded-lg hover:bg-background-hover cursor-pointer "
-                                        rounded
-                                        placeholderInitials={staffInfo.name
-                                            .split(" ")
-                                            .slice(-2)
-                                            .map((word) => word[0])
-                                            .join("")}
+                        <div className=" flex gap-2 pl-1 pt-2 mb-12">
+                            <Image
+                                src={LOGO}
+                                width={30}
+                                height={30}
+                                alt="logo"
+                            />
+                            {isCollapse ? null : (
+                                <h1
+                                    className={` ml-3 text-2xl text-secondary-950 font-semibold ${FONT.inter.className}`}
+                                >
+                                    ESMS
+                                </h1>
+                            )}
+                        </div>
+                        <Sidebar.Items>
+                            <Sidebar.ItemGroup>
+                                <Sidebar.Item
+                                    theme={sideBarTheme?.item}
+                                    active={routeName === ROUTES.home}
+                                    href={ROUTES.home}
+                                    icon={HiChartPie}
+                                >
+                                    Dashboard
+                                </Sidebar.Item>
+                                <Sidebar.Collapse
+                                    theme={sideBarTheme?.collapse}
+                                    href={isCollapse ? ROUTES.product : ""}
+                                    open={
+                                        [
+                                            ROUTES.category,
+                                            ROUTES.product,
+                                        ].includes(routeName) && !isCollapse
+                                    }
+                                    icon={HiShoppingBag}
+                                    label="Product"
+                                >
+                                    <Sidebar.Item
+                                        active={routeName === ROUTES.product}
+                                        theme={sideBarCollapsedItemTheme?.item}
+                                        href={ROUTES.product}
+                                        icon={HiDocumentSearch}
                                     >
-                                        <div>
+                                        Product List
+                                    </Sidebar.Item>
+                                    <Sidebar.Item
+                                        active={routeName === ROUTES.category}
+                                        theme={sideBarCollapsedItemTheme?.item}
+                                        href={ROUTES.category}
+                                        icon={HiBookmark}
+                                    >
+                                        Category
+                                    </Sidebar.Item>
+                                </Sidebar.Collapse>
+                                <Sidebar.Item
+                                    active={routeName === ROUTES.supplier}
+                                    theme={sideBarCollapsedItemTheme?.item}
+                                    href={ROUTES.supplier}
+                                    icon={PiTruckDuotone}
+                                >
+                                    Supplier
+                                </Sidebar.Item>
+                                <Sidebar.Item
+                                    active={routeName === ROUTES.customer}
+                                    theme={sideBarCollapsedItemTheme?.item}
+                                    href={ROUTES.customer}
+                                    icon={AiFillCustomerService}
+                                >
+                                    Customer
+                                </Sidebar.Item>
+                                <Sidebar.Item
+                                    active={routeName === ROUTES.staff}
+                                    theme={sideBarCollapsedItemTheme?.item}
+                                    href={ROUTES.staff}
+                                    icon={HiUserGroup}
+                                >
+                                    Staff
+                                </Sidebar.Item>
+                                <Sidebar.Collapse
+                                    theme={sideBarTheme?.collapse}
+                                    href={isCollapse ? ROUTES.import : ""}
+                                    open={
+                                        [
+                                            ROUTES.category,
+                                            ROUTES.import,
+                                        ].includes(routeName) && !isCollapse
+                                    }
+                                    icon={HiClipboardCheck}
+                                    label="Import"
+                                >
+                                    <Sidebar.Item
+                                        active={
+                                            routeName === ROUTES.import_bill
+                                        }
+                                        theme={sideBarCollapsedItemTheme?.item}
+                                        href={ROUTES.import_bill}
+                                        icon={LiaFileInvoiceDollarSolid}
+                                    >
+                                        Invoices
+                                    </Sidebar.Item>
+                                    <Sidebar.Item
+                                        active={routeName === ROUTES.import}
+                                        theme={sideBarCollapsedItemTheme?.item}
+                                        href={ROUTES.import}
+                                        icon={HiSave}
+                                    >
+                                        Import goods
+                                    </Sidebar.Item>
+                                </Sidebar.Collapse>
+                                <Sidebar.Collapse
+                                    theme={sideBarTheme?.collapse}
+                                    href={isCollapse ? ROUTES.sale : ""}
+                                    open={
+                                        [
+                                            ROUTES.sale_invoice,
+                                            ROUTES.sale,
+                                        ].includes(routeName) && !isCollapse
+                                    }
+                                    icon={MdOutlineCurrencyExchange}
+                                    label="Export"
+                                >
+                                    <Sidebar.Item
+                                        active={
+                                            routeName === ROUTES.sale_invoice
+                                        }
+                                        theme={sideBarCollapsedItemTheme?.item}
+                                        href={ROUTES.sale_invoice}
+                                        icon={LiaFileInvoiceDollarSolid}
+                                    >
+                                        Invoices
+                                    </Sidebar.Item>
+                                    <Sidebar.Item
+                                        active={routeName === ROUTES.sale}
+                                        theme={sideBarCollapsedItemTheme?.item}
+                                        href={ROUTES.sale}
+                                        icon={MdOutlineCurrencyExchange}
+                                    >
+                                        Export
+                                    </Sidebar.Item>
+                                </Sidebar.Collapse>{" "}
+                                <Sidebar.Collapse
+                                    theme={sideBarTheme?.collapse}
+                                    href={isCollapse ? ROUTES.warranty : ""}
+                                    open={
+                                        [
+                                            ROUTES.warranty_invoice,
+                                            ROUTES.warranty,
+                                        ].includes(routeName) && !isCollapse
+                                    }
+                                    icon={RiToolsLine}
+                                    label="Warranty"
+                                >
+                                    <Sidebar.Item
+                                        active={
+                                            routeName ===
+                                            ROUTES.warranty_invoice
+                                        }
+                                        theme={sideBarCollapsedItemTheme?.item}
+                                        href={ROUTES.warranty_invoice}
+                                        icon={LiaFileInvoiceDollarSolid}
+                                    >
+                                        Invoices
+                                    </Sidebar.Item>
+                                    <Sidebar.Item
+                                        active={routeName === ROUTES.warranty}
+                                        theme={sideBarCollapsedItemTheme?.item}
+                                        href={ROUTES.warranty}
+                                        icon={RiToolsLine}
+                                    >
+                                        Warranty
+                                    </Sidebar.Item>
+                                </Sidebar.Collapse>
+                            </Sidebar.ItemGroup>
+                        </Sidebar.Items>
+                        <div className="absolute w-full left-0 bottom-5 bg-transparent">
+                            {isCollapse ? (
+                                <Avatar
+                                    className="p-2 flex rounded-lg hover:bg-background-hover cursor-pointer "
+                                    rounded
+                                    onClick={() => setIsCollapse(false)}
+                                    placeholderInitials={staffInfo.name
+                                        .split(" ")
+                                        .slice(-2)
+                                        .map((word) => word[0])
+                                        .join("")}
+                                ></Avatar>
+                            ) : (
+                                <div className="mx-4 ">
+                                    <Dropdown
+                                        label={
+                                            <Avatar
+                                                className="p-2 flex rounded-lg hover:bg-background-hover cursor-pointer "
+                                                rounded
+                                                placeholderInitials={staffInfo.name
+                                                    .split(" ")
+                                                    .slice(-2)
+                                                    .map((word) => word[0])
+                                                    .join("")}
+                                            >
+                                                <div>
+                                                    <p className=" font-semibold text-start text-secondary-950 text-sm">
+                                                        {staffInfo.name}
+                                                    </p>
+                                                    <p className=" font-normal text-start text-secondary-600 text-sm">
+                                                        {staffInfo.email}
+                                                    </p>
+                                                </div>
+                                            </Avatar>
+                                        }
+                                        arrowIcon={false}
+                                        inline
+                                    >
+                                        <Dropdown.Header>
                                             <p className=" font-semibold text-start text-secondary-950 text-sm">
                                                 {staffInfo.name}
                                             </p>
                                             <p className=" font-normal text-start text-secondary-600 text-sm">
                                                 {staffInfo.email}
                                             </p>
-                                        </div>
-                                    </Avatar>
-                                }
-                                arrowIcon={false}
-                                inline
-                            >
-                                <Dropdown.Header>
-                                    <p className=" font-semibold text-start text-secondary-950 text-sm">
-                                        {staffInfo.name}
-                                    </p>
-                                    <p className=" font-normal text-start text-secondary-600 text-sm">
-                                        {staffInfo.email}
-                                    </p>
-                                </Dropdown.Header>
-                                <Dropdown.Item>Dashboard</Dropdown.Item>
-                                <Dropdown.Item>Settings</Dropdown.Item>
-                                <Dropdown.Item>Earnings</Dropdown.Item>
-                                <Dropdown.Divider />
-                                <Dropdown.Item
-                                    onClick={() => {
-                                        localStorage.setItem("token", "");
-                                        deleteCookie(COOKIE_NAME.ACCESS_TOKEN);
-                                        router.push("/signin");
-                                    }}
-                                >
-                                    Sign out
-                                </Dropdown.Item>
-                            </Dropdown>
+                                        </Dropdown.Header>
+                                        <Dropdown.Item>Dashboard</Dropdown.Item>
+                                        <Dropdown.Item>Settings</Dropdown.Item>
+                                        <Dropdown.Item>Earnings</Dropdown.Item>
+                                        <Dropdown.Divider />
+                                        <Dropdown.Item
+                                            onClick={() => {
+                                                localStorage.setItem(
+                                                    "token",
+                                                    "",
+                                                );
+                                                deleteCookie(
+                                                    COOKIE_NAME.ACCESS_TOKEN,
+                                                );
+                                                router.push("/signin");
+                                            }}
+                                        >
+                                            Sign out
+                                        </Dropdown.Item>
+                                    </Dropdown>
+                                </div>
+                            )}
                         </div>
-                    )}
-                </div>
-            </Sidebar>
-            <button
-                onClick={() => setIsCollapse(!isCollapse)}
-                className=" absolute rounded-full border-secondary-300 border-2 p-1 top-16 right-0 translate-x-1/2 bg-background-normal hover:bg-background-hover active:bg-background-active"
-            >
-                <HiChevronLeft
-                    className={` z-10 text-secondary-300 w-5 h-5 ${
-                        isCollapse ? " rotate-180" : ""
-                    }`}
-                />
-            </button>
+                    </Sidebar>
+                ) : null}
+                {screen("sm") ? (
+                    <>
+                        <button
+                            onClick={() => setIsCollapse(!isCollapse)}
+                            className=" absolute rounded-full border-secondary-300 border-2 p-1 top-16 right-0 translate-x-1/2 bg-background-normal hover:bg-background-hover active:bg-background-active"
+                        >
+                            <HiChevronLeft
+                                className={` z-10 text-secondary-300 w-5 h-5 ${
+                                    isCollapse ? " rotate-180" : ""
+                                }`}
+                            />
+                        </button>
+                    </>
+                ) : (
+                    <button
+                        onClick={() => setIsCollapse(!isCollapse)}
+                        className=" absolute rounded-full border-secondary-300 border-2 p-1 top-16 right-0 translate-x-2/3 bg-background-normal hover:bg-background-hover active:bg-background-active"
+                    >
+                        <HiChevronLeft
+                            className={` z-10 text-secondary-300 w-5 h-5 ${
+                                isCollapse ? " rotate-180" : ""
+                            }`}
+                        />
+                    </button>
+                )}
+            </div>
         </div>
     );
 }

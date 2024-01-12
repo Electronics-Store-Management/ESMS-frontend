@@ -8,7 +8,7 @@ export default function SideBar({ staffInfo }: PropTypes) {
         cookies().get(COOKIE_NAME.SIDE_BAR_COLLAPSE)?.value == "true" || false;
 
     return (
-        <div className=" absolute top-0 left-0 h-screen sm:relative sm:w-max z-50">
+        <div className=" absolute top-0 left-0 h-screen md:relative md:w-max z-50">
             <SideBarUI staffInfo={staffInfo} isCollapse={isCollapse} />
         </div>
     );

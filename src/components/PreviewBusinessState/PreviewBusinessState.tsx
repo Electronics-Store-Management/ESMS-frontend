@@ -11,7 +11,7 @@ export default function PreviewBusinessState() {
     const screen = useScreen();
 
     return (
-        <div className=" flex-initial rounded-xl shadow-md bg-background-normal w-full h-fit sm:w-fit md:h-full md:w-fit p-6 flex flex-col gap-6 sm:flex-row md:flex-col justify-evenly">
+        <div className=" flex-initial rounded-xl bg-background-normal w-full h-fit sm:w-fit md:h-full sm:h-full md:w-fit p-6 flex flex-col min-[425px]:flex-row sm:flex-col gap-6 justify-evenly">
             <BusinessStateItem primary={revenue?.revenue} type="revenue" />
             <BusinessStateItem primary={cost?.cost} type="cost" />
         </div>
@@ -27,7 +27,9 @@ function BusinessStateItem({
     secondary?: number;
     type: "revenue" | "cost";
 }) {
-    return (
+    const screen = useScreen();
+
+    return screen("sm") ? (
         <div className=" relative">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -84,6 +86,19 @@ function BusinessStateItem({
             </p>
             <p className=" absolute bottom-4 left-4 font-semibold text-secondary-400">
                 {type === "revenue" ? "Revenue" : "Expense"}
+            </p>
+        </div>
+    ) : (
+        <div className="">
+            <p className=" bottom-4 font-medium text-secondary-400">
+                {type === "revenue" ? "Revenue" : "Expense"}
+            </p>
+            <p
+                className={` mt-1 text-2xl font-semibold ${
+                    type === "revenue" ? " text-revenue" : " text-cost"
+                }`}
+            >
+                {primary ? <>{(primary / 1_000_000).toFixed(1)} m</> : "None"}
             </p>
         </div>
     );

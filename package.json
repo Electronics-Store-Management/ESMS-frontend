@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@floating-ui/react": "^0.26.4",
+    "@headlessui/react": "^1.7.18",
     "axios": "^1.6.2",
     "chart.js": "^4.4.1",
     "cookies-next": "^4.1.0",
@@ -29,7 +30,8 @@
     "react-query": "^3.39.3",
     "react-use": "^17.4.0",
     "swr": "^2.2.4",
-    "tailwind-merge": "^2.0.0"
+    "tailwind-merge": "^2.0.0",
+    "zustand": "^4.4.7"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.5.3",

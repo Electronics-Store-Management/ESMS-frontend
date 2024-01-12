@@ -13,7 +13,5 @@ export default async function viewSupplierList({
 
     const suppliers = response.data as Supplier[];
 
-    console.log(suppliers);
-
     return suppliers;
 }

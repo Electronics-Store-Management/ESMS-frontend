@@ -2,6 +2,7 @@
 
 import { viewWeekCost } from "@/api/statistic/cost.api";
 import { viewWeekRevenue } from "@/api/statistic/revenue.api";
+import useScreen from "@/hooks/useScreen";
 import FONT from "@/utils/fontFamily";
 import {
     CategoryScale,
@@ -28,86 +29,85 @@ ChartJS.register(
     Legend,
 );
 
-export const options = {
-    responsive: true,
-    interaction: {
-        intersect: false,
-    },
-    plugins: {
-        legend: {
-            position: "top" as const,
-            align: "end" as const,
-            labels: {
-                pointStyle: "circle" as const,
-                boxWidth: 3,
-                boxHeight: 3,
-                usePointStyle: true,
-                font: {
-                    size: 14,
-                    weight: "normal",
-                    family: "'Be Vietnam Pro', sans-serif",
-                },
-            },
-        },
-        title: {
-            display: false,
-            text: "",
-        },
-    },
-    scales: {
-        x: {
-            ticks: {
-                font: {
-                    family: "'Be Vietnam Pro', sans-serif",
-                    size: 15 as const,
-                    // weight: "bold" as const,
-                    color: "#6B7280" as const,
-                } as const,
-                color: "#6B7280" as const,
-                padding: 30,
-            },
-            gridLines: {
-                color: "rgba(0, 0, 0, 0)",
-            },
-            grid: {
-                display: false,
-            },
-            border: {
-                backdropPadding: 50,
-                backdropColor: "rgba(0, 0, 0, 0)",
-            },
-            major: {
-                enabled: true,
-            },
-        },
-        y: {
-            ticks: {
-                font: {
-                    family: "'Be Vietnam Pro', sans-serif",
-                    size: 14 as const,
-                    // weight: "bold" as const,
-                    color: "#6B7280" as const,
-                } as const,
-                color: "#6B7280" as const,
-                padding: 30,
-            },
-            gridLines: {
-                color: "rgba(0, 0, 0, 0)",
-            },
-            border: {
-                width: 0,
-            },
-        },
-    },
-};
-
 const font = FONT.primary;
 
 export default function BusinessChart({ title }: { title: string }) {
+    const screen = useScreen();
+
     const { data: costs } = useQuery(["cost-week"], viewWeekCost);
     const { data: revenues } = useQuery(["revenue-week"], viewWeekRevenue);
 
     const now = new Date();
+
+    const options = {
+        responsive: true,
+        interaction: {
+            intersect: false,
+        },
+        plugins: {
+            legend: {
+                position: "top" as const,
+                align: "end" as const,
+                labels: {
+                    pointStyle: "circle" as const,
+                    boxWidth: 3,
+                    boxHeight: 3,
+                    usePointStyle: true,
+                    font: {
+                        size: 14,
+                        weight: "normal",
+                        family: "'Be Vietnam Pro', sans-serif",
+                    },
+                },
+            },
+            title: {
+                display: false,
+                text: "",
+            },
+        },
+        scales: {
+            x: {
+                display: screen("sm"),
+                ticks: {
+                    font: {
+                        family: "'Be Vietnam Pro', sans-serif",
+                        size: 15 as const,
+                        // weight: "bold" as const,
+                        color: "#6B7280" as const,
+                    } as const,
+                    color: "#6B7280" as const,
+                    padding: 30,
+                },
+                grid: {
+                    display: false,
+                },
+                border: {
+                    backdropPadding: 50,
+                    backdropColor: "rgba(0, 0, 0, 0)",
+                },
+            },
+            y: {
+                ticks: {
+                    font: {
+                        family: "'Be Vietnam Pro', sans-serif",
+                        size: 14 as const,
+                        // weight: "bold" as const,
+                        color: "#6B7280" as const,
+                    } as const,
+                    color: "#6B7280" as const,
+                    padding: 30,
+                },
+                display: screen("sm"),
+                gridLines: {
+                    color: "rgba(0, 0, 0, 0)",
+                },
+                border: {
+                    width: 0,
+                },
+            },
+        },
+        maintainAspectRatio: screen("sm"),
+    };
 
     const labels = Array(7)
         .fill("")
@@ -146,17 +146,19 @@ export default function BusinessChart({ title }: { title: string }) {
     };
 
     return (
-        <div className=" flex-1 relative bg-background-normal rounded-xl shadow-md ">
+        <div className=" flex-1 pb-5 sm:pb-0 w-full bg-background-normal rounded-xl ">
             <div className=" w-full p-4 flex justify-between">
                 <p className={` font-semibold text-lg ${font.className}`}>
                     Business state
                 </p>
                 <div></div>
             </div>
-            {
-                //@ts-ignore
-                <Line options={options} data={data} />
-            }
+            <div className=" relative h-40 sm:h-fit px-3 sm:px-0">
+                {
+                    //@ts-ignore
+                    <Line options={options} data={data} />
+                }
+            </div>
         </div>
     );
 }

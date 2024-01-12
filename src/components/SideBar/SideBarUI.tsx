@@ -2,30 +2,34 @@
 
 import { Avatar, CustomFlowbiteTheme, Dropdown, Sidebar } from "flowbite-react";
 import Image from "next/image";
+import { AiFillCustomerService } from "react-icons/ai";
 import {
     HiBookmark,
     HiChartPie,
     HiChevronLeft,
     HiClipboardCheck,
     HiDocumentSearch,
+    HiMenu,
     HiSave,
     HiShoppingBag,
     HiUserGroup,
 } from "react-icons/hi";
-import { PiTruckDuotone } from "react-icons/pi";
-import { AiFillCustomerService } from "react-icons/ai";
 import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
+import { PiTruckDuotone } from "react-icons/pi";
 import { RiToolsLine } from "react-icons/ri";
 
 import COOKIE_NAME from "@/constants/cookies";
+import useScreen from "@/hooks/useScreen";
 import Staff from "@/types/entity/Staff";
 import { deleteCookie, setCookie } from "cookies-next";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { MdOutlineCurrencyExchange } from "react-icons/md";
 import LOGO from "../../assets/logo.png";
 import FONT from "../../utils/fontFamily";
-import useScreen from "@/hooks/useScreen";
+
+import { useSideBarState } from "@/contexts/SideBar";
+import { Transition } from "@headlessui/react";
 
 export default function SideBarUI({
     staffInfo,
@@ -35,32 +39,73 @@ export default function SideBarUI({
     const pathname = usePathname();
     const routeName = (pathname.split("/").at(1) || "") + "/";
     const screen = useScreen();
+    const isMobile = !screen("md");
 
-    const [isCollapse, setIsCollapse] = useState(_isCollapse);
+    const { isCollapse, setIsCollapse } = useSideBarState((state) => ({
+        isCollapse:
+            state.isCollapse === undefined ? _isCollapse : state.isCollapse,
+        setIsCollapse: state.setIsCollapse,
+    }));
+
+    useEffect(() => {
+        setIsCollapse(_isCollapse);
+    }, [_isCollapse]);
 
     useEffect(() => {
         setCookie(COOKIE_NAME.SIDE_BAR_COLLAPSE, isCollapse);
     }, [isCollapse]);
 
     return (
+        // <div className={`w-screen sm:w-fit h-screen`}>
         <div
-            className={`w-screen sm:w-fit h-full ${
-                !screen("sm") && !isCollapse ? " bg-[#000000a2]" : null
-            }`}
-            onClick={() => {
-                if (!screen("sm")) {
-                    setIsCollapse((prev) => !prev);
-                }
-            }}
+            onClick={(e) => e.stopPropagation()}
+            className="relative h-screen w-fit duration-300 transition-all"
         >
-            <div className=" relative w-fit h-full">
-                {screen("sm") || !isCollapse ? (
+            <Transition show={!isMobile || !isCollapse} className=" w-fit z-20">
+                <Transition.Child
+                    enter="transition-opacity ease-linear duration-500"
+                    enterFrom="opacity-0"
+                    enterTo="opacity-80"
+                    leave="transition-opacity ease-linear duration-500"
+                    leaveFrom="opacity-80"
+                    leaveTo="opacity-0"
+                >
+                    {isMobile && (
+                        <div
+                            onClick={() => {
+                                if (isMobile && !isCollapse) {
+                                    setIsCollapse((prev) => !prev);
+                                }
+                            }}
+                            className=" absolute top-0 left-0 opacity-80 w-screen h-screen bg-gray-800"
+                        />
+                    )}
+                </Transition.Child>
+                <Transition.Child
+                    className=" h-screen relative z-20"
+                    enter="transition ease-in-out duration-500 transform"
+                    enterFrom="-translate-x-full"
+                    enterTo="translate-x-0"
+                    leave="transition ease-in-out duration-500 transform"
+                    leaveFrom="translate-x-0"
+                    leaveTo="-translate-x-full"
+                >
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setIsCollapse((prev) => !prev);
+                        }}
+                        className={` w-fit z-10 right-2 transition-all duration-300 absolute rounded-md border-0 p-1 top-6 bg-background-normal active:shadow-md active:bg-background-active`}
+                    >
+                        <HiChevronLeft
+                            className={` z-10 text-secondary-300 w-6 h-6`}
+                        />
+                    </button>
                     <Sidebar
-                        key={isCollapse.toString()}
                         theme={sideBarTheme}
-                        collapsed={isCollapse}
+                        collapsed={!isMobile && isCollapse}
                         aria-label="Sidebar with multi-level dropdown example"
-                        className=" animate-openSideBar relative z-0"
+                        className=" relative z-0"
                     >
                         <div className=" flex gap-2 pl-1 pt-2 mb-12">
                             <Image
@@ -305,24 +350,16 @@ export default function SideBarUI({
                             )}
                         </div>
                     </Sidebar>
-                ) : null}
-                {screen("sm") ? (
-                    <>
-                        <button
-                            onClick={() => setIsCollapse(!isCollapse)}
-                            className=" absolute rounded-full border-secondary-300 border-2 p-1 top-16 right-0 translate-x-1/2 bg-background-normal hover:bg-background-hover active:bg-background-active"
-                        >
-                            <HiChevronLeft
-                                className={` z-10 text-secondary-300 w-5 h-5 ${
-                                    isCollapse ? " rotate-180" : ""
-                                }`}
-                            />
-                        </button>
-                    </>
-                ) : (
+                </Transition.Child>
+            </Transition>
+            {!isMobile ? (
+                <>
                     <button
-                        onClick={() => setIsCollapse(!isCollapse)}
-                        className=" absolute rounded-full border-secondary-300 border-2 p-1 top-16 right-0 translate-x-2/3 bg-background-normal hover:bg-background-hover active:bg-background-active"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setIsCollapse((prev) => !prev);
+                        }}
+                        className={` z-20 absolute rounded-full border-secondary-300 border-2 p-1 top-16 right-0 translate-x-1/2 bg-background-normal hover:bg-background-hover active:bg-background-active`}
                     >
                         <HiChevronLeft
                             className={` z-10 text-secondary-300 w-5 h-5 ${
@@ -330,9 +367,10 @@ export default function SideBarUI({
                             }`}
                         />
                     </button>
-                )}
-            </div>
+                </>
+            ) : null}
         </div>
+        // </div>
     );
 }
 

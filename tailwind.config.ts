@@ -64,7 +64,7 @@ const config: Config = {
                 cost: "var(--cost)",
             },
             animation: {
-                openSideBar: "openSideBar 1s linear forwards 1",
+                openSideBar: "openSideBar 0.2s linear forwards 1",
             },
         },
     },

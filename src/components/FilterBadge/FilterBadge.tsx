@@ -25,7 +25,7 @@ export default function FilterBadge({
             theme={customBadgeThem}
         >
             <div className=" flex gap-2 items-end">
-                <p>
+                <p className=" text-sm">
                     {title} = {content}
                 </p>
                 <HiOutlineX

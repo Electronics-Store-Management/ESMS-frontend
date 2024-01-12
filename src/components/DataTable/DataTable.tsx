@@ -77,14 +77,14 @@ export default function DataTable<T extends Object & BaseEntity>({
 
 export const tableTheme: CustomFlowbiteTheme["table"] = {
     root: {
-        base: "w-full text-left rounded-lg text-sm text-secondary-500",
+        base: "w-fit sm:w-full text-left rounded-lg text-sm text-secondary-500",
         shadow: "absolute bg-white dark:bg-black w-full h-full top-0 left-0 rounded-lg drop-shadow-md -z-10",
         wrapper: "relative ",
     },
     body: {
         base: "group/body",
         cell: {
-            base: `group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg px-4 py-4 font-semibold text-secondary-900 ${FONT.primary.className}`,
+            base: ` group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg px-4 py-4 font-normal text-secondary-900 ${FONT.primary.className}`,
         },
     },
     head: {
@@ -95,9 +95,9 @@ export const tableTheme: CustomFlowbiteTheme["table"] = {
     },
     row: {
         base: "group/row",
-        hovered: "hover:bg-secondary-100",
+        hovered: "hover:bg-primary-100",
         striped:
-            "odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700",
+            "odd:bg-background-normal even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700",
     },
 };
 

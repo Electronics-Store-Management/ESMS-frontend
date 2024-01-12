@@ -46,7 +46,7 @@ export function Row<T>({
     return isAllowedView ? (
         <Table.Row
             key={row.id}
-            className="bg-white cursor-pointer hover:bg-background-hover duration-100"
+            className="bg-white cursor-pointer hover:bg-primary-100 duration-100"
             onClick={() => onClickRow?.(row)}
         >
             <Table.Cell

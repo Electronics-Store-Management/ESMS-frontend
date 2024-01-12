@@ -2,11 +2,11 @@
 
 import { ReactNodeChildren } from "@/types/ReactNodeChildren";
 import {
+    ButtonProps,
     ButtonSizes,
     CustomFlowbiteTheme,
-    Button as _Button,
     Spinner,
-    ButtonProps,
+    Button as _Button,
 } from "flowbite-react";
 
 import React from "react";

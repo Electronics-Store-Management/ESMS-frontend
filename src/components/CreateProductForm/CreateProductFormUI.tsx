@@ -67,21 +67,21 @@ export default function CreateProductFormUI({
     }
 
     return (
-        <div className=" w-full max-h-screen py-10">
+        <div className=" w-full max-h-screen py-0 sm:py-10">
             <div
-                className={` w-full mb-10 bg-background-normal rounded-2xl p-8 ${className}`}
+                className={` w-full mb-0 sm:mb-10 bg-background-normal sm:rounded-2xl p-4 sm:p-8 ${className}`}
                 {...props}
             >
                 <h1
-                    className={` text-secondary-950 text-2xl text-center font-semibold ${FONT.primary.className}`}
+                    className={` mt-3 sm:mt-0 text-secondary-950 text-2xl text-center font-semibold ${FONT.primary.className}`}
                 >
                     Add product
                 </h1>
                 <form
                     onSubmit={handleSubmit(onSubmitData)}
-                    className=" overflow-auto"
+                    className=" mt-5 sm:mt-0 overflow-auto"
                 >
-                    <div className=" grid grid-cols-2 gap-5">
+                    <div className=" grid grid-cols-1 sm:grid-cols-2 gap-5">
                         <div>
                             <ControllerTextInput
                                 control={control}
@@ -164,7 +164,7 @@ export default function CreateProductFormUI({
                                 <p className=" font-medium mb-5"> months</p>
                             </div>
                         </div>
-                        <div className=" pt-10">
+                        <div className=" pt-5 sm:pt-10">
                             <DropZone
                                 index={0}
                                 file={getValues("photo")?.[0]}
@@ -175,7 +175,7 @@ export default function CreateProductFormUI({
                                     setValue("photo", photoList);
                                 }}
                             />
-                            <div className=" mt-10 flex gap-5">
+                            <div className="  mt-5 sm:mt-10 flex gap-5">
                                 {Array(4)
                                     .fill("")
                                     .map((_, index) => (
@@ -225,9 +225,9 @@ export default function CreateProductFormUI({
                                                 ) => (
                                                     <div
                                                         key={index}
-                                                        className=" mt-3 w-full flex gap-3"
+                                                        className=" my-4 sm:my-2 w-full flex flex-col sm:flex-row gap-3"
                                                     >
-                                                        <Dropdown
+                                                        <div className=" flex flex-row gap-3"> <Dropdown
                                                             theme={
                                                                 dropdownTheme
                                                             }
@@ -281,41 +281,47 @@ export default function CreateProductFormUI({
                                                                 );
                                                             }}
                                                             name="Name"
-                                                        />
+                                                        /></div>
+                                                       
 
-                                                        <TextInput
-                                                            type={type}
-                                                            className=" w-full text-secondary-900"
-                                                            placeholder="Enter value here..."
-                                                            value={value}
-                                                            onChange={(
-                                                                e: any,
-                                                            ) => {
-                                                                onChange(
-                                                                    onChangeSpec(
-                                                                        index,
-                                                                        name,
-                                                                        e.target
-                                                                            .value,
-                                                                        type,
-                                                                    ),
-                                                                );
-                                                            }}
-                                                            name="Value"
-                                                        />
-                                                        <Button
-                                                            hiddenTitle="Remove"
-                                                            btnType={"error"}
-                                                            onClick={() =>
-                                                                onRemoveSpec(
-                                                                    index,
-                                                                )
-                                                            }
-                                                        >
-                                                            <HiTrash
-                                                                size={18}
+                                                        <div className=" flex-1 flex gap-3 flex-row">
+                                                            <TextInput
+                                                                type={type}
+                                                                className=" w-full text-secondary-900"
+                                                                placeholder="Enter value here..."
+                                                                value={value}
+                                                                onChange={(
+                                                                    e: any,
+                                                                ) => {
+                                                                    onChange(
+                                                                        onChangeSpec(
+                                                                            index,
+                                                                            name,
+                                                                            e
+                                                                                .target
+                                                                                .value,
+                                                                            type,
+                                                                        ),
+                                                                    );
+                                                                }}
+                                                                name="Value"
                                                             />
-                                                        </Button>
+                                                            <Button
+                                                                hiddenTitle="Remove"
+                                                                btnType={
+                                                                    "error"
+                                                                }
+                                                                onClick={() =>
+                                                                    onRemoveSpec(
+                                                                        index,
+                                                                    )
+                                                                }
+                                                            >
+                                                                <HiTrash
+                                                                    size={18}
+                                                                />
+                                                            </Button>
+                                                        </div>
                                                     </div>
                                                 ),
                                             )}

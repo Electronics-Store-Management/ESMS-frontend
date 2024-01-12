@@ -30,6 +30,7 @@ export default function ControllerTextInput({
                         className=" text-secondary-900"
                         title={title}
                         icon={icon}
+                        sizing={"sm"}
                         defaultValue={defaultValue}
                         placeholder={placeholder}
                         {...register(name)}

@@ -65,9 +65,9 @@ export default function SideBarUI({
                 <Transition.Child
                     enter="transition-opacity ease-linear duration-500"
                     enterFrom="opacity-0"
-                    enterTo="opacity-80"
+                    enterTo="opacity-100"
                     leave="transition-opacity ease-linear duration-500"
-                    leaveFrom="opacity-80"
+                    leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
                     {isMobile && (
@@ -77,11 +77,12 @@ export default function SideBarUI({
                                     setIsCollapse((prev) => !prev);
                                 }
                             }}
-                            className=" absolute top-0 left-0 opacity-80 w-screen h-screen bg-gray-800"
+                            className=" absolute top-0 left-0 opacity-70 w-screen h-screen bg-zinc-900"
                         />
                     )}
                 </Transition.Child>
                 <Transition.Child
+                    appear
                     className=" h-screen relative z-20"
                     enter="transition ease-in-out duration-500 transform"
                     enterFrom="-translate-x-full"
@@ -95,7 +96,9 @@ export default function SideBarUI({
                             e.stopPropagation();
                             setIsCollapse((prev) => !prev);
                         }}
-                        className={` w-fit z-10 right-2 transition-all duration-300 absolute rounded-md border-0 p-1 top-6 bg-background-normal active:shadow-md active:bg-background-active`}
+                        className={` w-fit z-10 right-2 transition-all duration-300 absolute rounded-md border-0 p-1 top-6 bg-background-normal active:shadow-md active:bg-background-active ${
+                            isMobile || " hidden"
+                        }`}
                     >
                         <HiChevronLeft
                             className={` z-10 text-secondary-300 w-6 h-6`}

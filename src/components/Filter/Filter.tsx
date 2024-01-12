@@ -1,6 +1,7 @@
 import { CustomFlowbiteTheme, Dropdown, Spinner } from "flowbite-react";
 import { HiOutlineCheck } from "react-icons/hi";
 import FONT from "../../utils/fontFamily";
+import useScreen from "@/hooks/useScreen";
 
 export default function Filter({
     title,
@@ -12,10 +13,16 @@ export default function Filter({
     className,
     ...props
 }: PropTypes) {
+    const screen = useScreen();
+    const isMobile = !screen("sm");
+
     return (
-        <div className={` flex items-center gap-2 ${className}`} {...props}>
+        <div
+            className={` flex items-center justify-end gap-2 ${className}`}
+            {...props}
+        >
             <p
-                className={`${FONT.primary.className} font-bold text-[14px] text-secondary-900`}
+                className={`${FONT.primary.className} font-bold text-sm text-secondary-900`}
             >
                 {title}
             </p>

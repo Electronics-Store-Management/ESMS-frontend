@@ -37,7 +37,9 @@ export default async function Layout({ children }: ReactNodeChildren) {
     const staffInfo: Staff = await staffInfoResponse.json();
 
     const currentPage = redirectURI
-        .split("/")
+        .split("?")
+        .at(0)
+        ?.split("/")
         .at(3) as keyof typeof PageEntityType;
     if ((currentPage as string) !== "not-permitted")
         await checkPermission(

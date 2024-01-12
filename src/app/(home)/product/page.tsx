@@ -19,8 +19,16 @@ import ProductPreview from "@/types/entity/ProductPreview";
 import FORMATTER from "@/utils/formatter";
 import { useSearchParams } from "next/navigation";
 import { useQuery } from "react-query";
+import useScreen from "@/hooks/useScreen";
+import MenuButton from "@/components/SideBar/MenuButton";
+import FONT from "@/utils/fontFamily";
+
+const font = FONT.primary;
 
 export default function Page() {
+    const screen = useScreen();
+    const isMobile = !screen("md");
+
     const searchParams = useSearchParams();
 
     const category = searchParams.get(SEARCH_PARAMS.categoryName) || "";
@@ -45,23 +53,72 @@ export default function Page() {
 
     return (
         <div className="w-full h-full flex flex-col">
-            <div className=" w-full grid grid-cols-2">
-                <ProductSearch className="" />
-                <div className=" flex justify-end gap-8">
-                    <CategoryFilter className="" />
-                    <PriceRangeFilter />
-                    {isAllowedCreate ? (
-                        <Button
-                            size="sm"
-                            onClick={() => openCreateProductModal(refetch)}
-                        >
-                            <HiPlus className=" w-4 h-4 mr-2" />
-                            Add product
-                        </Button>
-                    ) : null}
+            {screen("xl") ? (
+                <div className=" w-full grid xl:grid-cols-2">
+                    <ProductSearch className="" />
+                    <div className=" flex justify-end gap-8">
+                        <CategoryFilter className="" />
+                        <PriceRangeFilter />
+                        {isAllowedCreate ? (
+                            <Button
+                                size="sm"
+                                onClick={() => openCreateProductModal(refetch)}
+                            >
+                                <HiPlus className=" w-4 h-4 mr-2" />
+                                Add product
+                            </Button>
+                        ) : null}
+                    </div>
                 </div>
-            </div>
-            <div className=" flex gap-5 mt-5">
+            ) : screen("sm") ? (
+                <div className=" w-full flex flex-col gap-5">
+                    <div className=" flex justify-between">
+                        <ProductSearch className="" />
+                        {isAllowedCreate ? (
+                            <Button
+                                size="sm"
+                                onClick={() => openCreateProductModal(refetch)}
+                            >
+                                <HiPlus className=" w-4 h-4 mr-2" />
+                                Add product
+                            </Button>
+                        ) : null}
+                    </div>
+                    <div className=" flex justify-start gap-5">
+                        <CategoryFilter className="" />
+                        <PriceRangeFilter />
+                    </div>
+                </div>
+            ) : (
+                <div className=" w-full flex flex-col gap-5">
+                    <div className="mb-1 flex justify-between">
+                        <h1 className={` text-3xl font-semibold`}>
+                            Product list
+                        </h1>
+                        <MenuButton />
+                    </div>
+                    <ProductSearch className=" w-full" />
+                    <div className=" grid grid-cols-3 gap-8 items-end">
+                        <div className=" col-span-2 ml-auto grid items-end gap-3">
+                            <CategoryFilter className="" />
+                            <PriceRangeFilter />
+                        </div>
+                        {isAllowedCreate ? (
+                            <div className=" ml-auto">
+                                <Button
+                                    size="sm"
+                                    onClick={() =>
+                                        openCreateProductModal(refetch)
+                                    }
+                                >
+                                    <HiPlus className=" w-4 h-4 mr-2" />
+                                </Button>
+                            </div>
+                        ) : null}
+                    </div>
+                </div>
+            )}
+            <div className=" flex flex-wrap gap-5 mt-5">
                 <FilterBadge
                     title="Product name"
                     type="search"
@@ -97,7 +154,10 @@ export default function Page() {
                     openUpdateProductModal(product.id, refetch);
                 }}
                 pick={{
-                    name: { title: "Name" },
+                    name: {
+                        title: "Name",
+                        className: " font-normal min-w-[250px]",
+                    },
                     category: { title: "Category" },
                     price: {
                         title: "Price",

@@ -3,7 +3,8 @@ const COOKIE_NAME = {
     ACCESS_TOKEN: "accessToken",
     SIDE_BAR_COLLAPSE: "side-bar-collapse",
     THEME: "theme",
-    CURRENT_THEME: "current-theme",
+    SELECTED_THEME: "selected-theme",
+    FONT_SIZE: "font-size",
 };
 
 export default COOKIE_NAME;

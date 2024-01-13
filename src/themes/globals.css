@@ -14,15 +14,17 @@
 }
 
 @layer utilities {
-    * {
-        transition-duration: all 300ms;
-    }
-
     button:focus {
         @apply !outline-0;
     }
 
     * {
-        /* scrollbar-gutter: stable; */
+        transition-duration: 0.3s;
+        animation-duration: 0.3s;
     }
+}
+
+* {
+    transition-duration: 0.3s;
+    animation-duration: 0.3s;
 }

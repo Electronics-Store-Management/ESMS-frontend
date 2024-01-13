@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 
 const queryClient = new QueryClient();
 
-export default function TokenProvider({ children }: ReactNodeChildren) {
+export default function GeneralProvider({ children }: ReactNodeChildren) {
     return (
         <QueryClientProvider client={queryClient}>
             {children}

@@ -66,27 +66,27 @@ export default function SignIn() {
 
     return (
         <div
-            className=" h-screen grid place-items-center"
-            style={{
-                background:
-                    "linear-gradient(106deg, rgba(236, 227, 206, 0.21) 12.98%, #739072 71.82%, #4F6F52 100%)",
-            }}
+            className=" h-screen bg-primary-200 grid place-items-center"
+            // style={{
+            //     background:
+            //         "linear-gradient(106deg, rgba(236, 227, 206, 0.21) 12.98%, #739072 71.82%, #4F6F52 100%)",
+            // }}
         >
-            <div className=" w-max min-w-[550px] rounded-3xl bg-white grid place-items-center">
-                <div className=" w-full px-20 py-16">
-                    <div className="relative w-fit mx-auto">
+            <div className=" w-full sm:w-max sm:min-w-[550px] sm:rounded-3xl bg-white grid place-items-center">
+                <div className=" w-full px-6 py-10 sm:px-20 sm:py-16">
+                    <div className="relative w-fit mx-auto flex flex-col items-center gap-5 sm:gap-0 sm:flex-row">
                         <Image
-                            className="absolute top-0 -left-10"
+                            className=" sm:absolute top-0 -left-10"
                             src={LOGO}
                             width={30}
                             height={30}
                             alt="logo"
                         />
-                        <h1 className=" mb-14 text-3xl text-center font-semibold text-secondary-900">
+                        <h1 className=" mb-14 text-2xl sm:text-3xl text-center font-semibold text-secondary-900">
                             Electronic Store
                         </h1>
                         <p
-                            className={`absolute right-16 top-5 translate-x-full text-4xl ${yesteryear.className}`}
+                            className={`absolute right-16 bottom-8 sm:top-5 translate-x-full text-2xl sm:text-4xl ${yesteryear.className}`}
                             style={{
                                 background:
                                     "linear-gradient(90deg, #16B6FA 0%, #DC02FF 100%)",
@@ -98,7 +98,7 @@ export default function SignIn() {
                             Management
                         </p>
                     </div>
-                    <form onSubmit={handleSubmit(onSubmit)}>
+                    <form onSubmit={handleSubmit(onSubmit)} className=" mx-auto max-w-[300px] sm:max-w-none">
                         <ControllerTextInput
                             control={control}
                             name="username"

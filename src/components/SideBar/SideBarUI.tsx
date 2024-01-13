@@ -30,6 +30,7 @@ import FONT from "../../utils/fontFamily";
 
 import { useSideBarState } from "@/contexts/SideBar";
 import { Transition } from "@headlessui/react";
+import Link from "next/link";
 
 export default function SideBarUI({
     staffInfo,
@@ -330,9 +331,14 @@ export default function SideBarUI({
                                                 {staffInfo.email}
                                             </p>
                                         </Dropdown.Header>
-                                        <Dropdown.Item>Dashboard</Dropdown.Item>
-                                        <Dropdown.Item>Settings</Dropdown.Item>
-                                        <Dropdown.Item>Earnings</Dropdown.Item>
+                                        <Dropdown.Item>
+                                            <Link href={"/home"}>
+                                                Dashboard
+                                            </Link>
+                                        </Dropdown.Item>
+                                        <Dropdown.Item>
+                                            <Link href={"/setting"}>Settings</Link>
+                                        </Dropdown.Item>
                                         <Dropdown.Divider />
                                         <Dropdown.Item
                                             onClick={() => {

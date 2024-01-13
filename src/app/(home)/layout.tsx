@@ -43,8 +43,8 @@ export default async function Layout({ children }: ReactNodeChildren) {
         .at(3) as keyof typeof PageEntityType;
     if ((currentPage as string) !== "not-permitted")
         await checkPermission(
-            PageEntityType[currentPage].type as EntityType,
-            PageEntityType[currentPage].permissions as PermissionType[],
+            PageEntityType[currentPage]?.type as EntityType,
+            PageEntityType[currentPage]?.permissions as PermissionType[],
         );
 
     return (

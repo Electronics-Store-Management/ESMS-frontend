@@ -64,9 +64,9 @@ export default function UpdateProductFormUI({
     }
 
     return (
-        <div className=" w-full max-h-screen sm:py-10">
+        <div className=" w-full max-h-screen">
             <div
-                className={` w-full  mb-0 sm:mb-10 bg-background-normal rounded-2xl p-8 ${className}`}
+                className={` w-full mb-0 bg-background-normal rounded-2xl p-8 ${className}`}
                 {...props}
             >
                 <h1

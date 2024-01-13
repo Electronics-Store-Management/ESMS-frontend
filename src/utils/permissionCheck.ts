@@ -136,6 +136,7 @@ export default async function checkPermission(
     entityType: EntityType,
     permissions: PermissionType[],
 ) {
+    if (!entityType || !permissions) return;
     if (!(await hasPermission(entityType, permissions)))
         redirect("/not-permitted");
 }

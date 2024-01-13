@@ -67,9 +67,9 @@ export default function CreateProductFormUI({
     }
 
     return (
-        <div className=" w-full max-h-screen py-0 sm:py-10">
+        <div className=" w-full max-h-screen py-0">
             <div
-                className={` w-full mb-0 sm:mb-10 bg-background-normal sm:rounded-2xl p-4 sm:p-8 ${className}`}
+                className={` w-full mb-0 bg-background-normal sm:rounded-2xl p-4 sm:p-8 ${className}`}
                 {...props}
             >
                 <h1

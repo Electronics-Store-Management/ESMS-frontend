@@ -6,8 +6,7 @@ import {
     TextInputProps,
     TextInput as _TextInput,
 } from "flowbite-react";
-import React, { ForwardedRef, ReactNode } from "react";
-import { HTMLInputTypeAttribute } from "react";
+import React, { ForwardedRef, HTMLInputTypeAttribute, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
 export default React.forwardRef(function TextInput(
@@ -24,7 +23,10 @@ export default React.forwardRef(function TextInput(
         addon,
         rightAddon,
         addonClassName,
+        onRightAddonClick,
         rightAddonClassName,
+        readOnly,
+        value,
         ...props
     }: PropTypes,
     ref: ForwardedRef<HTMLInputElement>,
@@ -73,43 +75,74 @@ export default React.forwardRef(function TextInput(
 
     return (
         <div className={className}>
-            {title && (
-                <div className="mb-2 block">
-                    <Label htmlFor={title} value={title} />
+            {readOnly ? (
+                <div className=" flex flex-col gap-[2px]">
+                    <p className=" text-sm text-secondary-600 flex gap-1 items-center">
+                        {title}
+                    </p>
+                    <p className=" text-base font-medium flex gap-1 items-center">
+                        {value}
+                    </p>
                 </div>
+            ) : (
+                <>
+                    {title && (
+                        <div className="mb-2 block">
+                            <Label
+                                htmlFor={title}
+                                className="font-semibold "
+                                value={title}
+                            />
+                        </div>
+                    )}
+                    <div className=" relative flex w-full">
+                        <_TextInput
+                            theme={customTheme}
+                            className="w-full"
+                            ref={ref}
+                            id={title}
+                            type={type}
+                            icon={icon}
+                            placeholder={placeholder}
+                            sizing={sizing}
+                            addon={addon}
+                            value={value}
+                            {...props}
+                            required
+                            autoComplete="off"
+                        />
+                        <div
+                            onClick={onRightIconClick}
+                            className=" absolute p-1 top-1/2 -translate-y-1/2 right-3 rounded-full hover:bg-background-hover active:bg-background-active duration-150 cursor-pointer"
+                        >
+                            {rightIcon}
+                        </div>
+                        {rightAddon && (
+                            <span
+                                onClick={onRightAddonClick}
+                                className={`${theme.rightAddon} cursor-pointer hover:bg-primary-200 active:bg-primary-300`}
+                            >
+                                {rightAddon}
+                            </span>
+                        )}
+                    </div>
+                </>
             )}
-            <div className="flex w-full">
-                <_TextInput
-                    theme={customTheme}
-                    className="w-full"
-                    ref={ref}
-                    id={title}
-                    type={type}
-                    icon={icon}
-                    rightIcon={rightIcon}
-                    placeholder={placeholder}
-                    sizing={sizing}
-                    addon={addon}
-                    {...props}
-                    required
-                />
-                {rightAddon && (
-                    <span className={theme.rightAddon}>{rightAddon}</span>
-                )}
-            </div>
         </div>
     );
 });
 
-type PropTypes = {
-    title?: string;
+type PropTypes = Omit<
+    React.ComponentPropsWithRef<"input"> & TextInputProps,
+    "rightIcon"
+> & {
     type?: HTMLInputTypeAttribute;
     placeholder?: string;
     error?: boolean;
     onRightIconClick?: () => void;
+    onRightAddonClick?: () => void;
     rightAddon?: ReactNode;
     addonClassName?: string;
     rightAddonClassName?: string;
-} & React.ComponentPropsWithRef<"input"> &
-    TextInputProps;
-
+    rightIcon?: ReactNode;
+};

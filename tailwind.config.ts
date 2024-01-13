@@ -60,10 +60,14 @@ const config: Config = {
                     hover: "var(--background-hover)",
                     active: "var(--background-active)",
                 },
+                revenue: "var(--revenue)",
+                cost: "var(--cost)",
+            },
+            animation: {
+                openSideBar: "openSideBar 0.2s linear forwards 1",
             },
         },
     },
     plugins: [require("flowbite/plugin")],
 };
 export default config;
-

@@ -47,6 +47,26 @@ export default function OperationStateToast({
     );
 }
 
+const createOperationToast =
+    (isSuccess: boolean) =>
+    (title: ReactNode, content: ReactNode, retry?: () => any) => {
+        toast.custom(
+            (t) => (
+                <OperationStateToast
+                    isSuccess={isSuccess}
+                    title={title}
+                    content={content}
+                    t={t}
+                    retry={retry}
+                />
+            ),
+            { duration: 3000 },
+        );
+    };
+
+export const createSuccessToast = createOperationToast(true);
+export const createFailToast = createOperationToast(false);
+
 type PropsType = {
     isSuccess: boolean;
     t?: Toast;

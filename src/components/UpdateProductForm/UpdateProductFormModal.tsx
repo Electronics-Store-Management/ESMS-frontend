@@ -1,5 +1,4 @@
 import { ModalStateContext } from "@/contexts/ModalContext";
-import Product from "@/types/entity/Product";
 import { Modal } from "flowbite-react";
 import { useContext } from "react";
 import UpdateProductForm from "./UpdateProductForm";
@@ -24,16 +23,18 @@ export function useUpdateProductModal() {
 }
 
 export default function UpdateProductFormModal() {
-    const {
-        isUpdateProductModalOpen,
-        productId,
-        closeUpdateProductModal,
-    } = useUpdateProductModal();
+    const { isUpdateProductModalOpen, productId, closeUpdateProductModal } =
+        useUpdateProductModal();
 
     return (
         <Modal
-            theme={{ content: { inner: " rounded-2xl" } }}
-            size="3xl"
+            theme={{
+                content: {
+                    base: "relative h-full w-full p-0 sm:p-4 md:h-auto",
+                    inner: "relative rounded-none sm:rounded-lg bg-white shadow dark:bg-gray-700 flex flex-col max-h-[90vh]",
+                },
+            }}
+            size="4xl"
             show={isUpdateProductModalOpen}
             onClose={closeUpdateProductModal}
         >

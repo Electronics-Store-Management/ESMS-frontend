@@ -1,12 +1,11 @@
 import viewCategoryList from "@/api/category/viewCategoryList.api";
+import SEARCH_PARAMS from "@/constants/searchParams";
 import Category from "@/types/entity/Category";
+import withQuery from "@/utils/withQuery";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 import { useQuery } from "react-query";
 import Filter from "../Filter/Filter";
-import { usePathname, useRouter } from "next/navigation";
-import withQuery from "@/utils/withQuery";
-import SEARCH_PARAMS from "@/constants/searchParams";
-import { useSearchParams } from "next/navigation";
 
 export default function CategoryFilter({
     onItemChange = () => {},
@@ -47,4 +46,3 @@ type PropTypes = { onItemChange?: (item: string) => any } & Omit<
     React.ComponentPropsWithoutRef<"div">,
     "onClick"
 >;
-

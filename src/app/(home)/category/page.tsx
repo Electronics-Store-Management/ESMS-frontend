@@ -13,11 +13,13 @@ import DataTable from "@/components/DataTable/DataTable";
 import CategorySearch from "@/components/CategorySearch/CategorySearch";
 import { useDeleteCategoryMutation } from "@/api/category/deleteCategory.api";
 import { useUpdateCategoryModal } from "@/components/UpdateCategoryForm/UpdateCategoryFormModal";
+import FilterBadge from "@/components/FilterBadge/FilterBadge";
+import { usePermission } from "@/hooks/usePermission";
 
 export default function Page() {
     const searchParams = useSearchParams();
 
-    const categoryKeyword = searchParams.get(SEARCH_PARAMS.name) || "";
+    const categoryKeyword = searchParams.get(SEARCH_PARAMS.categoryName) || "";
 
     const { openCreateCategoryModal } = useCreateCategoryModal();
     const { openUpdateCategoryModal } = useUpdateCategoryModal();
@@ -33,47 +35,56 @@ export default function Page() {
 
     const deleteCategoryMutation = useDeleteCategoryMutation(refetch);
 
-    return (
-        <div className="grid grid-cols-4 gap-5">
-            <div></div>
-            <div className="col-span-2">
-                <CategorySearch className="w-full mb-8" />
-                <p className="text-yellow-500 text-sm font-semibold mb-4">
-                    {data?.length} items
-                </p>
-                <DataTable
-                    data={data || []}
-                    isLoading={isLoading}
-                    onDelete={(category) => {
-                        openClaimModal(
-                            <>
-                                Do you want to delete category{" "}
-                                <span>{category.name}</span>
-                            </>,
-                            (confirm) =>
-                                confirm &&
-                                deleteCategoryMutation.mutate(category),
-                        );
-                    }}
-                    onEdit={(category) => {
-                        openUpdateCategoryModal(category.id, refetch);
-                    }}
-                    pick={{
-                        name: { title: "Name" },
-                    }}
-                />
-            </div>
+    const isAllowedCreate = usePermission("CATEGORY", ["CREATE"]);
 
-            <div className="flex justify-end items-start">
-                <Button
-                    size="md"
-                    onClick={() => openCreateCategoryModal(refetch)}
-                >
-                    <HiPlus className=" w-4 h-4 mr-2" />
-                    New category
-                </Button>
+    return (
+        <div className="w-full h-full flex flex-col overflow-auto">
+            <div className="grid grid-cols-4 gap-5">
+                <div></div>
+                <div className="col-span-2">
+                    <CategorySearch className="w-full mb-4" />
+                    <FilterBadge
+                        title={"Category name"}
+                        searchParamName={SEARCH_PARAMS.categoryName}
+                        type={"search"}
+                        className=" mb-6"
+                    />
+                    <DataTable
+                        data={data || []}
+                        entityType="CATEGORY"
+                        isLoading={isLoading}
+                        onDelete={(category) => {
+                            openClaimModal(
+                                <>
+                                    Do you want to delete category{" "}
+                                    <span>{category.name}</span>
+                                </>,
+                                (confirm) =>
+                                    confirm &&
+                                    deleteCategoryMutation.mutate(category),
+                            );
+                        }}
+                        onEdit={(category) => {
+                            openUpdateCategoryModal(category.id, refetch);
+                        }}
+                        pick={{
+                            name: { title: "Name" },
+                        }}
+                    />
+                </div>
+
+                <div className="flex justify-end items-start">
+                    {isAllowedCreate ? (
+                        <Button
+                            size="md"
+                            onClick={() => openCreateCategoryModal(refetch)}
+                        >
+                            <HiPlus className=" w-4 h-4 mr-2" />
+                            New category
+                        </Button>
+                    ) : null}
+                </div>
             </div>
         </div>
     );
 }
-

@@ -59,7 +59,6 @@ type PropTypes = React.ComponentPropsWithRef<"div"> & {
     onImportBillCodeSearchChange?: (keyword: string) => any;
     onSearch?: () => any;
     isImportBillLoading?: boolean;
-    importBills?: ImportBill[];
     className?: string;
 };
 
@@ -75,4 +74,3 @@ const textInputTheme: CustomFlowbiteTheme["textInput"] = {
 };
 
 export default ImportBillSearchUI;
-

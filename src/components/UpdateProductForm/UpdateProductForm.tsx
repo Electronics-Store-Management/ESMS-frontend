@@ -73,7 +73,7 @@ export default function UpdateProductForm({ productId }: PropTypes) {
     return (
         <>
             {isProductLoading ? (
-                <Loading />
+                <Loading className="p-8" />
             ) : (
                 <UpdateProductFormUI
                     categories={categories}

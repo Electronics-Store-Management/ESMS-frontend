@@ -1,4 +1,4 @@
-:root {
+[data-theme="light"] {
     --white: #ffffff;
     --transparent-hover: #364b4410;
 
@@ -97,6 +97,9 @@
     --line-grey01: var(--secondary-200);
     --line-grey02: var(--secondary-300);
     --line-blue: var(--primary-600);
+
+    --revenue: var(--primary-500);
+    --cost: var(--yellow-400);
 
     --background: #ffffff;
     --background-hover: #f4f4f4;

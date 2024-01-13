@@ -61,10 +61,10 @@ export default function UpdateStaffFormUI({
                             control={control}
                             name="role"
                             title="Role"
-                            defaultValue={{ name: staff?.role }}
+                            defaultValue={staff?.role}
                             items={[
-                                { name: "Staff", id: "ADMIN" },
-                                { name: "Admin", id: "STAFF" },
+                                { name: "Admin", id: "ADMIN" },
+                                { name: "Staff", id: "STAFF" },
                             ]}
                             choseValue={getValues("role")}
                             onValueChange={(value) => setValue("role", value)}

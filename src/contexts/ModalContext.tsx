@@ -2,11 +2,15 @@
 
 import ClaimModal from "@/components/ClaimModal/ClaimModal";
 import CreateCategoryFormModal from "@/components/CreateCategoryForm/CreateCategoryFormModal";
+import CreateCustomerFormModal from "@/components/CreateCustomerForm/CreateCustomerFormModal";
 import CreateProductFormModal from "@/components/CreateProductForm/CreateProductFormModal";
 import CreateStaffFormModal from "@/components/CreateStaffForm/CreateStaffFormModal";
+import CreateSupplierFormModal from "@/components/CreateSupplierForm/CreateSupplierFormModal";
 import UpdateCategoryFormModal from "@/components/UpdateCategoryForm/UpdateCategoryFormModal";
+import UpdateCustomerFormModal from "@/components/UpdateCustomerForm/UpdateCustomerFormModal";
 import UpdateProductFormModal from "@/components/UpdateProductForm/UpdateProductFormModal";
 import UpdateStaffFormModal from "@/components/UpdateStaffForm/UpdateStaffFormModal";
+import UpdateSupplierFormModal from "@/components/UpdateSupplierForm/UpdateSupplierFormModal";
 import { ReactNodeChildren } from "@/types/ReactNodeChildren";
 import { ReactNode, createContext, useState } from "react";
 
@@ -26,11 +30,17 @@ export function ModalProvider({ children }: ReactNodeChildren) {
         >
             {children}
             <CreateProductFormModal />
-            <UpdateProductFormModal />
             <CreateCategoryFormModal />
-            <UpdateCategoryFormModal />
             <CreateStaffFormModal />
+            <CreateSupplierFormModal />
+            <CreateCustomerFormModal />
+
+            <UpdateProductFormModal />
+            <UpdateCategoryFormModal />
             <UpdateStaffFormModal />
+            <UpdateSupplierFormModal />
+            <UpdateCustomerFormModal />
+
             <ClaimModal />
         </ModalStateContext.Provider>
     );
@@ -38,11 +48,16 @@ export function ModalProvider({ children }: ReactNodeChildren) {
 
 export const defaultModalStateValue = {
     addProduct: { isOpen: false },
-    addStaff: { isOpen: false },
-    updateStaff: { isOpen: false },
-    updateProduct: { isOpen: false },
     addCategory: { isOpen: false },
+    addStaff: { isOpen: false },
+    addSupplier: { isOpen: false },
+    addCustomer: { isOpen: false },
+
+    updateProduct: { isOpen: false },
     updateCategory: { isOpen: false },
+    updateStaff: { isOpen: false },
+    updateSupplier: { isOpen: false },
+    updateCustomer: { isOpen: false },
     claim: { isOpen: false },
 };
 
@@ -60,11 +75,17 @@ export type IModalStateContext = {
 
 export type IModalState = {
     addProduct: IModalStateItem;
-    addStaff: IModalStateItem;
-    updateStaff: IModalStateItem & { staffId?: string };
-    updateProduct: IModalStateItem & { productId?: string };
     addCategory: IModalStateItem;
+    addStaff: IModalStateItem;
+    addSupplier: IModalStateItem;
+    addCustomer: IModalStateItem;
+
+    updateProduct: IModalStateItem & { productId?: string };
     updateCategory: IModalStateItem & { categoryId?: string };
+    updateStaff: IModalStateItem & { staffId?: string };
+    updateSupplier: IModalStateItem & { supplierId?: string };
+    updateCustomer: IModalStateItem & { customerId?: string };
+
     claim: IModalStateItem & {
         message?: ReactNode;
         onResponse?: (confirm: boolean) => any;

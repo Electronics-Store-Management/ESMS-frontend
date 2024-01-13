@@ -1,10 +1,9 @@
 import { ReactNodeChildren } from "@/types/ReactNodeChildren";
-import FONT from "../../utils/fontFamily";
-import { CustomFlowbiteTheme, Dropdown } from "flowbite-react";
-import { Controller } from "react-hook-form";
-import React, { useState } from "react";
 import BaseEntity from "@/types/entity/BaseEntity";
-import Category from "@/types/entity/Category";
+import { CustomFlowbiteTheme, Dropdown, DropdownItem } from "flowbite-react";
+import React, { useState } from "react";
+import { Controller } from "react-hook-form";
+import FONT from "../../utils/fontFamily";
 
 export default function ControllerSelectInput<
     T extends BaseEntity & { name: string },
@@ -20,7 +19,7 @@ export default function ControllerSelectInput<
     className,
     ...props
 }: PropTypes<T>) {
-    const [selected, setSelected] = useState<string>(defaultValue?.name || "");
+    const [selected, setSelected] = useState<string>(defaultValue || "");
 
     return (
         <div className={` py-[10px] ${className}`} {...props}>
@@ -44,7 +43,7 @@ export default function ControllerSelectInput<
                         }
                         dismissOnClick={true}
                     >
-                        <Dropdown.Item
+                        <DropdownItem
                             onClick={() => {
                                 onValueChange("");
                                 setSelected("");
@@ -53,9 +52,9 @@ export default function ControllerSelectInput<
                             <p className=" font-normal text-secondary-600">
                                 Not choose
                             </p>
-                        </Dropdown.Item>
+                        </DropdownItem>
                         {items?.map((value) => (
-                            <Dropdown.Item
+                            <DropdownItem
                                 key={value.id}
                                 onClick={() => {
                                     onValueChange(value?.id);
@@ -63,7 +62,7 @@ export default function ControllerSelectInput<
                                 }}
                             >
                                 {value.name}
-                            </Dropdown.Item>
+                            </DropdownItem>
                         ))}
                     </Dropdown>
                 )}
@@ -91,8 +90,8 @@ const dropdownTheme: CustomFlowbiteTheme["dropdown"] = {
         header: "block py-2 px-4 text-sm text-gray-700 dark:text-gray-200",
         hidden: "invisible opacity-0",
         item: {
-            container: " w-[180px]",
-            base: "flex flex-row-reverse items-center justify-between py-2 px-4 text-sm text-secondary-800 cursor-pointer w-full hover:bg-secondary-100 focus:bg-secondary-100 ",
+            container: "",
+            base: "flex flex-row items-center justify-between py-2 px-4 text-sm text-secondary-800 cursor-pointer w-full hover:bg-secondary-100 focus:bg-secondary-100 ",
             icon: "mr-2 justify-self-end h-5 w-5",
         },
         style: {
@@ -116,5 +115,5 @@ type PropTypes<T> = Omit<
         choseValue?: string;
         isLoading?: boolean;
         onValueChange?: (value?: string) => any;
-        defaultValue?: any;
+        defaultValue?: string;
     };

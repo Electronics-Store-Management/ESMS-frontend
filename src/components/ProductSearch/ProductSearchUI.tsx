@@ -6,6 +6,7 @@ import {
     TextInput as TextInputFlowbite,
 } from "flowbite-react";
 import { HiOutlineCheck, HiOutlineSearch } from "react-icons/hi";
+import { BiSolidCategory } from "react-icons/bi";
 
 import Category from "@/types/entity/Category";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -14,6 +15,7 @@ import { useDeepCompareEffect } from "react-use";
 import SEARCH_PARAMS from "../../constants/searchParams";
 import withQuery from "../../utils/withQuery";
 import Button from "../Button/Button";
+import useScreen from "@/hooks/useScreen";
 
 export default function ProductSearchUI({
     onCategoryChange = () => {},
@@ -36,12 +38,23 @@ export default function ProductSearchUI({
         onCategoryChange(category);
     }, [category]);
 
+    const screen = useScreen();
+    const isMobile = !screen("sm");
+
     return (
         <div {...props}>
-            <ButtonFlowbite.Group>
+            <ButtonFlowbite.Group className=" w-full">
                 <Dropdown
                     theme={dropdownTheme}
-                    label={category?.name || "All categories"}
+                    label={
+                        screen("sm") ? (
+                            <p className=" text-primary-700">
+                                {category?.name || "All categories"}
+                            </p>
+                        ) : (
+                            <BiSolidCategory className=" text-primary-700" />
+                        )
+                    }
                     dismissOnClick={true}
                     onClick={onCategoryDropdownClicked}
                     size="sm"
@@ -86,11 +99,11 @@ export default function ProductSearchUI({
                 <TextInputFlowbite
                     ref={productNameRef}
                     theme={textInputTheme}
+                    sizing={screen("sm") ? "md" : "sm"}
                     defaultValue={
                         searchParams.get(SEARCH_PARAMS.productName) || ""
                     }
                     placeholder="Enter product name here..."
-                    sizing="md"
                 />
                 <Button
                     size="sm"
@@ -114,8 +127,8 @@ export default function ProductSearchUI({
 }
 
 const dropdownTheme: CustomFlowbiteTheme["dropdown"] = {
-    arrowIcon: "ml-2 h-4 w-4 text-secondary-950",
-    content: "py-1 text-secondary-900 focus:outline-none",
+    arrowIcon: "ml-2 h-4 w-4 text-primary-700",
+    content: "py-1 text-secondary-600 focus:outline-none",
     floating: {
         animation: "transition-opacity",
         arrow: {
@@ -146,10 +159,14 @@ const dropdownTheme: CustomFlowbiteTheme["dropdown"] = {
 };
 
 const textInputTheme: CustomFlowbiteTheme["textInput"] = {
+    base: "flex-1",
     field: {
         input: {
             withAddon: {
-                off: "rounded-none w-[240px]",
+                off: "rounded-none w-full",
+            },
+            sizes: {
+                sm: "p-2 text-xs",
             },
         },
     },

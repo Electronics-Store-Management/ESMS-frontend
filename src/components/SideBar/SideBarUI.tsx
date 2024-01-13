@@ -331,13 +331,11 @@ export default function SideBarUI({
                                                 {staffInfo.email}
                                             </p>
                                         </Dropdown.Header>
-                                        <Dropdown.Item>
-                                            <Link href={"/home"}>
-                                                Dashboard
-                                            </Link>
+                                        <Dropdown.Item href="/home">
+                                            Dashboard
                                         </Dropdown.Item>
-                                        <Dropdown.Item>
-                                            <Link href={"/setting"}>Settings</Link>
+                                        <Dropdown.Item href="/setting">
+                                            Settings
                                         </Dropdown.Item>
                                         <Dropdown.Divider />
                                         <Dropdown.Item

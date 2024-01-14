@@ -81,7 +81,7 @@ export default function CreateProductFormUI({
                     onSubmit={handleSubmit(onSubmitData)}
                     className=" mt-5 sm:mt-0 overflow-auto"
                 >
-                    <div className=" grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div className=" flex flex-col lg:grid lg:grid-cols-2 gap-5 mt-5">
                         <div>
                             <ControllerTextInput
                                 control={control}
@@ -227,62 +227,71 @@ export default function CreateProductFormUI({
                                                         key={index}
                                                         className=" my-4 sm:my-2 w-full flex flex-col sm:flex-row gap-3"
                                                     >
-                                                        <div className=" flex flex-row gap-3"> <Dropdown
-                                                            theme={
-                                                                dropdownTheme
-                                                            }
-                                                            label={type}
-                                                            dismissOnClick={
-                                                                true
-                                                            }
-                                                            size={"sm"}
-                                                            className=" w-48"
-                                                        >
-                                                            {[
-                                                                "text",
-                                                                "email",
-                                                                "date",
-                                                                "number",
-                                                                "color",
-                                                            ]?.map((type) => (
-                                                                <DropdownItem
-                                                                    key={type}
-                                                                    onClick={() => {
-                                                                        onChange(
-                                                                            onChangeSpec(
-                                                                                index,
-                                                                                name,
-                                                                                value,
-                                                                                type,
-                                                                            ),
-                                                                        );
-                                                                    }}
-                                                                >
-                                                                    {type}
-                                                                </DropdownItem>
-                                                            ))}
-                                                        </Dropdown>
-                                                        <TextInput
-                                                            type="text"
-                                                            className=" w-80 text-secondary-900"
-                                                            placeholder="Name"
-                                                            value={name}
-                                                            onChange={(
-                                                                e: any,
-                                                            ) => {
-                                                                onChange(
-                                                                    onChangeSpec(
-                                                                        index,
-                                                                        e.target
-                                                                            .value,
-                                                                        value,
-                                                                        type,
+                                                        <div className=" flex flex-row gap-3">
+                                                            {" "}
+                                                            <Dropdown
+                                                                theme={
+                                                                    dropdownTheme
+                                                                }
+                                                                label={type}
+                                                                dismissOnClick={
+                                                                    true
+                                                                }
+                                                                size={"sm"}
+                                                                className=" w-48"
+                                                            >
+                                                                {[
+                                                                    "text",
+                                                                    "email",
+                                                                    "date",
+                                                                    "number",
+                                                                    "color",
+                                                                ]?.map(
+                                                                    (type) => (
+                                                                        <DropdownItem
+                                                                            key={
+                                                                                type
+                                                                            }
+                                                                            onClick={() => {
+                                                                                onChange(
+                                                                                    onChangeSpec(
+                                                                                        index,
+                                                                                        name,
+                                                                                        value,
+                                                                                        type,
+                                                                                    ),
+                                                                                );
+                                                                            }}
+                                                                        >
+                                                                            {
+                                                                                type
+                                                                            }
+                                                                        </DropdownItem>
                                                                     ),
-                                                                );
-                                                            }}
-                                                            name="Name"
-                                                        /></div>
-                                                       
+                                                                )}
+                                                            </Dropdown>
+                                                            <TextInput
+                                                                type="text"
+                                                                className=" w-80 text-secondary-900"
+                                                                placeholder="Name"
+                                                                value={name}
+                                                                onChange={(
+                                                                    e: any,
+                                                                ) => {
+                                                                    onChange(
+                                                                        onChangeSpec(
+                                                                            index,
+                                                                            e
+                                                                                .target
+                                                                                .value,
+                                                                            value,
+                                                                            type,
+                                                                        ),
+                                                                    );
+                                                                }}
+                                                                name="Name"
+                                                            />
+                                                        </div>
 
                                                         <div className=" flex-1 flex gap-3 flex-row">
                                                             <TextInput

@@ -31,8 +31,12 @@ export default function ControllerTextarea({
                     <Textarea
                         id={id}
                         type={type}
-                        className=" text-secondary-900"
-                        title={title}
+                        className=" bg-background-secondary text-secondary-900"
+                        title={
+                            <p className=" text-secondary-900 font-medium">
+                                {title}
+                            </p>
+                        }
                         icon={icon}
                         rows={rows}
                         defaultValue={defaultValue}

@@ -34,7 +34,7 @@ export default function CreateCustomerFormUI({
                 Add Customer
             </h1>
             <form onSubmit={handleSubmit(onSubmitData)}>
-                <div className=" grid grid-cols-1 gap-5 mt-5">
+                <div className=" flex flex-col lg:grid lg:grid-cols-2 gap-5 mt-5">
                     <ControllerTextInput
                         control={control}
                         name="name"
@@ -61,7 +61,11 @@ export default function CreateCustomerFormUI({
                     />
                     <div>
                         <div className="mb-2 block">
-                            <Label htmlFor="address" value="Address" />
+                            <Label
+                                className=" text-secondary-900 font-semibold"
+                                htmlFor="address"
+                                value="Address"
+                            />
                         </div>
                         <ControllerTextarea
                             id="address"

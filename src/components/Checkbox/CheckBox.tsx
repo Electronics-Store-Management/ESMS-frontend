@@ -17,7 +17,7 @@ export default function CheckBox({
                 defaultChecked={defaultChecked}
                 {...props}
             />
-            <Label htmlFor={id} className="flex">
+            <Label htmlFor={id} className="flex text-secondary-900">
                 {children}
             </Label>
         </div>

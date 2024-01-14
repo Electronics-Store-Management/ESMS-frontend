@@ -43,7 +43,7 @@ export default function UpdateStaffFormUI({
                 Update staff profile
             </h1>
             <form onSubmit={handleSubmit(onSubmitData)}>
-                <div className=" grid grid-cols-2 gap-5">
+                <div className=" flex flex-col-reverse lg:grid lg:grid-cols-2 gap-5 mt-5">
                     <div>
                         <ControllerTextInput
                             control={control}

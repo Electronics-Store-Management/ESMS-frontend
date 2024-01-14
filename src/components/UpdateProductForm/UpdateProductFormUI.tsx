@@ -78,7 +78,7 @@ export default function UpdateProductFormUI({
                     onSubmit={handleSubmit(onSubmitData)}
                     className="  mt-5 sm:mt-0 overflow-auto"
                 >
-                    <div className="  grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div className=" flex flex-col lg:grid lg:grid-cols-2 gap-5 mt-5">
                         <div>
                             <ControllerTextInput
                                 control={control}

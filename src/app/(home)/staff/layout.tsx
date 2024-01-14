@@ -97,29 +97,30 @@ export default function Layout({ children }: ReactNodeChildren) {
                         );
                     }}
                     pick={{
-                        name: { title: "Name" },
+                        name: { title: "Name", className: "min-w-[150px]" },
                         ...(pathname.split("/").at(-1) != "staff"
                             ? {}
                             : {
                                   email: {
                                       title: "Email",
                                       className:
-                                          " font-normal text-secondary-500",
+                                          " font-normal text-secondary-500 min-w-[150px]",
                                   },
                                   phone: {
                                       title: "Phone number",
                                       className:
-                                          " font-normal text-secondary-500",
+                                          " font-normal text-secondary-500 min-w-[100px]",
                                   },
                                   citizenId: {
                                       title: "Citizen ID",
                                       className:
-                                          " font-normal text-secondary-500",
+                                          " font-normal text-secondary-500 min-w-[100px]",
                                   },
                               }),
                         lastOnline: {
                             title: "Last online",
-                            className: " font-normal text-secondary-500",
+                            className:
+                                " font-normal text-secondary-500 min-w-[150px]",
                             mapper: FORMATTER.toShortDate,
                         },
                     }}

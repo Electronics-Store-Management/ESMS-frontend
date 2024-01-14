@@ -36,7 +36,7 @@ export default function CreateSupplierFormUI({
                 Add supplier
             </h1>
             <form onSubmit={handleSubmit(onSubmitData)}>
-                <div className=" grid grid-cols-2 gap-5 mt-5">
+                <div className=" flex flex-col lg:grid lg:grid-cols-2 gap-5 mt-5">
                     <div>
                         <ControllerTextInput
                             control={control}
@@ -76,7 +76,11 @@ export default function CreateSupplierFormUI({
                         />
                         <div>
                             <div className="mb-2 block">
-                                <Label htmlFor="address" value="Address" />
+                                <Label
+                                    className=" text-secondary-900 font-semibold"
+                                    htmlFor="address"
+                                    value="Address"
+                                />
                             </div>
                             <ControllerTextarea
                                 id="address"
@@ -96,7 +100,11 @@ export default function CreateSupplierFormUI({
                     </div>
                     <div className="">
                         <div className="mb-2 block">
-                            <Label htmlFor="note" value="Note" />
+                            <Label
+                                className=" text-secondary-900 font-semibold"
+                                htmlFor="note"
+                                value="Note"
+                            />
                         </div>
                         <ControllerTextarea
                             id="note"

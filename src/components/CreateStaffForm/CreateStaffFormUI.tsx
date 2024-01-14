@@ -37,7 +37,7 @@ export default function CreateStaffFormUI({
                 Add new staff
             </h1>
             <form onSubmit={handleSubmit(onSubmitData)}>
-                <div className=" grid grid-cols-2 gap-5">
+                <div className=" flex flex-col-reverse lg:grid lg:grid-cols-2 gap-5">
                     <div>
                         <ControllerTextInput
                             control={control}

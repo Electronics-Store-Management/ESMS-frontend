@@ -72,7 +72,7 @@ export default function SignIn() {
             //         "linear-gradient(106deg, rgba(236, 227, 206, 0.21) 12.98%, #739072 71.82%, #4F6F52 100%)",
             // }}
         >
-            <div className=" w-full sm:w-max sm:min-w-[550px] sm:rounded-3xl bg-white grid place-items-center">
+            <div className=" w-full sm:w-max sm:min-w-[550px] sm:rounded-3xl bg-background-secondary grid place-items-center">
                 <div className=" w-full px-6 py-10 sm:px-20 sm:py-16">
                     <div className="relative w-fit mx-auto flex flex-col items-center gap-5 sm:gap-0 sm:flex-row">
                         <Image
@@ -86,14 +86,14 @@ export default function SignIn() {
                             Electronic Store
                         </h1>
                         <p
-                            className={`absolute right-16 bottom-8 sm:top-5 translate-x-full text-2xl sm:text-4xl ${yesteryear.className}`}
-                            style={{
-                                background:
-                                    "linear-gradient(90deg, #16B6FA 0%, #DC02FF 100%)",
-                                backgroundClip: "text",
-                                WebkitBackgroundClip: "text",
-                                WebkitTextFillColor: "transparent",
-                            }}
+                            className={`absolute right-16 bottom-8 sm:top-5 translate-x-full text-2xl sm:text-4xl text-primary-500 ${yesteryear.className}`}
+                            // style={{
+                            //     background:
+                            //         "linear-gradient(90deg, #16B6FA 0%, #DC02FF 100%)",
+                            //     backgroundClip: "text",
+                            //     WebkitBackgroundClip: "text",
+                            //     WebkitTextFillColor: "transparent",
+                            // }}
                         >
                             Management
                         </p>

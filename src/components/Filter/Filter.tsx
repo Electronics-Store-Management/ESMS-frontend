@@ -22,7 +22,7 @@ export default function Filter({
             {...props}
         >
             <p
-                className={`${FONT.primary.className} font-bold text-sm text-secondary-900`}
+                className={`${FONT.primary.className} font-semibold text-sm text-secondary-900`}
             >
                 {title}
             </p>
@@ -53,7 +53,9 @@ export default function Filter({
                                 key={value}
                                 icon={value === choosen ? HiOutlineCheck : null}
                             >
-                                <p className=" w-full text-start">{value}</p>
+                                <p className=" w-full text-secondary-900 text-start">
+                                    {value}
+                                </p>
                             </Dropdown.Item>
                         ))}
                         <Dropdown.Item
@@ -61,7 +63,7 @@ export default function Filter({
                             onClick={() => onItemChange(undefined || "")}
                             icon={choosen ? null : HiOutlineCheck}
                         >
-                            <p className="  w-full text-start font-medium text-primary-300">
+                            <p className="  w-full text-start font-semibold text-primary-300">
                                 All
                             </p>
                         </Dropdown.Item>
@@ -74,7 +76,8 @@ export default function Filter({
 
 const dropdownTheme: CustomFlowbiteTheme["dropdown"] = {
     arrowIcon: "ml-2 h-4 w-4 text-secondary-950",
-    content: "py-1 text-secondary-900 focus:outline-none",
+    content:
+        "py-1 text-secondary-900 bg-background-secondary focus:outline-none",
     floating: {
         animation: "transition-opacity",
         arrow: {
@@ -85,19 +88,19 @@ const dropdownTheme: CustomFlowbiteTheme["dropdown"] = {
             },
             placement: "-4px",
         },
-        base: "z-10 w-fit rounded divide-y divide-gray-100 shadow focus:outline-none",
-        content: "py-1 text-sm text-gray-700",
-        divider: "my-1 h-px bg-gray-100 dark:bg-gray-600",
-        header: "block py-2 px-4 text-sm text-gray-700 dark:text-gray-200",
+        base: "z-10 w-fit rounded bg-background-secondary divide-y divide-secondary-100 shadow focus:outline-none",
+        content: "py-1 text-sm text-secondary-700",
+        divider: "my-1 h-px bg-secondary-100",
+        header: "block py-2 px-4 text-sm text-secondary-700",
         hidden: "invisible opacity-0",
         item: {
             container: " w-[180px]",
-            base: "flex flex-row-reverse items-center justify-between py-2 px-4 text-sm text-secondary-800 cursor-pointer w-full hover:bg-secondary-100 focus:bg-secondary-100 ",
+            base: "flex flex-row-reverse items-center justify-between py-2 px-4 text-sm text-secondary-800 cursor-pointer w-full bg-background-secondary hover:bg-secondary-100 focus:bg-secondary-100 ",
             icon: "mr-2 justify-self-end h-5 w-5",
         },
         style: {
-            light: "border border-secondary-200 bg-white text-secondary-900",
-            auto: "border border-secondary-200 bg-white text-secondary-900",
+            light: "border border-secondary-200 bg-background-secondary text-secondary-900",
+            auto: "border border-secondary-200 bg-background-secondary text-secondary-900",
         },
         target: " max-w-[250px] w-max border-2 border-surface-grey02 text-ellipsis flex bg-surface-grey01 text-secondary-950 transition duration-200 enabled:hover:bg-primary-200 enabled:active:bg-primary-300",
     },

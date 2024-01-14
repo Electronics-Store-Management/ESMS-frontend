@@ -51,7 +51,7 @@ export default async function Layout({ children }: ReactNodeChildren) {
         <ModalProvider>
             <div className=" w-screen h-screen flex">
                 <SideBar staffInfo={staffInfo} />
-                <div className=" p-5 lg:py-8 lg:pl-10 lg:pr-8 w-full h-screen flex flex-col bg-background-normal overflow-hidden">
+                <div className=" relative p-5 lg:py-8 lg:pl-10 lg:pr-8 w-full h-screen flex flex-col bg-background-normal overflow-hidden">
                     {children}
                 </div>
             </div>

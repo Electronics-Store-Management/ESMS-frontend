@@ -53,71 +53,25 @@ export default function Page() {
 
     return (
         <div className="w-full h-full flex flex-col">
-            {screen("xl") ? (
-                <div className=" w-full grid xl:grid-cols-2">
-                    <ProductSearch className="" />
-                    <div className=" flex justify-end gap-8">
-                        <CategoryFilter className="" />
-                        <PriceRangeFilter />
-                        {isAllowedCreate ? (
-                            <Button
-                                size="sm"
-                                onClick={() => openCreateProductModal(refetch)}
-                            >
-                                <HiPlus className=" w-4 h-4 mr-2" />
-                                Add product
-                            </Button>
-                        ) : null}
-                    </div>
+            <div className=" w-full grid grid-cols-[repeat(12,1fr)] grid-rows-3 sm:grid-rows-2 gap-5 place-items-stretch">
+                <ProductSearch className=" col-span-12 row-span-1 md:col-span-6 lg:col-span-6" />
+                <div className=" col-span-11 xl:col-span-4 sm:col-start-1 xl:col-start-7 row-start-2 sm:row-start-2 xl:row-start-1 row-span-2 sm:row-span-1 xl:row-span-1 flex flex-col flex-wrap sm:flex-row gap-5">
+                    <CategoryFilter className="" />
+                    <PriceRangeFilter className="" />
                 </div>
-            ) : screen("sm") ? (
-                <div className=" w-full flex flex-col gap-5">
-                    <div className=" flex justify-between">
-                        <ProductSearch className="" />
-                        {isAllowedCreate ? (
-                            <Button
-                                size="sm"
-                                onClick={() => openCreateProductModal(refetch)}
-                            >
-                                <HiPlus className=" w-4 h-4 mr-2" />
-                                Add product
-                            </Button>
-                        ) : null}
-                    </div>
-                    <div className=" flex justify-start gap-5">
-                        <CategoryFilter className="" />
-                        <PriceRangeFilter />
-                    </div>
-                </div>
-            ) : (
-                <div className=" w-full flex flex-col gap-5">
-                    <div className="mb-1 flex justify-between">
-                        <h1 className={` text-3xl font-semibold`}>
-                            Product list
-                        </h1>
-                        <MenuButton />
-                    </div>
-                    <ProductSearch className=" w-full" />
-                    <div className=" grid grid-cols-3 gap-8 items-end">
-                        <div className=" col-span-2 ml-auto grid items-end gap-3">
-                            <CategoryFilter className="" />
-                            <PriceRangeFilter />
+                {isAllowedCreate ? (
+                    <Button
+                        size="sm"
+                        onClick={() => openCreateProductModal(refetch)}
+                        className=" place-items-stretch col-span-1 md:col-span-3 sm:col-span-3 col-start-12 md:col-start-10 sm:col-start-10 row-start-3 sm:row-start-2 md:row-start-1 lg:col-start-11"
+                    >
+                        <div className="flex gap-2 items-center">
+                            <HiPlus className=" w-4 h-4" />
+                            {screen("sm") ? "Add product" : null}
                         </div>
-                        {isAllowedCreate ? (
-                            <div className=" ml-auto">
-                                <Button
-                                    size="sm"
-                                    onClick={() =>
-                                        openCreateProductModal(refetch)
-                                    }
-                                >
-                                    <HiPlus className=" w-4 h-4 mr-2" />
-                                </Button>
-                            </div>
-                        ) : null}
-                    </div>
-                </div>
-            )}
+                    </Button>
+                ) : null}
+            </div>
             <div className=" flex flex-wrap gap-5 mt-5">
                 <FilterBadge
                     title="Product name"

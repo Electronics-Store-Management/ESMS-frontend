@@ -1,13 +1,11 @@
 "use client";
 
 import BaseEntity from "@/types/entity/BaseEntity";
-import { CustomFlowbiteTheme, Dropdown, Table } from "flowbite-react";
-import { HiOutlineDotsVertical, HiPencil, HiTrash } from "react-icons/hi";
-import Button from "../Button/Button";
+import { EntityType } from "@/types/entity/PermissionResponse";
 import FONT from "@/utils/fontFamily";
+import { CustomFlowbiteTheme, Table } from "flowbite-react";
 import TableSketon from "../TableSkeleton/TableSkeleton";
 import { Row } from "./Row";
-import { EntityType } from "@/types/entity/PermissionResponse";
 
 export default function DataTable<T extends Object & BaseEntity>({
     data,
@@ -78,26 +76,25 @@ export default function DataTable<T extends Object & BaseEntity>({
 export const tableTheme: CustomFlowbiteTheme["table"] = {
     root: {
         base: "w-fit sm:w-full text-left rounded-lg text-sm text-secondary-500",
-        shadow: "absolute bg-white dark:bg-black w-full h-full top-0 left-0 rounded-lg drop-shadow-md -z-10",
+        shadow: "absolute bg-background-secondary dark:bg-black w-full h-full top-0 left-0 rounded-lg drop-shadow-md -z-10",
         wrapper: "relative ",
     },
     body: {
-        base: "group/body",
+        base: "group/body bg-background-secondary",
         cell: {
-            base: ` group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg px-4 py-4 font-normal text-secondary-900 ${FONT.primary.className}`,
+            base: ` group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg p-2 sm:p-3 md:p-4 font-normal text-secondary-900 ${FONT.primary.className}`,
         },
     },
     head: {
-        base: "group/head text-xs border-b-2 border-secondary-200 uppercase text-gray-700",
+        base: "group/head bg-background-secondary text-xs border-b-2 border-secondary-200 uppercase text-secondary-700",
         cell: {
-            base: "group-first/head:first:rounded-tl-lg border-b-[1px] border-secondary-200  group-first/head:last:rounded-tr-lg bg-gray-50 dark:bg-gray-700 px-4 py-4",
+            base: "  group-first/head:first:rounded-tl-lg border-b-[1px] border-secondary-200  group-first/head:last:rounded-tr-lg p-2 sm:p-3 md:p-4 sm:p-2 md:p-4",
         },
     },
     row: {
-        base: "group/row",
+        base: "group/row bg-background-secondary",
         hovered: "hover:bg-primary-100",
-        striped:
-            "odd:bg-background-normal even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700",
+        striped: "odd:bg-background-secondary even:bg-background-secondary ",
     },
 };
 

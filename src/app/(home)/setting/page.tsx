@@ -64,7 +64,7 @@ export default function Page() {
                                 }
                                 defaultChecked={theme === "system"}
                             >
-                                Use default system
+                                <p className=" text-secondary-900"> Use default system</p>
                             </CheckBox>
                         </div>
                     }

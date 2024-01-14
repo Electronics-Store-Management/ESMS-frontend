@@ -16,6 +16,7 @@ import SEARCH_PARAMS from "../../constants/searchParams";
 import withQuery from "../../utils/withQuery";
 import Button from "../Button/Button";
 import useScreen from "@/hooks/useScreen";
+import MenuButton from "../SideBar/MenuButton";
 
 export default function ProductSearchUI({
     onCategoryChange = () => {},
@@ -39,63 +40,67 @@ export default function ProductSearchUI({
     }, [category]);
 
     const screen = useScreen();
-    const isMobile = !screen("sm");
+    const isMobile = !screen("md");
 
     return (
         <div {...props}>
             <ButtonFlowbite.Group className=" w-full">
-                <Dropdown
-                    theme={dropdownTheme}
-                    label={
-                        screen("sm") ? (
-                            <p className=" text-primary-700">
-                                {category?.name || "All categories"}
-                            </p>
+                {isMobile ? (
+                    <MenuButton className=" bg-secondary-50 px-3 rounded-l-lg rounded-r-none" />
+                ) : (
+                    <Dropdown
+                        theme={dropdownTheme}
+                        label={
+                            screen("sm") ? (
+                                <p className=" text-primary-700">
+                                    {category?.name || "All categories"}
+                                </p>
+                            ) : (
+                                <BiSolidCategory className=" text-primary-700" />
+                            )
+                        }
+                        dismissOnClick={true}
+                        onClick={onCategoryDropdownClicked}
+                        size="sm"
+                    >
+                        {isCategoryLoading ? (
+                            <div className=" my-2 flex gap-2 justify-center items-center">
+                                <Spinner size="sm" />
+                                <p className=" text-sm text-secondary-900">
+                                    Loading...
+                                </p>
+                            </div>
                         ) : (
-                            <BiSolidCategory className=" text-primary-700" />
-                        )
-                    }
-                    dismissOnClick={true}
-                    onClick={onCategoryDropdownClicked}
-                    size="sm"
-                >
-                    {isCategoryLoading ? (
-                        <div className=" my-2 flex gap-2 justify-center items-center">
-                            <Spinner size="sm" />
-                            <p className=" text-sm text-secondary-900">
-                                Loading...
-                            </p>
-                        </div>
-                    ) : (
-                        <>
-                            {categories.map((category_) => (
+                            <>
+                                {categories.map((category_) => (
+                                    <Dropdown.Item
+                                        theme={dropdownTheme?.floating?.item}
+                                        onClick={() => setCategory(category_)}
+                                        key={category_.id}
+                                        icon={
+                                            category?.name === category_.name
+                                                ? HiOutlineCheck
+                                                : null
+                                        }
+                                    >
+                                        <p className=" w-full text-start">
+                                            {category_.name}
+                                        </p>
+                                    </Dropdown.Item>
+                                ))}
                                 <Dropdown.Item
                                     theme={dropdownTheme?.floating?.item}
-                                    onClick={() => setCategory(category_)}
-                                    key={category_.id}
-                                    icon={
-                                        category?.name === category_.name
-                                            ? HiOutlineCheck
-                                            : null
-                                    }
+                                    onClick={() => setCategory(undefined)}
+                                    icon={category ? null : HiOutlineCheck}
                                 >
-                                    <p className=" w-full text-start">
-                                        {category_.name}
+                                    <p className="  w-full text-start font-medium text-primary-300">
+                                        All categories
                                     </p>
                                 </Dropdown.Item>
-                            ))}
-                            <Dropdown.Item
-                                theme={dropdownTheme?.floating?.item}
-                                onClick={() => setCategory(undefined)}
-                                icon={category ? null : HiOutlineCheck}
-                            >
-                                <p className="  w-full text-start font-medium text-primary-300">
-                                    All categories
-                                </p>
-                            </Dropdown.Item>
-                        </>
-                    )}
-                </Dropdown>
+                            </>
+                        )}
+                    </Dropdown>
+                )}
                 <TextInputFlowbite
                     ref={productNameRef}
                     theme={textInputTheme}
@@ -162,11 +167,15 @@ const textInputTheme: CustomFlowbiteTheme["textInput"] = {
     base: "flex-1",
     field: {
         input: {
+            base: " bg-secondary-50",
             withAddon: {
                 off: "rounded-none w-full",
             },
+            colors: {
+                gray: "bg-secondary-50 border-secondary-900 text-secondary-900 focus:border-primary-500 focus:ring-primary-500 placeholder-secondary-500 ",
+            },
             sizes: {
-                sm: "p-2 text-xs",
+                sm: "p-2 text-secondary-900 text-xs",
             },
         },
     },

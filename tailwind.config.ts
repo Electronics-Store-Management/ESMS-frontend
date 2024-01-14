@@ -57,6 +57,7 @@ const config: Config = {
                 line: generateColor("line", ["grey01", "grey02", "blue"]),
                 background: {
                     normal: "var(--background)",
+                    secondary: "var(--background-secondary)",
                     hover: "var(--background-hover)",
                     active: "var(--background-active)",
                 },

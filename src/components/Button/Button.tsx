@@ -50,16 +50,18 @@ export default function Button({
 const getTheme = (isFill: boolean): CustomFlowbiteTheme["button"] => {
     if (isFill)
         return {
+            base: " flex flex-row items-stretch items-center justify-center p-0.5 text-center font-medium relative focus:z-10 focus:outline-none",
             color: {
                 primary:
                     "bg-primary-300 hover:bg-primary-400 focus:ring-primary-100 text-white",
                 secondary:
-                    "bg-white hover:bg-secondary-50 focus:ring-secondary-100 text-secondary-900",
+                    "bg-background-normal hover:bg-secondary-50 focus:ring-secondary-100 text-secondary-900",
                 error: "bg-color-error hover:bg-red-600 focus:ring-red-100 text-white",
             },
         };
     return {
         color: {
+            base: " flex flex-row items-stretch items-center justify-center p-0.5 text-center font-medium relative focus:z-10 focus:outline-none",
             primary:
                 "bg-transparent hover:bg-primary-50 focus:ring-primary-100 text-primary-600",
             secondary:

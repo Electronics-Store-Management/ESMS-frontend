@@ -83,7 +83,6 @@ export default function SideBarUI({
                     )}
                 </Transition.Child>
                 <Transition.Child
-                    appear
                     className=" h-screen relative z-20"
                     enter="transition ease-in-out duration-500 transform"
                     enterFrom="-translate-x-full"

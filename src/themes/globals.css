@@ -19,12 +19,12 @@
     }
 
     * {
-        transition-duration: 0.3s;
-        animation-duration: 0.3s;
+        transition-duration: 0.2s;
+        /* animation-duration: 0.3s; */
     }
 }
 
 * {
-    transition-duration: 0.3s;
-    animation-duration: 0.3s;
+    transition-duration: 0.2s;
+    /* animation-duration: 0.3s; */
 }

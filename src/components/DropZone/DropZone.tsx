@@ -25,7 +25,7 @@ export default function DropZone({
         >
             <Label
                 htmlFor={`dropzone-file-${index || 0}`}
-                className={` flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600 ${
+                className={` flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-secondary-300 bg-secondary-50 hover:bg-secondary-100 ${
                     isCompact ? "h-12 sm:h-20" : "h-40 sm:h-64"
                     // file || defaultValue ? "h-64" : "h-64"
                 }`}

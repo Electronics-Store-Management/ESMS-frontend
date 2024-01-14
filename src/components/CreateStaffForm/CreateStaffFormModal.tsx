@@ -25,7 +25,10 @@ export default function CreateStaffFormModal() {
 
     return (
         <Modal
-            theme={{ content: { inner: " rounded-2xl" } }}
+            theme={{
+                content: { inner: " rounded-2xl bg-background-secondary" },
+                root: { show: { on: "flex bg-secondary-500 bg-opacity-50" } },
+            }}
             size="3xl"
             show={isCreateStaffModalOpen}
             onClose={closeCreateStaffModal}

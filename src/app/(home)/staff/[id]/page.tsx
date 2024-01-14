@@ -38,7 +38,7 @@ export default async function Page({
     console.log(groupPermissionByEntityType(permissions, authorities).at(-1));
 
     return (
-        <div className=" w-1/3 overflow-auto py-5 px-8 flex flex-col gap-3 rounded-lg border-[1px] border-secondary-200">
+        <div className=" w-full lg:w-1/3 overflow-auto lg:py-5 lg:px-8 flex flex-col gap-3 rounded-lg lg:border-[1px] border-secondary-200">
             <div className=" grid gap-2">
                 <div className=" flex justify-between items-center">
                     <p className=" font-semibold">Permission list</p>
@@ -95,14 +95,14 @@ export default async function Page({
 
 const customTheme: CustomFlowbiteTheme["accordion"] = {
     root: {
-        base: "divide-y divide-gray-200 border-gray-200 ",
+        base: "divide-y !border-secondary-200 !divide-secondary-200 ",
         flush: {
-            off: "rounded-lg border",
-            on: "border-b",
+            off: "rounded-lg !border-secondary-200 !divide-secondary-200  border divide-secondary-200",
+            on: "border-b divide-secondary-200 !border-secondary-200 !divide-secondary-200 ",
         },
     },
     content: {
-        base: "py-4 px-4 last:rounded-b-lg dark:bg-gray-900 first:rounded-t-lg",
+        base: "py-4 px-4 last:rounded-b-lg  !border-secondary-200  !divide-secondary-200 first:rounded-t-lg",
     },
     title: {
         arrow: {
@@ -112,15 +112,15 @@ const customTheme: CustomFlowbiteTheme["accordion"] = {
                 on: "rotate-180",
             },
         },
-        base: "flex w-full items-center justify-between first:rounded-t-lg last:rounded-b-lg py-3 px-3 text-left font-medium text-gray-500 dark:text-gray-400",
+        base: "flex !border-secondary-200 w-full items-center justify-between first:rounded-t-lg last:rounded-b-lg py-3 px-3 text-left font-medium text-secondary-500 ",
         flush: {
-            off: "hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:hover:bg-gray-800 dark:focus:ring-gray-800",
-            on: "bg-transparent dark:bg-transparent",
+            off: "border-secondary-200 hover:bg-secondary-100 focus:ring-4 focus:ring-secondary-200 ",
+            on: "bg-transparent ",
         },
         heading: "",
         open: {
             off: "",
-            on: "text-gray-900 bg-gray-100 dark:bg-gray-800 dark:text-white",
+            on: "text-secondary-900 bg-secondary-100 font-semibold",
         },
     },
 };

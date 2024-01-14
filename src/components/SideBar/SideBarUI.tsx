@@ -299,6 +299,7 @@ export default function SideBarUI({
                             ) : (
                                 <div className="mx-4 ">
                                     <Dropdown
+                                        theme={dropdownTheme}
                                         label={
                                             <Avatar
                                                 className="p-2 flex rounded-lg hover:bg-background-hover cursor-pointer "
@@ -322,7 +323,9 @@ export default function SideBarUI({
                                         arrowIcon={false}
                                         inline
                                     >
-                                        <Dropdown.Header>
+                                        <Dropdown.Header
+                                            theme={dropdownTheme?.floating}
+                                        >
                                             <p className=" font-semibold text-start text-secondary-950 text-sm">
                                                 {staffInfo.name}
                                             </p>
@@ -330,13 +333,20 @@ export default function SideBarUI({
                                                 {staffInfo.email}
                                             </p>
                                         </Dropdown.Header>
-                                        <Dropdown.Item href="/home">
+                                        <Dropdown.Item
+                                            theme={
+                                                dropdownTheme?.floating?.item
+                                            }
+                                            href="/home"
+                                        >
                                             Dashboard
                                         </Dropdown.Item>
                                         <Dropdown.Item href="/setting">
                                             Settings
                                         </Dropdown.Item>
-                                        <Dropdown.Divider />
+                                        <Dropdown.Divider
+                                            theme={dropdownTheme?.floating}
+                                        />
                                         <Dropdown.Item
                                             onClick={() => {
                                                 localStorage.setItem(
@@ -491,6 +501,39 @@ const sideBarCollapsedItemTheme: CustomFlowbiteTheme["sidebar"] = {
         label: "",
         listItem: "",
     },
+};
+
+const dropdownTheme: CustomFlowbiteTheme["dropdown"] = {
+    arrowIcon: "ml-2 h-4 w-4 text-secondary-950",
+    content:
+        "py-1 text-secondary-900 bg-background-secondary focus:outline-none",
+    floating: {
+        animation: "transition-opacity",
+        arrow: {
+            base: "absolute z-10 h-2 w-2 rotate-45",
+            style: {
+                light: "bg-secondary-900",
+                auto: "bg-secondary-900",
+            },
+            placement: "-4px",
+        },
+        base: "z-10 w-fit rounded bg-background-secondary divide-y divide-secondary-100 shadow focus:outline-none",
+        content: "py-1 text-sm text-secondary-700",
+        divider: "my-1 h-px bg-secondary-100",
+        header: "block py-2 px-4 text-sm text-secondary-700",
+        hidden: "invisible opacity-0",
+        item: {
+            // container: "",
+            base: "flex flex-row items-center justify-between py-2 px-4 text-sm text-secondary-800 cursor-pointer w-full bg-background-secondary hover:bg-secondary-100 focus:bg-secondary-100 ",
+            icon: "mr-2 justify-self-end h-5 w-5",
+        },
+        style: {
+            light: "border border-secondary-200 bg-background-secondary text-secondary-900",
+            auto: "border border-secondary-200 bg-background-secondary text-secondary-900",
+        },
+        target: " max-w-[250px] w-max border-2 border-surface-grey02 text-ellipsis flex bg-surface-grey01 text-secondary-950 transition duration-200 enabled:hover:bg-primary-200 enabled:active:bg-primary-300",
+    },
+    inlineWrapper: "flex w-full items-center justify-between",
 };
 
 type PropTypes = {

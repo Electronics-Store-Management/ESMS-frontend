@@ -28,7 +28,7 @@ export default function CreateStaffFormUI({
 
     return (
         <div
-            className={` w-full bg-background-normal rounded-2xl p-8 ${className}`}
+            className={` w-full bg-background-secondary rounded-2xl p-8 ${className}`}
             {...props}
         >
             <h1

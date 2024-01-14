@@ -1,59 +1,22 @@
-import API from "@/constants/apiEnpoint";
+"use client";
+
 import { ReactNodeChildren } from "@/types/ReactNodeChildren";
-import Revision from "@/types/Revision";
-import Supplier from "@/types/entity/Supplier";
-import fetchWithToken from "@/utils/fetchWithToken";
-import FORMATTER from "@/utils/formatter";
+import SupplierList from "../SupplierList";
+import useScreen from "@/hooks/useScreen";
 
-import StaffAvatar from "@/components/StaffAvatar/StaffAvatar";
-import {
-    Timeline,
-    TimelineBody,
-    TimelineContent,
-    TimelineItem,
-    TimelinePoint,
-    TimelineTime,
-    TimelineTitle,
-} from "flowbite-react";
-import Link from "next/link";
-
-export default async function Layout({
+export default function Layout({
     children,
     params: { id: supplierId },
 }: ReactNodeChildren & { params: { id: string } }) {
-    const historyResponse = await fetchWithToken(
-        API.supplier.getHistory(supplierId),
-    );
-    const history: Revision<Supplier>[] = await historyResponse.json();
+    const screen = useScreen();
+    const isMobile = !screen("md");
 
     return (
-        <div className=" w-1/2 overflow-y-auto flex flex-col-reverse xl:flex-row gap-1 ">
-            <div className=" flex-none xl:max-h-full h-fit pl-1 pr-8 pb-2 overflow-x-hidden xl:overflow-y-auto">
-                <Timeline>
-                    {history.map(({ id, timestamp, username }) => (
-                        <TimelineItem key={id}>
-                            <TimelinePoint />
-                            <TimelineContent>
-                                <TimelineTime>
-                                    <Link
-                                        href={`/supplier/${supplierId}/${id}`}
-                                    >
-                                        {FORMATTER.toShortDate(timestamp)}
-                                    </Link>
-                                </TimelineTime>
-                                <TimelineTitle>{}</TimelineTitle>
-                                <TimelineBody>
-                                    <p className=" mt-3 font-semibold text-sm">
-                                        Edited by
-                                    </p>
-                                    <StaffAvatar username={username} />
-                                </TimelineBody>
-                            </TimelineContent>
-                        </TimelineItem>
-                    ))}
-                </Timeline>
+        <>
+            {isMobile || <SupplierList />}
+            <div className=" pt-1 flex-1 w-1/2 overflow-y-auto flex flex-col-reverse xl:flex-row gap-5 xl:gap-1 ">
+                {children}
             </div>
-            {children}
-        </div>
+        </>
     );
 }

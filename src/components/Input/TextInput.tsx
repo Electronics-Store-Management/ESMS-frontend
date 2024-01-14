@@ -52,7 +52,7 @@ export default React.forwardRef(function TextInput(
         field: {
             input: {
                 base: twMerge(
-                    "!bg-secondary-25 !border-secondary-200 focus:!border-primary-400 focus:!ring-0 !w-full",
+                    "!bg-secondary-25 !border-secondary-200 text-secondary-900 focus:!border-primary-400 focus:!ring-0 !w-full",
                     rightAddon && theme.input.withRightAddon,
                     error && theme.input.status.error,
                 ),
@@ -61,6 +61,7 @@ export default React.forwardRef(function TextInput(
                     md: "!py-3 !px-4 text-sm",
                     lg: "!py-3 !px-4",
                 },
+                colors: { gray: " text-secondary-900" },
                 withIcon: {
                     off: "",
                     on: "!pl-10",

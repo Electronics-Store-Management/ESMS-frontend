@@ -1,3 +1,5 @@
+import SupplierList from "./SupplierList";
+
 export default function Page() {
-    return null;
+    return <SupplierList />;
 }

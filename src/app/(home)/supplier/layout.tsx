@@ -2,39 +2,33 @@
 
 import { HiOutlineSearch, HiPlus } from "react-icons/hi";
 
-import { useDeleteSupplierMutation } from "@/api/supplier/deleteSupplier.api";
 import viewSupplierList from "@/api/supplier/viewSupplierList.api";
 import Button from "@/components/Button/Button";
-import { useClaimModal } from "@/components/ClaimModal/ClaimModal";
 import { useCreateSupplierModal } from "@/components/CreateSupplierForm/CreateSupplierFormModal";
-import DataTable from "@/components/DataTable/DataTable";
 import FilterBadge from "@/components/FilterBadge/FilterBadge";
 import TextInput from "@/components/Input/TextInput";
-import { useUpdateSupplierModal } from "@/components/UpdateSupplierForm/UpdateSupplierFormModal";
+import MobileHeader from "@/components/MobileHeader/MobileHeader";
 import SEARCH_PARAMS from "@/constants/searchParams";
+import { usePermission } from "@/hooks/usePermission";
+import useScreen from "@/hooks/useScreen";
+import { ReactNodeChildren } from "@/types/ReactNodeChildren";
 import Supplier from "@/types/entity/Supplier";
 import withQuery from "@/utils/withQuery";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useRef } from "react";
 import { useQuery } from "react-query";
-import { ReactNodeChildren } from "@/types/ReactNodeChildren";
-import useClient from "@/hooks/useClient";
-import { usePermission } from "@/hooks/usePermission";
+import SupplierList from "./SupplierList";
 
 export default function Layout({ children }: ReactNodeChildren) {
-    const pathname = usePathname();
     const router = useRouter();
     const searchParams = useSearchParams();
-
-    const isClient = useClient();
 
     const searchRef = useRef<HTMLInputElement>(null);
     const supplierKeyword = searchParams.get(SEARCH_PARAMS.supplierName) || "";
 
     const { open: openCreateSupplierModal } = useCreateSupplierModal();
-    const { open: openUpdateSupplierModal } = useUpdateSupplierModal();
 
-    const { data, isLoading, refetch } = useQuery<Supplier[]>(
+    const { refetch } = useQuery<Supplier[]>(
         ["suppliers", supplierKeyword],
         viewSupplierList,
         {
@@ -42,17 +36,18 @@ export default function Layout({ children }: ReactNodeChildren) {
         },
     );
 
-    const deleteSupplierMutation = useDeleteSupplierMutation(refetch);
-    const { openClaimModal } = useClaimModal();
-
     const isAllowedCreate = usePermission("SUPPLIER", ["CREATE"]);
+
+    const screen = useScreen();
+    const isMobile = !screen("md");
 
     return (
         <div className="w-full h-full flex flex-col">
-            <div className=" w-full grid grid-cols-2">
+            <MobileHeader title="Supplier" />
+            <div className=" w-full flex gap-5">
                 <TextInput
                     ref={searchRef}
-                    className=" w-96"
+                    className=" w-full max-w-96"
                     defaultValue={
                         searchParams.get(SEARCH_PARAMS.supplierName) || ""
                     }
@@ -67,14 +62,17 @@ export default function Layout({ children }: ReactNodeChildren) {
                     }
                     placeholder="Search supplier by name here..."
                 />
-                <div className=" flex justify-end gap-8">
+                <div className=" flex-none flex justify-end place-items-stretch col-span-2 sm:col-span-3 lg:col-span-3 col-start-12 sm:col-start-10 lg:col-start-10 row-start-1 ">
                     {isAllowedCreate ? (
                         <Button
                             size="sm"
                             onClick={() => openCreateSupplierModal(refetch)}
+                            className=" place-items-stretch col-span-1 sm:col-span-2 col-start-6 sm:col-start-5 row-start-1 "
                         >
-                            <HiPlus className=" w-4 h-4 mr-2" />
-                            Add supplier
+                            <div className="flex items-center gap-2">
+                                <HiPlus className=" w-4 h-4" />
+                                {!isMobile ? <p>New supplier</p> : null}
+                            </div>
                         </Button>
                     ) : null}
                 </div>
@@ -87,40 +85,7 @@ export default function Layout({ children }: ReactNodeChildren) {
                 />
             </div>
             <div className=" w-full flex-1 overflow-auto flex gap-5">
-                {isClient && (
-                    <DataTable
-                        data={data || []}
-                        isLoading={isLoading}
-                        onDelete={(supplier) => {
-                            openClaimModal(
-                                <>
-                                    Do you want to delete supplier{" "}
-                                    <span>{supplier.name}</span>
-                                </>,
-                                (confirm) =>
-                                    confirm &&
-                                    deleteSupplierMutation.mutate(supplier),
-                            );
-                        }}
-                        onEdit={(supplier) => {
-                            openUpdateSupplierModal(supplier.id, refetch);
-                        }}
-                        onClickRow={(supplier) =>
-                            router.push(`/supplier/${supplier.id}`)
-                        }
-                        pick={{
-                            name: { title: "Name" },
-                            email: { title: "Email" },
-                            ...(pathname.split("/").at(-1) != "supplier"
-                                ? {}
-                                : {
-                                      phone: { title: "Phone" },
-                                      address: { title: "Address" },
-                                  }),
-                        }}
-                    />
-                )}
-
+                {/* <SupplierList /> */}
                 {children}
             </div>
         </div>

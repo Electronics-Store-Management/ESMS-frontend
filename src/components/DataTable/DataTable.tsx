@@ -75,7 +75,7 @@ export default function DataTable<T extends Object & BaseEntity>({
 
 export const tableTheme: CustomFlowbiteTheme["table"] = {
     root: {
-        base: "w-fit sm:w-full text-left rounded-lg text-sm text-secondary-500",
+        base: "min-w-full text-left rounded-lg text-sm text-secondary-500",
         shadow: "absolute bg-background-secondary dark:bg-black w-full h-full top-0 left-0 rounded-lg drop-shadow-md -z-10",
         wrapper: "relative ",
     },

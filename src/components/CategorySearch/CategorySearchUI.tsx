@@ -57,11 +57,18 @@ export default function CategorySearchUI({
 }
 
 const textInputTheme: CustomFlowbiteTheme["textInput"] = {
-    base: "w-full",
+    base: "flex-1",
     field: {
         input: {
+            base: " bg-secondary-50",
             withAddon: {
-                off: "rounded-none rounded-s-lg w-full",
+                off: "rounded-none w-full",
+            },
+            colors: {
+                gray: "bg-secondary-50 border-secondary-900 text-secondary-900 focus:border-primary-500 focus:ring-primary-500 placeholder-secondary-500 ",
+            },
+            sizes: {
+                sm: "p-2 text-secondary-900 text-xs",
             },
         },
     },

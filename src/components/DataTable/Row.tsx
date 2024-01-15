@@ -116,7 +116,7 @@ export function Row<T>({
                                 icon={HiPencil}
                                 onClick={() => onEdit?.(row)}
                                 theme={{
-                                    base: " bg-background-secondary",
+                                    base: "flex items-center justify-start py-2 px-4 text-sm text-secondary-700 cursor-pointer w-full hover:bg-gray-100  bg-background-secondary",
                                     icon: " text-red-600 mr-2 h-4 w-4",
                                 }}
                             >
@@ -126,7 +126,7 @@ export function Row<T>({
                         {isAllowedDelete ? (
                             <Dropdown.Item
                                 theme={{
-                                    base: " bg-background-secondary",
+                                    base: "flex items-center justify-start py-2 px-4 text-sm text-secondary-700 cursor-pointer w-full hover:bg-gray-100  bg-background-secondary",
                                     icon: " text-red-600 mr-2 h-4 w-4",
                                 }}
                                 icon={HiTrash}

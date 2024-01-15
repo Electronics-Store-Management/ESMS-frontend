@@ -15,6 +15,7 @@ import withQuery from "@/utils/withQuery";
 
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
+import Background from "./background";
 
 export default async function Layout({ children }: ReactNodeChildren) {
     const accessToken = cookies().get("accessToken")?.value || "";
@@ -49,10 +50,13 @@ export default async function Layout({ children }: ReactNodeChildren) {
 
     return (
         <ModalProvider>
-            <div className=" w-screen h-screen flex">
+            <div className=" relative w-screen h-screen flex">
                 <SideBar staffInfo={staffInfo} />
-                <div className=" relative p-5 lg:py-8 lg:pl-10 lg:pr-8 w-full h-screen flex flex-col bg-background-normal overflow-hidden">
-                    {children}
+                <div className=" w-full h-screen bg-background-normal ">
+                    <Background />
+                    <div className=" z-10 p-5 lg:py-8 lg:pl-10 lg:pr-8 w-full h-screen flex flex-coloverflow-hidden">
+                        {children}
+                    </div>
                 </div>
             </div>
         </ModalProvider>

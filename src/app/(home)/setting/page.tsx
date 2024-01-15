@@ -23,7 +23,7 @@ export default function Page() {
 
     return (
         <div className=" grid grid-cols-2">
-            <div className=" grid gap-8">
+            <div className=" flex flex-col gap-8">
                 <LabeledText
                     title={<p className=" pb-2 px-4">Theme</p>}
                     value={

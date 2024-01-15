@@ -20,7 +20,7 @@ const RangeDatePicker = ({
 
     return (
         <div>
-            <div date-rangepicker="true" className="flex items-center gap-4">
+            <div date-rangepicker="true" className="flex flex-col sm:flex-row items-center gap-4">
                 <Datepicker onSelectedDateChanged={handleSelectStart} />
                 <div className="w-3 border-t border-secondary-200" />
                 <Datepicker onSelectedDateChanged={handleSelectEnd} />

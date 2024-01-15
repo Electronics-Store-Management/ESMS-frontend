@@ -28,12 +28,13 @@ const ImportBillDateFilter = ({ onSearch }: ImportBillDateFilterProps) => {
                 onSelectedStartDateChanged={handleSelectStart}
                 onSelectedEndDateChanged={handleSelectEnd}
             />
-            <Button size="md" onClick={handleSearch}>
-                Search
-            </Button>
+            <div className=" w-fit h-fit">
+                <Button size="md" onClick={handleSearch}>
+                    Search
+                </Button>
+            </div>
         </div>
     );
 };
 
 export default ImportBillDateFilter;
-

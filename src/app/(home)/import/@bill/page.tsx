@@ -22,6 +22,8 @@ import ProductPreview from "@/types/entity/ProductPreview";
 import FORMATTER from "@/utils/formatter";
 import _ from "lodash";
 import { useMutation } from "react-query";
+import useScreen from "@/hooks/useScreen";
+import BillProductList from "@/components/BillProductList/BillProductList";
 
 const Page = () => {
     const [billProducts, setBillProducts] = useState<
@@ -94,8 +96,11 @@ const Page = () => {
         addNewImportMutation.mutate(request);
     }
 
+    const screen = useScreen();
+    const isMobile = !screen("md");
+
     return (
-        <div className=" h-full col-span-2 flex flex-col overflow-y-auto pl-2">
+        <div className=" h-full col-span-2 flex flex-col gap-3 lg:overflow-y-auto pl-2">
             <p className=" font-semibold text-color-heading text-2xl">
                 Product List
             </p>
@@ -113,46 +118,60 @@ const Page = () => {
                     });
                     setBillProducts(new Map(billProducts.entries()));
                 }}
-                className=" w-1/2 mt-5"
+                className=" lg:w-1/2 mt-5"
             />
-            <BillProductTable
-                className="mt-8 flex-1"
-                data={billProducts}
-                onChange={(id, product) => {
-                    billProducts.set(id, product);
-                    setBillProducts(new Map(billProducts.entries()));
-                }}
-                onRemove={(id: string) => {
-                    billProducts.delete(id);
-                    setBillProducts(new Map(billProducts.entries()));
-                }}
-                fields={{
-                    name: {
-                        title: "Product name",
-                        size: 3,
-                        editable: false,
-                    },
-                    price: { title: "Price", size: 2, type: "number" },
-                    quantity: {
-                        title: "Quantity",
-                        defaultValue: 1,
-                        type: "number",
-                        size: 2,
-                        validateFunc: (value: number) => {
-                            if (value <= 0)
-                                return "You must import at least 1 product";
-                            return "";
+            {isMobile ? (
+                <BillProductList
+                    data={billProducts}
+                    onChange={(id, product) => {
+                        billProducts.set(id, product);
+                        setBillProducts(new Map(billProducts.entries()));
+                    }}
+                    onRemove={(id: string) => {
+                        billProducts.delete(id);
+                        setBillProducts(new Map(billProducts.entries()));
+                    }}
+                />
+            ) : (
+                <BillProductTable
+                    className="mt-8 flex-1"
+                    data={billProducts}
+                    onChange={(id, product) => {
+                        billProducts.set(id, product);
+                        setBillProducts(new Map(billProducts.entries()));
+                    }}
+                    onRemove={(id: string) => {
+                        billProducts.delete(id);
+                        setBillProducts(new Map(billProducts.entries()));
+                    }}
+                    fields={{
+                        name: {
+                            title: "Product name",
+                            size: 3,
+                            editable: false,
                         },
-                    },
-                    totalPrice: {
-                        title: "Total price",
-                        size: 2,
-                        calculateFunc: ({ price, quantity }) =>
-                            FORMATTER.toCurrency(price * quantity),
-                    },
-                }}
-            />
-            <div className=" mt-4 flex-none flex items-end w-full">
+                        price: { title: "Price", size: 2, type: "number" },
+                        quantity: {
+                            title: "Quantity",
+                            defaultValue: 1,
+                            type: "number",
+                            size: 2,
+                            validateFunc: (value: number) => {
+                                if (value <= 0)
+                                    return "You must import at least 1 product";
+                                return "";
+                            },
+                        },
+                        totalPrice: {
+                            title: "Total price",
+                            size: 2,
+                            calculateFunc: ({ price, quantity }) =>
+                                FORMATTER.toCurrency(price * quantity),
+                        },
+                    }}
+                />
+            )}
+            <div className=" mt-4 flex-none flex flex-col sm:flex-row sm:items-end gap-5 sm:gap-0 w-full">
                 <div className="flex-1 flex flex-col gap-1">
                     <div className="flex flex-col gap-1">
                         <p className=" text-secondary-950">
@@ -179,7 +198,7 @@ const Page = () => {
                         }
                     />
                 </div>
-                <div className=" flex gap-5">
+                <div className=" flex gap-5 justify-end sm:justify-normal">
                     <Button btnType="secondary">Cancel</Button>
                     <Button className=" flex" onClick={() => onSubmit()}>
                         <HiCheck size={20} />

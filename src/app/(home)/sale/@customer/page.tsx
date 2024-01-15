@@ -2,8 +2,10 @@
 
 import CustomerSelection from "@/components/CustomerSelection/CustomerSelection";
 import TextInput from "@/components/Input/TextInput";
+import MenuButton from "@/components/SideBar/MenuButton";
 import LabeledText from "@/components/Typography/LabeledText";
 import { CustomerContext } from "@/contexts/CustomerContext";
+import useScreen from "@/hooks/useScreen";
 import Customer from "@/types/entity/Customer";
 import { useContext, useState } from "react";
 import { HiLocationMarker, HiPhone, HiUser } from "react-icons/hi";
@@ -13,11 +15,17 @@ export default function Page() {
 
     const [isCreateCustomer, setIsCreateCustomer] = useState(false);
 
+    const screen = useScreen();
+    const isMobile = !screen("md");
+
     return (
         <div className="h-full">
-            <p className="font-semibold text-color-heading text-2xl">
-                Customer info
-            </p>
+            <div className=" flex justify-between items-center">
+                <p className="font-semibold text-color-heading text-2xl">
+                    Customer info
+                </p>
+                {isMobile && <MenuButton />}
+            </div>
             <CustomerSelection
                 className=" mt-[52px]"
                 onSearch={(customer: Customer) => {

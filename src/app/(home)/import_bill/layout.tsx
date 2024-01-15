@@ -3,6 +3,7 @@
 import viewImportList from "@/api/import/viewImportList.api";
 import DataTable from "@/components/DataTable/DataTable";
 import ImportBillDateFilter from "@/components/ImportBillDateFilter/ImportBillDateFilter";
+import MobileHeader from "@/components/MobileHeader/MobileHeader";
 import SEARCH_PARAMS from "@/constants/searchParams";
 import { ReactNodeChildren } from "@/types/ReactNodeChildren";
 import Revision from "@/types/Revision";
@@ -64,12 +65,13 @@ const Layout = ({ children }: ReactNodeChildren) => {
 
     return (
         <>
+            <MobileHeader title="Import bill" />
             <div className="w-full mb-8">
                 <ImportBillDateFilter
                     onSearch={(start, end) => onDateFilter(start, end)}
                 />
             </div>
-            <div className=" w-full h-full overflow-auto flex gap-5">
+            <div className=" w-full h-full overflow-auto flex flex-col-reverse lg:flex-row gap-5">
                 <DataTable
                     data={data || []}
                     isLoading={isLoading}
@@ -88,6 +90,7 @@ const Layout = ({ children }: ReactNodeChildren) => {
                         timestamp: {
                             title: "Created date",
                             mapper: FORMATTER.toShortDate,
+                            className: "min-w-[150px]",
                         },
                         username: { title: "Staff" },
                         importProducts: {

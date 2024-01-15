@@ -2,19 +2,27 @@
 
 import viewSupplierList from "@/api/supplier/viewSupplierList.api";
 import SearchInput from "@/components/SearchInput/SearchInput.tsx";
+import MenuButton from "@/components/SideBar/MenuButton";
 import LabeledText from "@/components/Typography/LabeledText";
 import { SupplierContext } from "@/contexts/SupplierContext";
+import useScreen from "@/hooks/useScreen";
 import { useContext } from "react";
 import { HiLocationMarker, HiMail, HiPhone, HiUser } from "react-icons/hi";
 
 export default function Page() {
     const { supplier, setSupplier } = useContext(SupplierContext);
 
+    const screen = useScreen();
+    const isMobile = !screen("md");
+
     return (
-        <div className="h-full">
-            <p className="font-semibold text-color-heading text-2xl">
-                Supplier info
-            </p>
+        <div className="h-full mb-10 md:mb-0">
+            <div className=" flex justify-between items-center">
+                <p className="font-semibold text-color-heading text-2xl">
+                    Supplier info
+                </p>
+                {isMobile && <MenuButton />}
+            </div>
             <SearchInput
                 title="Search for supplier"
                 placeholder="Enter placeholder name here"

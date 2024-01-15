@@ -40,6 +40,7 @@ export default function RootLayout({
         <html lang="en" style={{ fontSize: parseInt(fontSize, 10) }}>
             <head>
                 <link rel="manifest" href="/manifest.json" />
+                <link rel="icon" href="/favicon.ico" sizes="any" />
             </head>
             <body className={inter.className}>
                 <GeneralProvider>

@@ -58,7 +58,7 @@ const config: Config = {
                 background: {
                     normal: "var(--background)",
                     secondary: "var(--background-secondary)",
-                    sidebar: "var(--background-sidebar",
+                    sidebar: "var(--background-sidebar)",
                     hover: "var(--background-hover)",
                     active: "var(--background-active)",
                 },

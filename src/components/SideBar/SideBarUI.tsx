@@ -26,11 +26,13 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { MdOutlineCurrencyExchange } from "react-icons/md";
 import LOGO from "../../assets/logo.png";
+import LOGO_TET from "../../assets/logo-tet.png";
 import FONT from "../../utils/fontFamily";
 
 import { useSideBarState } from "@/contexts/SideBar";
 import { Transition } from "@headlessui/react";
 import Link from "next/link";
+import { useTheme } from "next-themes";
 
 export default function SideBarUI({
     staffInfo,
@@ -41,6 +43,8 @@ export default function SideBarUI({
     const routeName = (pathname.split("/").at(1) || "") + "/";
     const screen = useScreen();
     const isMobile = !screen("md");
+
+    const { theme } = useTheme();
 
     const { isCollapse, setIsCollapse } = useSideBarState((state) => ({
         isCollapse:
@@ -112,7 +116,7 @@ export default function SideBarUI({
                     >
                         <div className=" flex gap-2 pl-1 pt-2 mb-12">
                             <Image
-                                src={LOGO}
+                                src={theme == "holiday" ? LOGO_TET : LOGO}
                                 width={30}
                                 height={30}
                                 alt="logo"
@@ -412,7 +416,7 @@ const sideBarTheme: CustomFlowbiteTheme["sidebar"] = {
             on: "w-16",
             off: "w-64",
         },
-        inner: "h-full overflow-y-auto overflow-x-hidden rounded bg-background-normal py-4 px-3",
+        inner: "h-full overflow-y-auto overflow-x-hidden rounded bg-background-sidebar py-4 px-3",
     },
     collapse: {
         button: "group flex w-full items-center rounded-lg p-2 text-sm font-normal text-secondary-900 transition duration-75 hover:bg-primary-100",

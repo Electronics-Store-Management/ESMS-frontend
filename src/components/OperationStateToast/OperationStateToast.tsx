@@ -27,14 +27,14 @@ export default function OperationStateToast({
                         )}
                     </div>
                     <div className="ml-3 flex-1">
-                        <p className="text-sm font-medium text-gray-900">
+                        <p className="text-sm font-medium text-secondary-900">
                             {title || "Success"}
                         </p>
-                        <p className="mt-1 text-sm text-gray-500">{content}</p>
+                        <p className="mt-1 text-sm text-secondary-500">{content}</p>
                     </div>
                 </div>
             </div>
-            <div className="flex border-l border-gray-200">
+            <div className="flex border-l border-secondary-200">
                 <button
                     onClick={() =>
                         isSuccess ? toast.remove(t?.id) : retry?.()

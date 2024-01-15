@@ -102,11 +102,23 @@ export function Row<T>({
                             </div>
                         )}
                         dismissOnClick={false}
+                        theme={{
+                            floating: {
+                                style: {
+                                    light: "border border-secondary-200 bg-background-secondary text-secondary-900",
+                                    auto: "border border-secondary-200 bg-background-secondary text-secondary-900",
+                                },
+                            },
+                        }}
                     >
                         {isAllowedEdit ? (
                             <Dropdown.Item
                                 icon={HiPencil}
                                 onClick={() => onEdit?.(row)}
+                                theme={{
+                                    base: " bg-background-secondary",
+                                    icon: " text-red-600 mr-2 h-4 w-4",
+                                }}
                             >
                                 Edit
                             </Dropdown.Item>
@@ -114,6 +126,7 @@ export function Row<T>({
                         {isAllowedDelete ? (
                             <Dropdown.Item
                                 theme={{
+                                    base: " bg-background-secondary",
                                     icon: " text-red-600 mr-2 h-4 w-4",
                                 }}
                                 icon={HiTrash}

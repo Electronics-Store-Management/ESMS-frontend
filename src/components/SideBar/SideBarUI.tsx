@@ -407,7 +407,7 @@ const ROUTES = {
 
 const sideBarTheme: CustomFlowbiteTheme["sidebar"] = {
     root: {
-        base: "h-full border-r-[1px] border-secondary-200",
+        base: "h-full bg-background-sidebar border-r-[1px] border-secondary-200",
         collapsed: {
             on: "w-16",
             off: "w-64",

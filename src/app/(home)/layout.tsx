@@ -54,7 +54,9 @@ export default async function Layout({ children }: ReactNodeChildren) {
                 <SideBar staffInfo={staffInfo} />
                 <div className=" w-full h-screen bg-background-normal ">
                     <Background />
-                    <div className=" z-10 p-5 lg:py-8 lg:pl-10 lg:pr-8 w-full h-screen flex flex-coloverflow-hidden">
+                    <div className=" z-10 p-5 lg:py-8 lg:pl-10 lg:pr-8 w-full h-screen flex flex-col overflow-hidden">
+                        <link rel="icon" href="/favicon.ico" sizes="any" />
+
                         {children}
                     </div>
                 </div>
